@@ -1,11 +1,17 @@
 <script>
 import AppHeader from './components/AppHeader.vue'
 import AppJumbo from './components/AppJumbo.vue'
+import AppCategory from './components/AppCategory.vue'
+import AppReview from './components/AppReview.vue'
+import AppDownload from './components/AppDownload.vue'
 
 export default {
     components: {
         AppHeader,
         AppJumbo,
+        AppCategory,
+        AppReview,
+        AppDownload,
 
     }
 }
@@ -14,6 +20,9 @@ export default {
 <template>
     <AppHeader />
     <AppJumbo />
+    <AppCategory />
+    <AppReview />
+    <AppDownload />
 </template>
 
 
