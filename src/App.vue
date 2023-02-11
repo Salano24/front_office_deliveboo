@@ -28,11 +28,12 @@ export default {
 
 
 <style lang="scss">
-*{
+@use './styles/general.scss';
+/* *{
     box-sizing: 0;
     padding: 0;
     margin: 0;
     font-family: 'League Spartan', sans-serif;
-}
+} */
 
 </style>

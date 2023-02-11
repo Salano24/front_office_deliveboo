@@ -10,7 +10,7 @@ export default {
 
 <style lang="scss">
 .jumbo{
-    background-image: url(../assets/jumbo.jpg);
+    background-image: url(../assets/jumbo.png);
     width: 100vw;
     aspect-ratio: 16 / 8;
     
