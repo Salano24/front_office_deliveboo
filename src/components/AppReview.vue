@@ -7,8 +7,8 @@ export default {
 <template>
     <div class="review">
         <div class="category_title d-flex justify-content-center flex-wrap text-center py-5 px-5">
-            <h1 class="">Dicono di noi</h1>
-            <img class="ms-4 mb-sm-0" src="../assets/megafono.png" alt="megafono">
+            <h1 class="lh-sm">Dicono di noi</h1>
+            <img class="ms-4 mb-sm-0 pt-3" src="../assets/megafono.png" alt="megafono">
         </div>
 
         <div class="container">
@@ -113,7 +113,7 @@ export default {
             margin: auto;
             position: absolute;
             left: 50%;
-            top: 60%;
+            top: 70%;
             transform: translateX(-50%);
 
            

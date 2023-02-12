@@ -8,12 +8,12 @@ export default {
 <div class="category_title text-center py-5 px-5">
     <div class="top_title d-flex justify-content-center flex-wrap">
         <h1>Le nostre categorie</h1>
-        <img class="ms-4" src="../assets/category_food.png" alt="hamburger">
+        <img class="ms-4 pt-4" src="../assets/category_food.png" alt="hamburger">
     </div>
-    <h3>Ciò che più ti piace, subito a casa tua</h3>
+    <h3  class="pt-md-4">Ciò che più ti piace, subito a casa tua</h3>
 </div>
 
-<div class="container-fluid m-auto p-0">
+<div class="container-fluid bg-black m-auto p-0">
     <div class="row gx-0">
         <div class="col-12 col-sm-6 col-md-3 text_center pizza"><h2>PIZZA</h2></div>
         <div class="col-12 col-sm-6 col-md-3 text_center hamburgher"><h2>HAMBURGER</h2></div>
@@ -22,7 +22,7 @@ export default {
         <div class="col-12 col-sm-6 col-md-3 text_center messicano"><h2>MESSICANO</h2></div>
         <div class="col-12 col-sm-6 col-md-3 text_center sushi"><h2>SUSHI</h2></div>
         <div class="col-12 col-sm-6 col-md-3 text_center carne"><h2>CARNE</h2></div>
-        <div class="col-12 col-sm-6 col-md-3 text_center pasta"><h2>PASTA</h2></div>
+        <div class="col-12 col-sm-6 col-md-3 text_center pasta"><h2>PASTA</h2></div>    
     </div>
 </div>
 </template>

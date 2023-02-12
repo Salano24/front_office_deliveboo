@@ -4,6 +4,7 @@ import AppJumbo from './components/AppJumbo.vue'
 import AppCategory from './components/AppCategory.vue'
 import AppReview from './components/AppReview.vue'
 import AppDownload from './components/AppDownload.vue'
+import AppJoinUs from './components/AppJoinUs.vue'
 
 export default {
     components: {
@@ -12,6 +13,7 @@ export default {
         AppCategory,
         AppReview,
         AppDownload,
+        AppJoinUs,
 
     }
 }
@@ -23,6 +25,7 @@ export default {
     <AppCategory />
     <AppReview />
     <AppDownload />
+    <AppJoinUs />
 </template>
 
 
