@@ -5,18 +5,22 @@ export default {
 </script>
 
 <template>
-    <div class="review_title">
-        <h1>DICONO DI NOI</h1>
+    <div class="review">
+        <div class="category_title d-flex justify-content-center flex-wrap text-center py-5 px-5">
+            <h1 class="">Dicono di noi</h1>
+            <img class="ms-4 mb-sm-0" src="../assets/megafono.png" alt="megafono">
+        </div>
+
         <div class="container">
-            <div class="row">
-                <div class="col_3">
+            <div class="row gx-0 gy-4 mx-0 gx-sm-5">
+                <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
                     <div class="card">
                         <div class="card_top">
                             <img src="../assets/uomo1.png" alt="">
-                            <h3>Tommaso <br> Baldanzi</h3>
+                            <h5>Tommaso <br> Baldanzi</h5>
                         </div>
                         <div class="card_text">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat quaerat accusantium ea at laudantium autem sequi animi consequatur fugit voluptate?
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
                         </div>
                         <div class="card_star">
                             <i class="fa-solid fa-star"></i>
@@ -27,14 +31,16 @@ export default {
 
                         </div>
                     </div>
-                </div><div class="col_3">
+                </div>
+                
+                <div class="col-12 col-sm-6 col-lg-4  col-xl-3">
                     <div class="card">
                         <div class="card_top">
-                            <img src="../assets/donna1.png" alt="">
-                            <h3>Sofia <br> Preti</h3>
+                            <img class="img-fluid" src="../assets/donna1.png" alt="">
+                            <h5>Sofia <br> Preti</h5>
                         </div>
                         <div class="card_text">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat quaerat accusantium ea at laudantium autem sequi animi consequatur fugit voluptate?
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
                         </div>
                         <div class="card_star">
                             <i class="fa-solid fa-star"></i>
@@ -42,14 +48,16 @@ export default {
                             <i class="fa-solid fa-star"></i>
                         </div>
                     </div>
-                </div><div class="col_3">
+                </div>
+                
+                <div class="d-none d-lg-block col-lg-4 col-xl-3">
                     <div class="card">
                         <div class="card_top">
-                            <img src="../assets/uomo2.png" alt="">
-                            <h3>Gabriele <br> Nardella</h3>
+                            <img class="img-fluid" src="../assets/uomo2.png" alt="">
+                            <h5>Gabriele <br> Nardella</h5>
                         </div>
                         <div class="card_text">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat quaerat accusantium ea at laudantium autem sequi animi consequatur fugit voluptate?
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
                         </div>
                         <div class="card_star">
                             <i class="fa-solid fa-star"></i>
@@ -60,14 +68,16 @@ export default {
                            
                         </div>
                     </div>
-                </div><div class="col_3">
+                </div>
+                
+                <div class="d-none d-xl-block col-xl-3">
                     <div class="card">
                         <div class="card_top">
-                            <img src="../assets/donna2.png" alt="">
-                            <h3>Carolina <br> Capuano</h3>
+                            <img class="img-fluid" src="../assets/donna2.png" alt="">
+                            <h5>Carolina <br> Capuano</h5>
                         </div>
                         <div class="card_text">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat quaerat accusantium ea at laudantium autem sequi animi consequatur fugit voluptate?
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
                         </div>
                         <div class="card_star">
                             <i class="fa-solid fa-star"></i>
@@ -82,24 +92,29 @@ export default {
     </div>
 </template>
 
-<style lang="scss">
-    .review_title{
+<style lang="scss" scoped>
+    .review{
         background-color: #ffbd59;
-        text-align: center;
-        padding-top: 4rem;
-        padding-bottom: 10rem;
         position: relative;
 
-        h1{
-            font-size: 3.5rem;
+        .category_title{
+            img{
+                width: 70px;
+                height: fit-content;
+                padding-bottom: 7rem;
+                margin-bottom: 5rem;
+            }
         }
 
+    }
+
         .container{
-            width: 70%;
+            width: 80%;
             margin: auto;
             position: absolute;
-            left: 15%;
+            left: 50%;
             top: 60%;
+            transform: translateX(-50%);
 
            
          .row{
@@ -107,15 +122,11 @@ export default {
             width: 100%;
             flex-wrap: wrap;
             justify-content: space-between;
-
-            .col_3{
-                width: calc(100% / 12 * 3 - 21px);
-               padding: 7px;
                 
                 .card{
                 background-color: white;
-                border-radius:45px;
-                box-shadow: 0px 5px 8px 2px #888888;
+                border-radius:30px;
+                box-shadow: 0px 3px 5px 0px #adadad;
 
                 .card_top{
                     padding:1rem ;
@@ -127,15 +138,17 @@ export default {
                         border-radius: 50%;
                         height: 3rem;
                     }
+                    h5{
+                        padding-left: 10px;
+                    }
                     
                 }
 
                 .card_text{
-                    padding-bottom: 1rem;
-                    padding-left: 2rem;
-                    padding-right: 2rem;
+                padding: 1rem 2rem 0 2rem;
                 }
                 .card_star{
+                    text-align: center;
                     padding-bottom: 1rem;
                     color: #ffde59;
                     font-size: 1.5rem;
@@ -143,8 +156,6 @@ export default {
                 }
             }
          }
-        }
         
-    }
     
 </style>

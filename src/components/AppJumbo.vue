@@ -5,10 +5,10 @@ export default {
 </script>
 
 <template>
-<div class="jumbo"></div>
+<div class="jumbo w-100"></div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .jumbo{
     background-image: url(../assets/jumbo.png);
     width: 100vw;

@@ -5,22 +5,22 @@ export default {
 </script>
 
 <template>
-<div class="container app">
-    <div class="row">
-        <div class="col-2">
-            <h1>ORDINA <br> OVUNQUE <br> TU SIA CON</h1>
-            <h2 class="green">DeliveBoo<span class="red">App</span></h2>
+<div class="container app mt-5 mt-sm-0">
+    <div class="row mt-5 mt-sm-0">
+        <div class="col-12 col-sm-6 ps-lg-5 pb-5 text-center text-sm-start">
+            <h1 class="mt-5 mt-sm-5 lh-sm mx-auto mx-sm-0">Ordina <br> ovunque <br> tu sia con</h1>
+            <h2 class="green fw-bold">DeliveBoo<span class="red">App</span></h2>
             <button class="btn_dark">Scarica</button>
         </div>
 
-        <div class="col-2">
-            <img src="../assets/Deliveboo-social.png" alt="">
+        <div class="col-12 col-sm-6 mt-sm-5">
+            <img class="img-fluid mt-sm-5 mt-md-0" src="../assets/Deliveboo-social.png" alt="">
         </div>
     </div>
 </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scope>
 
       .app{
             padding-top: 15rem;
@@ -28,18 +28,8 @@ export default {
      .container{
             width: 50%;
             margin: auto;
-            left: 15%;
-            top: 60%;
-
            
-         .row{
-            display: flex;
-            width: 100%;
-
-            .col-2{
-                width: calc(100% / 12 * 6 );
-              
-
+         .row{           
                h1{
                 margin-bottom: 1rem;
                 font-size: 3rem;
@@ -65,10 +55,6 @@ export default {
                 font-size: 1.2rem;
                }
 
-               img{
-                width: 100%;
-               }
-            }
         }
     }
 </style>

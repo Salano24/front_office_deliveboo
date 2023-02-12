@@ -7,12 +7,12 @@ export default {
 <template>
 
 <nav class="navbar sticky-top navbar-expand-sm shadow">
-        <div class="container-fluid d-flex">
-            <a class="logo w-25 d-flex
+        <div class="container-fluid d-flex gap-sm-5">
+            <a class="logo w-sm-75 d-flex
              align-items-center text-decoration-none" href="#"><img class="img-fluid"
                     src="../assets/logo.png" alt=""><span class="d-none d-sm-inline fw-bold fs-4">DeliveBoo</span></a>
 
-            <div class="search ms-sm-5">
+            <div class="search w-50">
                 <select class="restaurant_type fs-6 w-75 text-uppercase" >
                     <option value="" selected disabled>cucina</option>
                     <option >Italiano</option>
@@ -58,7 +58,7 @@ export default {
    
 </template>
 
-<style lang="scss" >
+<style lang="scss" scoped>
 .container-fluid{
     max-width: 1800px;
 }
@@ -85,14 +85,10 @@ nav{
 }
 }
 
-/* .search{
-    width: 20%;
-    display: flex;
-    justify-content: space-around;
-    select{
-        font-size: 1.2rem;
-    }
-
+ .search{
+    max-width: 130px;
+ }
+/*
     input{
         height: 60%;
         border:2px solid #8ea61d ;
@@ -131,6 +127,8 @@ nav{
                 text-transform: lowercase;
             }
 }
-
+.navbar-collapse {
+flex-grow: unset;
+}
 
 </style>
