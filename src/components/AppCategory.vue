@@ -7,8 +7,8 @@ export default {
 <template>
 <div class="category_title text-center py-5 px-5">
     <div class="top_title d-flex justify-content-center flex-wrap">
-        <h1>Le nostre categorie</h1>
-        <img class="ms-4 pt-4" src="../assets/category_food.png" alt="hamburger">
+        <h1 class="lh-sm">Le nostre categorie</h1>
+        <img class="ms-4" src="../assets/category_food.png" alt="hamburger">
     </div>
     <h3  class="pt-md-4">Ciò che più ti piace, subito a casa tua</h3>
 </div>
@@ -30,7 +30,9 @@ export default {
 <style lang="scss" scoped>
     .top_title{
        margin: 0 0 1rem 0;
-
+h1{
+    font-size: 50px;
+}
        img{
         width: 70px;
         height: fit-content;

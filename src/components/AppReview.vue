@@ -6,9 +6,9 @@ export default {
 
 <template>
     <div class="review">
-        <div class="category_title d-flex justify-content-center flex-wrap text-center py-5 px-5">
+        <div class="category_title d-flex justify-content-center flex-wrap text-center pt-5 px-5">
             <h1 class="lh-sm">Dicono di noi</h1>
-            <img class="ms-4 mb-sm-0 pt-3" src="../assets/megafono.png" alt="megafono">
+            <img class="ms-4 mb-sm-0" src="../assets/megafono.png" alt="megafono">
         </div>
 
         <div class="container">

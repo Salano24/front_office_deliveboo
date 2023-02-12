@@ -5,6 +5,7 @@ import AppCategory from './components/AppCategory.vue'
 import AppReview from './components/AppReview.vue'
 import AppDownload from './components/AppDownload.vue'
 import AppJoinUs from './components/AppJoinUs.vue'
+import AppFooter from './components/AppFooter.vue'
 
 export default {
     components: {
@@ -14,7 +15,7 @@ export default {
         AppReview,
         AppDownload,
         AppJoinUs,
-
+        AppFooter
     }
 }
 </script>
@@ -26,6 +27,7 @@ export default {
     <AppReview />
     <AppDownload />
     <AppJoinUs />
+    <AppFooter />
 </template>
 
 
