@@ -74,16 +74,16 @@ export default {
     <div v-show="showMenu === true">
 
         <div class="cart_preview">
-            <div class="cart_right p-4">
+            <div class="cart_right p-3">
                 <div class="cart_preview_header d-flex">
-                    <button type="button" class="btn-close me-4" @click.prevent="showOffcanvasMenu()" aria-label="Close"></button>
-                    <div class="cart_body pb-3">
+                    <button type="button" class="btn-close me-3" @click.prevent="showOffcanvasMenu()" aria-label="Close"></button>
+                    <div class="cart_body pb-3 me-2">
                         
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <h4 class="title_frame mb-0">Il tuo ordine</h4>
                                 <div class="square px-2 py-1"><i class="fa-solid fa-utensils text-white"></i></div>
                             </div>
-                        <div class="cart_content overflow-auto">
+                        <div class="cart_content">
                             <!-- order -->
                             <a href="#" class="d-flex gap-3 mb-2">
                                 <div class="sb-cover-frame">
@@ -221,20 +221,22 @@ export default {
                         </div>
 
                             <div class="cart_footer border-top py-3">
-                                <!-- button -->
-                                <a href="#" class="view_order btn rounded-0 text-white me-2">
+                              
+                                <div class="buttons mb-2">
+                                    <a href="#" class="view_order btn rounded-0 text-white me-2">
                                     <span>Visualizza</span>
-                                </a>
-                                <!-- button end -->
+                                    </a>
 
-                                <!-- button -->
-                                <a href="#" class="pay btn rounded-0 text-white">
-                                    <span>Pagamento</span>
-                                </a>
-                                <!-- button end -->
-
-                                <h3>Totale</h3>
-                                <h4>34.00 €</h4>
+                                    <a href="#" class="pay btn rounded-0 text-white">
+                                        <span>Pagamento</span>
+                                    </a>
+                                
+                                </div>
+                                <!-- //buttons --> 
+                                <div class="total">
+                                    <h3>Totale</h3>
+                                    <h4>34.00 €</h4>
+                                </div>
                             </div>
                             <!-- //cart_footer -->
                     </div>
@@ -326,22 +328,22 @@ nav{
 .navbar-collapse {
 flex-grow: unset;
 }
-    .cart_preview {
+.cart_preview {
         transition: 0.5;
-    background-color: #0000004f;
-    width: 100%;
-    height: 100vh;
-    position: fixed;
-    top: 60px;
-    right: 0;
-    bottom: 0;
-    z-index: 1000;
+        background-color: #0000004f;
+        width: 100%;
+        height: 100vh;
+        position: fixed;
+        top: 60px;
+        right: 0;
+        bottom: 0;
+        z-index: 9000;
 .cart_right{
     position: fixed;
     top: 60px;
     right: 0;
     bottom: 0;
-    z-index: 1000;
+    z-index: 9000;
     background-color: #FFFFFF;
     display: flex;
     flex-direction: column;
@@ -361,6 +363,7 @@ flex-grow: unset;
     }
     .cart_content{
         height: 40%;
+        overflow: auto;
          a{
             background-color:#F6EDDA;
             text-decoration: none;
@@ -385,6 +388,28 @@ flex-grow: unset;
                 transition: 0.3s ease-in-out;
             }
         }
+        
+    }
+    /* width */
+    .cart_content::-webkit-scrollbar {
+    width: 10px;
+    }
+
+    /* Track */
+    .cart_content::-webkit-scrollbar-track {
+    border: 1px solid rgb(182, 182, 182); 
+    border-radius: 10px;
+    }
+        
+        /* Handle */
+    .cart_content::-webkit-scrollbar-thumb {
+    background:#ffbd59; 
+    border-radius: 10px;
+    }
+
+        /* Handle on hover */
+    .cart_content::-webkit-scrollbar-thumb:hover {
+    background: grey; 
     }
    .cart_footer{
 
