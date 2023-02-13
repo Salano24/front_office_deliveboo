@@ -1,11 +1,14 @@
 <script>
+import AppCartPreview from "./AppCartPreview.vue";
+import { store as store } from "../store.js";
 export default {
     name: "AppHeader",
     components: {
-
+AppCartPreview,
     },
     data() {
         return {
+        store,
             products: [],
         }
     },
@@ -43,7 +46,11 @@ export default {
 </script>
 
 <template>
-
+  <nav class="navbar sticky-top navbar-expand-sm shadow">
+    <div class="container-fluid d-flex gap-sm-5">
+      <a class="logo w-sm-75 d-flex align-items-center text-decoration-none"
+        href="#"><img class="img-fluid" src="../assets/logo.png" alt="" /><span class="d-none d-sm-inline fw-bold fs-4">DeliveBoo</span>
+        </a>
     <nav class="navbar sticky-top navbar-expand-sm shadow">
         <div class="container-fluid d-flex gap-sm-5">
             <a class="logo w-sm-75 d-flex
@@ -68,70 +75,82 @@ export default {
 
                 <!-- <input placeholder="Cerca un ristorante" type="search" id="restaurant_search" name="restaurant_search">
                 <button><i class="fa-solid fa-magnifying-glass"></i></button> -->
+      </div>
+      <button
+        class="navbar-toggler d-lg-none"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapsibleNavId"
+        aria-controls="collapsibleNavId"
+        aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-            </div>
-            <button class=" navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
-                data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+      <div class="collapse navbar-collapse" id="collapsibleNavId">
+        <ul class="navbar-nav ms-auto text-end gap-3">
+          <li class="nav-itemhead_user">
+            <a href="">Accedi</a>
+          </li>
+
+          <li class="nav-item">
+            <a href="">Registrati</a>
+          </li>
+          <li class="nav-item cart">
+            <button
+              class="cart_icon border-0 bg-white"
+              type="button"
+              @click.prevent="this.store.showOffcanvasMenu()">
+              <i class="fa-solid fa-cart-shopping"></i>
             </button>
-            <div class="collapse navbar-collapse" id="collapsibleNavId">
-                <ul class="navbar-nav ms-auto text-end gap-3">
-                    <li class="nav-itemhead_user">
-                        <a href="">Accedi</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="">Registrati</a>
-                    </li>
-                    <li class="nav-item cart">
-                        <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
-                    </li>
-
-                </ul>
-            </div>
-        </div>
-    </nav>
-
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- cart_preview -->
+  <div v-show="this.store.showMenu">
+    <AppCartPreview />
+  </div>
+  <!-- //cart_preview -->
 </template>
 
 <style lang="scss" scoped>
 .container-fluid {
-    max-width: 1800px;
+  max-width: 1800px;
 }
-
 nav {
-    background-color: #FFFFFF;
-
-    .logo {
-        img {
-            max-height: 50px;
-        }
-
-        span {
-            color: #8ea61d;
-        }
+  background-color: #ffffff;
+  .logo {
+    img {
+      max-height: 50px;
     }
-
-    a {
-        text-decoration: none;
-        color: #a43c28;
-        font-size: 1.1rem;
-
-        .cart {
-            font-size: 1.3rem;
-        }
-
-        &:hover {
-            color: #8ea61d;
-        }
+    span {
+      color: #8ea61d;
     }
+  }
+  a {
+    text-decoration: none;
+    color: #a43c28;
+    font-size: 1.1rem;
+    .cart {
+      font-size: 1.3rem;
+    }
+    &:hover {
+      color: #8ea61d;
+    }
+  }
+  .cart_icon {
+    color: #a43c28;
+    &:hover {
+      color: #8ea61d;
+    }
+  }
 }
 
 .search {
-    max-width: 130px;
+  max-width: 130px;
 }
-
 /*
     input{
         height: 60%;
@@ -153,30 +172,26 @@ nav {
 } */
 
 .restaurant_type {
-    border: 0;
-    color: #a43c28;
-    font-weight: bold;
-    background-color: #FFFFFF;
-
-    &:hover {
-        color: #8ea61d;
-
-        option {
-            color: #a43c28;
-            background-color: #FFFFFF;
-
-            &:hover {
-                background-color: #ffbd59;
-            }
-        }
-    }
-
+  border: 0;
+  color: #a43c28;
+  font-weight: bold;
+  background-color: #ffffff;
+  &:hover {
+    color: #8ea61d;
     option {
-        text-transform: lowercase;
+      color: #a43c28;
+      background-color: #ffffff;
+      &:hover {
+        background-color: #ffbd59;
+      }
     }
+  }
+  option {
+    text-transform: lowercase;
+  }
 }
 
 .navbar-collapse {
-    flex-grow: unset;
+  flex-grow: unset;
 }
 </style>
