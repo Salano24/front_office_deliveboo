@@ -15,9 +15,17 @@ export default {
         AppReview,
         AppDownload,
         AppJoinUs,
-        AppFooter
+        AppFooter,
+    },
+    data() {
+        return {
+        }
+    },
+    methods() {
+
     }
 }
+
 </script>
 
 <template>
@@ -34,5 +42,4 @@ export default {
 
 <style lang="scss">
 @use './styles/general.scss';
-
 </style>
