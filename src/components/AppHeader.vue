@@ -1,6 +1,11 @@
 <script>
+import AppCartPreview from './AppCartPreview.vue'
+
 export default {
     name: "AppHeader",
+    components: {
+        AppCartPreview
+    }
 }
 </script>
 
@@ -48,7 +53,7 @@ export default {
                        <a href="">Registrati</a>
                     </li>
                     <li class="nav-item cart">
-                        <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
+                        <a href=""><button class="btn btn-primary d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasResponsive" aria-controls="offcanvasResponsive">Cart</button><AppCartPreview /></a>
                     </li>
 
                 </ul>
