@@ -33,6 +33,14 @@ export default {
 
             </div>
 
+            <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    
+                    <router-link class="nav-link" :to="{ name: 'single-restaurant'/* , params:{id:restaurant.id} */ }">Home</router-link>
+                </li>
+
+            </ul>
+
             <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
                 data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
                 aria-label="Toggle navigation">
