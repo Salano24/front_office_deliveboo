@@ -1,52 +1,81 @@
 <script>
 import AppCartPreview from "./AppCartPreview.vue";
 import { store as store } from "../store.js";
-
 export default {
-  name: "AppHeader",
-  components: {
-    AppCartPreview,
-  },
-  data() {
-    return {
-      store,
-    };
-  },
-};
+    name: "AppHeader",
+    components: {
+AppCartPreview,
+    },
+    data() {
+        return {
+        store,
+            products: [],
+        }
+    },
+    watch: {
+        products: {//viene costruito in questo modo perché é un array di oggetti
+            handler(newProducts) {//viene costruito in questo modo perché é un array di oggetti
+                //ogni volta che products viene modificato viene trasformato in stringa e aggiunto al localStorage
+                localStorage.products = JSON.stringify(newProducts);
+            },
+            deep: true
+        }
+    },
+    //end watch
+    methods: {
+        addProduct(piatto) {
+            this.products.unshift({
+                name: piatto,
+                restaurant_id: 10
+            })
+            console.log(this.products);
+        }
+    },
+    //end metods
+    mounted() {
+        console.log('mounted')
+        if (localStorage.products) {
+            this.products = JSON.parse(localStorage.products);
+        }
+        console.log(this.products);
+    },
+    //end mounted
+    //@click="addProduct('argomento')
+
+}
 </script>
 
 <template>
   <nav class="navbar sticky-top navbar-expand-sm shadow">
     <div class="container-fluid d-flex gap-sm-5">
-      <a
-        class="logo w-sm-75 d-flex align-items-center text-decoration-none"
-        href="#"
-        ><img class="img-fluid" src="../assets/logo.png" alt="" /><span
-          class="d-none d-sm-inline fw-bold fs-4"
-          >DeliveBoo</span
-        ></a
-      >
+      <a class="logo w-sm-75 d-flex align-items-center text-decoration-none"
+        href="#"><img class="img-fluid" src="../assets/logo.png" alt="" /><span class="d-none d-sm-inline fw-bold fs-4">DeliveBoo</span>
+        </a>
+    <nav class="navbar sticky-top navbar-expand-sm shadow">
+        <div class="container-fluid d-flex gap-sm-5">
+            <a class="logo w-sm-75 d-flex
+             align-items-center text-decoration-none" href="#"><img class="img-fluid" src="../assets/logo.png"
+                    alt=""><span class="d-none d-sm-inline fw-bold fs-4">DeliveBoo</span></a>
 
-      <div class="search w-50">
-        <select class="restaurant_type fs-6 w-75 text-uppercase">
-          <option value="" selected disabled>cucina</option>
-          <option>Italiano</option>
-          <option>Internazionale</option>
-          <option>Cinese</option>
-          <option>Giapponese</option>
-          <option>Messicano</option>
-          <option>Indiano</option>
-          <option>Pesce</option>
-          <option>Carne</option>
-          <option>Pizza</option>
-          <option>Vegano</option>
-          <option>Altro</option>
-        </select>
+            <div class="search w-50">
+                <select class="restaurant_type fs-6 w-75 text-uppercase">
+                    <option value="" selected disabled>cucina</option>
+                    <option>Italiano</option>
+                    <option>Internazionale</option>
+                    <option>Cinese</option>
+                    <option>Giapponese</option>
+                    <option>Messicano</option>
+                    <option>Indiano</option>
+                    <option>Pesce</option>
+                    <option>Carne</option>
+                    <option>Pizza</option>
+                    <option>Vegano</option>
+                    <option>Altro</option>
+                </select>
 
-        <!-- <input placeholder="Cerca un ristorante" type="search" id="restaurant_search" name="restaurant_search">
+                <!-- <input placeholder="Cerca un ristorante" type="search" id="restaurant_search" name="restaurant_search">
                 <button><i class="fa-solid fa-magnifying-glass"></i></button> -->
       </div>
-
       <button
         class="navbar-toggler d-lg-none"
         type="button"
@@ -54,8 +83,7 @@ export default {
         data-bs-target="#collapsibleNavId"
         aria-controls="collapsibleNavId"
         aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
+        aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
@@ -72,8 +100,7 @@ export default {
             <button
               class="cart_icon border-0 bg-white"
               type="button"
-              @click.prevent="this.store.showOffcanvasMenu()"
-            >
+              @click.prevent="this.store.showOffcanvasMenu()">
               <i class="fa-solid fa-cart-shopping"></i>
             </button>
           </li>
@@ -163,6 +190,7 @@ nav {
     text-transform: lowercase;
   }
 }
+
 .navbar-collapse {
   flex-grow: unset;
 }
