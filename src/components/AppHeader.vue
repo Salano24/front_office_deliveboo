@@ -5,74 +5,90 @@ export default {
 </script>
 
 <template>
-    <div class="header">
-        <div class="logo">
-            <img src="../assets/2x2_logo.png" alt="">
-            <span>DeliveBoo</span>
 
-        </div>
-        <div class="search">
-              <select class="restaurant_type" >
-                <option value="" selected disabled> CUCINA</option>
-                <option >Italiano</option>
-                <option>Internazionale</option>
-                <option >Cinese</option>
-                <option >Giapponese</option>
-                <option >Messicano</option>
-                <option >Indiano</option>         
-                <option >Pesce</option>
-                <option >Carne</option>
-                <option>Pizza</option>
-                <option>Vegano</option>
-                <option>Altro</option>
-              </select>    
-              
-              <input placeholder="Cerca un ristorante" type="search" id="restaurant_search" name="restaurant_search">
-              <button><i class="fa-solid fa-magnifying-glass"></i></button>
+<nav class="navbar sticky-top navbar-expand-sm shadow">
+        <div class="container-fluid d-flex gap-sm-5">
+            <a class="logo w-sm-75 d-flex
+             align-items-center text-decoration-none" href="#"><img class="img-fluid"
+                    src="../assets/logo.png" alt=""><span class="d-none d-sm-inline fw-bold fs-4">DeliveBoo</span></a>
 
-        </div>
-        <div class="head_user">
-            <a href="#">Login</a>
-            <a href="#">Registrati</a>
-            <a href="#"><i class="cart fa-solid fa-cart-shopping"></i></a>
-        </div>
-    </div>
+            <div class="search w-50">
+                <select class="restaurant_type fs-6 w-75 text-uppercase" >
+                    <option value="" selected disabled>cucina</option>
+                    <option >Italiano</option>
+                    <option>Internazionale</option>
+                    <option >Cinese</option>
+                    <option >Giapponese</option>
+                    <option >Messicano</option>
+                    <option >Indiano</option>         
+                    <option >Pesce</option>
+                    <option >Carne</option>
+                    <option>Pizza</option>
+                    <option>Vegano</option>
+                    <option>Altro</option>
+                </select>    
+                
+                <!-- <input placeholder="Cerca un ristorante" type="search" id="restaurant_search" name="restaurant_search">
+                <button><i class="fa-solid fa-magnifying-glass"></i></button> -->
 
+            </div>
+
+            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavId">
+                <ul class="navbar-nav ms-auto text-end gap-3">
+                    <li class="nav-itemhead_user">
+                        <a href="">Accedi</a>
+                    </li>
+
+                    <li class="nav-item">
+                       <a href="">Registrati</a>
+                    </li>
+                    <li class="nav-item cart">
+                        <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
    
 </template>
 
-<style lang="scss" >
-.header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #f6edda;
-    padding-left: 4rem;
-    padding-right: 4rem;
-
+<style lang="scss" scoped>
+.container-fluid{
+    max-width: 1800px;
+}
+nav{
+    background-color: #FFFFFF;
     .logo{
-        display: flex;
-        align-items: center;
         img{
-                width: 20%;
+                max-height: 50px;
             }
         span{
             color: #8ea61d;
-            font-size: 2rem;
-            font-weight: bold;
         }    
     }
-   
+   a{
+        text-decoration: none;
+        color:#a43c28;
+        font-size: 1.1rem;
+        .cart{
+            font-size: 1.3rem;
+           } 
+        &:hover{
+                color: #8ea61d;
+            }
+}
 }
 
-.search{
-    width: 20%;
-    display: flex;
-    justify-content: space-around;
-    select{
-        font-size: 1.2rem;
-    }
-
+ .search{
+    max-width: 130px;
+ }
+/*
     input{
         height: 60%;
         border:2px solid #8ea61d ;
@@ -90,27 +106,29 @@ export default {
         font-size: 2rem;
     }
 
-}
+} */
 
 .restaurant_type{
     border: 0;
     color: #a43c28;
     font-weight: bold;
-    background-color: #f6edda;
-    margin-right: 1rem;
-    
+    background-color: #FFFFFF;
+    &:hover{
+                color: #8ea61d;
+                option{
+                    color: #a43c28;
+                    background-color: #FFFFFF;
+                    &:hover{
+                        background-color: #ffbd59;
+                    }
+                }
+            }
+            option{
+                text-transform: lowercase;
+            }
+}
+.navbar-collapse {
+flex-grow: unset;
 }
 
-.head_user{
-    a{
-        text-decoration: none;
-        color: black;
-        margin-left: 2rem;
-        font-size: 1.1rem;
-        .cart{
-            color: #a43c28;
-            font-size: 1.3rem;
-        }
-    }
-}
 </style>

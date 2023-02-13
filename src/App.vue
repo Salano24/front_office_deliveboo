@@ -4,6 +4,8 @@ import AppJumbo from './components/AppJumbo.vue'
 import AppCategory from './components/AppCategory.vue'
 import AppReview from './components/AppReview.vue'
 import AppDownload from './components/AppDownload.vue'
+import AppJoinUs from './components/AppJoinUs.vue'
+import AppFooter from './components/AppFooter.vue'
 
 export default {
     components: {
@@ -12,7 +14,8 @@ export default {
         AppCategory,
         AppReview,
         AppDownload,
-
+        AppJoinUs,
+        AppFooter
     }
 }
 </script>
@@ -23,16 +26,13 @@ export default {
     <AppCategory />
     <AppReview />
     <AppDownload />
+    <AppJoinUs />
+    <AppFooter />
 </template>
 
 
 
 <style lang="scss">
-*{
-    box-sizing: 0;
-    padding: 0;
-    margin: 0;
-    font-family: 'League Spartan', sans-serif;
-}
+@use './styles/general.scss';
 
 </style>

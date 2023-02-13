@@ -1,2 +1,27 @@
 // Import all of Bootstrap's CSS
 @import "/node_modules/bootstrap/scss/bootstrap";
+
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;700&display=swap');
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'League Spartan', sans-serif;
+}
+
+p, span{
+    font-family: 'Roboto', sans-serif;
+}
+
+h1{
+    width: fit-content;
+    font-size: 50px;
+    line-height: 1.8;
+    font-weight: bold;
+    text-transform: uppercase;
+}
