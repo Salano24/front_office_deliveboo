@@ -40,7 +40,7 @@ export default {
     console.log(this.products);
   },
   //end mounted
-  //@click="addProduct('argomento')
+  //<button @click="addProduct('argomento')">prova</button>
 
 }
 </script>
