@@ -1,5 +1,6 @@
 <script>
 import { store as store } from "../store.js";
+import axios from "axios";
 export default {
   name: "AppCategory",
   components: {},
@@ -7,19 +8,51 @@ export default {
     return {
       store,
       products: [],
-      isHidden: true,
     };
   },
-  methods: {
-    showTypes() {
-      this.isHidden = false;
+    // #region logica carrello
+    watch: {
+        products: {//viene costruito in questo modo perché é un array di oggetti
+            handler(newProducts) {//viene costruito in questo modo perché é un array di oggetti
+                //ogni volta che products viene modificato viene trasformato in stringa e aggiunto al localStorage
+                localStorage.products = JSON.stringify(newProducts);
+            },
+            deep: true
+        }
     },
-  },
+    // #endregion logica carrello
+  methods: {
+        // #region logica carrello
+        getPlates(call) {
+            axios.get(call)
+                .then(response => {
+                    this.plates = response.data.results;
+                    console.log(this.plates)
+                    this.loading = false
+                })
+                .catch(error => {
+                    console.error(error)
+                    this.error = error.message
+                    this.loading = false
+                })
+        }, addProduct(plate) {
+            this.products.unshift({
+                id: plate.id,
+                name: plate.name,
+                restaurant_id: plate.restaurant_id,
+            })
+            console.log(this.products);
+        }
+        //    #endregion
+    },
   mounted() {
     store.getRestaurants(store.base_api_url + "api/restaurants");
-    //store.getRestaurants(store.base_api_url + 'api/restaurants/types/' + store.queryString + 'italiano')
+    if (localStorage.products) {
+            this.products = JSON.parse(localStorage.products);
+        }
   },
 };
+
 </script>
 
 <template>
@@ -98,6 +131,7 @@ export default {
   <div v-else-if="store.restaurants === null">
     <h3>nessun ristorante corrisponde alla ricerca</h3>
   </div>
+
 </template>
 
 <style lang="scss" scoped>

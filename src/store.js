@@ -11,6 +11,10 @@ export const store = reactive({
   queryString: "",
   base_api_url: "http://127.0.0.1:8000/",
   error: null,
+  products: [],
+  productsOrder: [],
+  queryString: '',
+  base_api_url: 'http://127.0.0.1:8000/',
   callApi() {
     this.queryString = this.selectedTypes.join("+");
     const url = this.base_api_url + "api/restaurants/types/" + this.queryString;
@@ -90,4 +94,10 @@ console.log(response.data);
         console.log(error);
       });
   },
+  getImagePath(path) {
+    if (path) {
+      return this.base_api_url + "storage/" + path;
+    }
+    return "/img/no-image.png";
+  }
 });
