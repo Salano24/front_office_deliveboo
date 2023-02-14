@@ -1,5 +1,6 @@
 <script>
 import { store as store } from "../store.js";
+import axios from "axios";
 export default {
     name: "AppCategory",
     components: {
@@ -8,11 +9,60 @@ export default {
     data() {
         return {
             store,
+            plates: '',
+            products: [], //necessario per logica del carrello
         }
+
+    },
+    // #region logica carrello
+    watch: {
+        products: {//viene costruito in questo modo perché é un array di oggetti
+            handler(newProducts) {//viene costruito in questo modo perché é un array di oggetti
+                //ogni volta che products viene modificato viene trasformato in stringa e aggiunto al localStorage
+                localStorage.products = JSON.stringify(newProducts);
+            },
+            deep: true
+        }
+    },
+    // #endregion logica carrello
+
+    methods: {
+        // #region logica carrello
+        getPlates(call) {
+            axios.get(call)
+                .then(response => {
+                    this.plates = response.data.results;
+                    console.log(this.plates)
+                    this.loading = false
+                })
+                .catch(error => {
+                    console.error(error)
+                    this.error = error.message
+                    this.loading = false
+                })
+        }, addProduct(plate) {
+            this.products.unshift({
+                id: plate.id,
+                name: plate.name,
+                restaurant_id: plate.restaurant_id,
+            })
+            console.log(this.products);
+        }
+        //    #endregion
+
     },
     mounted() {
         store.getRestaurants(store.base_api_url + 'api/restaurants')
         //store.getRestaurants(store.base_api_url + 'api/restaurants/types/' + store.queryString + 'italiano')
+        this.getPlates(store.base_api_url + 'api/plates')
+
+        //  #region logica carrello
+
+        if (localStorage.products) {
+            this.products = JSON.parse(localStorage.products);
+        }
+        // #endregion logica carrello
+
     }
 }
 </script>
@@ -74,6 +124,21 @@ export default {
                         {{ restaurant.name }}
                         {{ restaurant.address }}
                         {{ restaurant.phone }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="top_title" v-if="true">
+        <div class="container">
+            <div class="row">
+                <div v-for="plate in this.plates" class="col-3">
+                    <div class="card">
+                        nome:<div>{{ plate.name }}</div>
+                        id: <div>{{ plate.id }}</div>
+                        restaurant_id:<div>{{ plate.restaurant_id }}</div>
+                        <button @click="this.addProduct(plate)">+</button>
                     </div>
                 </div>
             </div>
