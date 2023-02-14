@@ -73,6 +73,9 @@ export default {
         <span class="navbar-toggler-icon"></span>
       </button>
 
+      <router-link class="nav-link" :to="{ name: 'restaurants' }">Ristoranti</router-link>
+      
+
       <div class="collapse navbar-collapse" id="collapsibleNavId">
         <ul class="navbar-nav ms-auto text-end gap-3">
           <li class="nav-itemhead_user">

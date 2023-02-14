@@ -54,31 +54,7 @@ export default {
             </div>
         </div>
     </div>
-    <h1 class="lh-sm">I nostri ristoranti</h1>
-    <div class="top_title" v-if="store.restaurants.data && !store.loading">
-        <div class="row">
-            <div v-for="restaurant in store.restaurants.data" class="col-4">
-                <div class="card">
-                    {{ restaurant.name }}
-                    {{ restaurant.address }}
-                    {{ restaurant.phone }}
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="top_title" v-if="store.restaurants && !store.loading">
-        <div class="row">
-            <div v-for="restaurant in store.restaurants" class="col-4">
-                <div v-if="restaurant">
-                    <div class="card">
-                        {{ restaurant.name }}
-                        {{ restaurant.address }}
-                        {{ restaurant.phone }}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
 </template>
 
 <style lang="scss" scoped>
