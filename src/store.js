@@ -6,7 +6,16 @@ export const store = reactive({
   restaurants: '',
   restaurant: '',
   loading: true,
+  types: [],
+  selectedTypes: [],
+  queryString: '',
   base_api_url: 'http://127.0.0.1:8000/',
+  callApi() {
+    this.queryString = this.selectedTypes.join('+');
+    this.getRestaurants(this.base_api_url + 'api/restaurants/types/' + this.queryString)
+    console.log(this.base_api_url + 'api/restaurants/types/' + this.queryString);
+    this.queryString = '';
+  },
   showOffcanvasMenu() {
     this.showMenu = !this.showMenu;
   },
@@ -15,6 +24,17 @@ export const store = reactive({
       .then(response => {
         this.restaurants = response.data.results;
         console.log(this.restaurants)
+        this.loading = false
+      })
+      .catch(error => {
+        console.error(error)
+        this.error = error.message
+        this.loading = false
+      })
+  }, getTypes(call) {
+    axios.get(call)
+      .then(response => {
+        this.types = response.data.results;
         this.loading = false
       })
       .catch(error => {

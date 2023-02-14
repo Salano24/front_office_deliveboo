@@ -7,7 +7,7 @@ export default {
       store,
     };
   },
-  mounted() {},
+  mounted() { },
 };
 </script>
 
@@ -15,12 +15,8 @@ export default {
   <div class="cart_preview">
     <div class="cart_right p-3">
       <div class="cart_preview_header d-flex">
-        <button
-          type="button"
-          class="btn-close me-3"
-          @click="this.store.showOffcanvasMenu()"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close me-3" @click="this.store.showOffcanvasMenu()" aria-label="Close">
+        </button>
         <div class="cart_body pb-3 me-2">
           <div class="d-flex align-items-center justify-content-between mb-4">
             <h4 class="title_frame mb-0">Il tuo ordine</h4>
@@ -198,6 +194,7 @@ export default {
   right: 0;
   bottom: 0;
   z-index: 9000;
+
   .cart_right {
     position: fixed;
     top: 60px;
@@ -213,17 +210,21 @@ export default {
     .square {
       background-color: #ffbd59;
     }
+
     img {
       width: 80px;
       aspect-ratio: 1/1;
       object-fit: cover;
     }
+
     .title_frame {
       color: #8ea61d;
     }
+
     .cart_content {
       height: 40%;
       overflow: auto;
+
       a {
         background-color: #f6edda;
         text-decoration: none;
@@ -234,9 +235,11 @@ export default {
           color: #8ea61d;
         }
       }
+
       .quantity_input {
         display: flex;
         align-items: center;
+
         .plus,
         .minus {
           background-color: #f5c332;
@@ -249,6 +252,7 @@ export default {
         }
       }
     }
+
     /* width */
     .cart_content::-webkit-scrollbar {
       width: 10px;
@@ -270,15 +274,19 @@ export default {
     .cart_content::-webkit-scrollbar-thumb:hover {
       background: grey;
     }
+
     .cart_footer {
       .view_order {
         background-color: #ffbd59;
+
         &:hover {
           background-color: #8ea61d;
         }
       }
+
       .pay {
         background-color: #a43c28;
+
         &:hover {
           background-color: #8ea61d;
         }

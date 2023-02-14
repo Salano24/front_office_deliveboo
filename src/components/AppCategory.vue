@@ -12,7 +12,7 @@ export default {
     },
     mounted() {
         store.getRestaurants(store.base_api_url + 'api/restaurants')
-        console.log(store.projects)//attualmente da undefined perché non ha tempo di fare la chiamata aggiungere un loading e fare console.log solo quando il caricamento risulta fatto
+        //store.getRestaurants(store.base_api_url + 'api/restaurants/types/' + store.queryString + 'italiano')
     }
 }
 </script>
@@ -51,6 +51,31 @@ export default {
             </div>
             <div class="col-12 col-sm-6 col-md-3 text_center pasta">
                 <h2>PASTA</h2>
+            </div>
+        </div>
+    </div>
+    <h1 class="lh-sm">I nostri ristoranti</h1>
+    <div class="top_title" v-if="store.restaurants.data && !store.loading">
+        <div class="row">
+            <div v-for="restaurant in store.restaurants.data" class="col-4">
+                <div class="card">
+                    {{ restaurant.name }}
+                    {{ restaurant.address }}
+                    {{ restaurant.phone }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="top_title" v-if="store.restaurants && !store.loading">
+        <div class="row">
+            <div v-for="restaurant in store.restaurants" class="col-4">
+                <div v-if="restaurant">
+                    <div class="card">
+                        {{ restaurant.name }}
+                        {{ restaurant.address }}
+                        {{ restaurant.phone }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
