@@ -26,8 +26,7 @@ export default {
     padding-top: 15rem;
 }
 .container{
-    width: 50%;
-    margin: auto;
+    
            
     .row{           
         h1{  

@@ -104,6 +104,9 @@ export default {
             </div>
         </div>
     </div>
+
+
+
     <h1 class="lh-sm">I nostri ristoranti</h1>
     <div class="top_title" v-if="store.restaurants.data && !store.loading">
         <div class="row">
@@ -144,6 +147,7 @@ export default {
             </div>
         </div>
     </div>
+
 </template>
 
 <style lang="scss" scoped>
