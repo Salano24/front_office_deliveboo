@@ -18,7 +18,7 @@ export default {
       <div class="col-12 col-sm-6 col-md-3 text_center pizza">
         <div class="accordion accordion-flush" id="accordionFlushExample">
           <div class="">
-            <h2 class="" id="flush-headingOne">
+            <h2 class="mb-0" id="flush-headingOne">
               <button
                 class="border-0 bg-transparent w-100"
                 type="button"
@@ -37,7 +37,7 @@ export default {
             aria-labelledby="flush-headingOne"
             data-bs-parent="#accordionFlushExample"
           >
-            <div class="accordion-body">
+            <div class="accordion-body pb-0">
               <div class="content overflow-auto">
                 Placeholder content for this accordion, which is intended to
                 demonstrate the <code>.accordion-flush</code> class. This is the
@@ -128,6 +128,29 @@ export default {
   }
 }
 .content {
-  height: 100px;
+  height: 110px;
+}
+.content::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.content::-webkit-scrollbar-track {
+  border: 1px solid rgb(77, 77, 77);
+  border-radius: 10px;
+}
+
+/* Handle */
+.content::-webkit-scrollbar-thumb {
+  background: #ffbd59;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.content::-webkit-scrollbar-thumb:hover {
+  background: grey;
+}
+.accordion h2 {
+  line-height: 0;
 }
 </style>
