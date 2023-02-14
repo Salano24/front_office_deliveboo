@@ -37,7 +37,9 @@ export default {
     if (localStorage.products) {
       this.products = JSON.parse(localStorage.products);
     }
-    console.log(this.products);
+    //console.log(this.products + ' this.products');
+    console.log(store.base_api_url + 'api/types')
+    store.getTypes(store.base_api_url + 'api/types')
   },
   //end mounted
   //<button @click="addProduct('argomento')">prova</button>
@@ -54,20 +56,13 @@ export default {
       </a>
 
       <div class="search w-50">
-        <select class="restaurant_type fs-6 w-75 text-uppercase">
-          <option value="" selected disabled>cucina</option>
-          <option>Italiano</option>
-          <option>Internazionale</option>
-          <option>Cinese</option>
-          <option>Giapponese</option>
-          <option>Messicano</option>
-          <option>Indiano</option>
-          <option>Pesce</option>
-          <option>Carne</option>
-          <option>Pizza</option>
-          <option>Vegano</option>
-          <option>Altro</option>
-        </select>
+        <div class="restaurant_type fs-6 w-75 text-uppercase">
+          <div v-for="type in store.types" class="mb-1 d-flex">
+            <input type="checkbox" name="types" v-model="store.selectedTypes" :value="type.name" :id="type.id">
+            <label for="types">{{ type.name }}</label>
+          </div>
+          <button class="btn btn-danger" @click="store.callApi">Filtra</button>
+        </div>
       </div>
       <!-- <input placeholder="Cerca un ristorante" type="search" id="restaurant_search" name="restaurant_search">
                 <button><i class="fa-solid fa-magnifying-glass"></i></button> -->
