@@ -81,7 +81,7 @@ export default {
   <!-- <input placeholder="Cerca un ristorante" type="search" id="restaurant_search" name="restaurant_search">
                 <button><i class="fa-solid fa-magnifying-glass"></i></button> -->
 
-  <div class="top_title" v-if="!store.loading">
+  <div class="top_title" v-if="!store.loading && store.restaurants">
     <div class="row">
       <div v-for="restaurant in store.restaurants" class="col-4">
         <div v-if="restaurant">
@@ -95,7 +95,7 @@ export default {
     </div>
   </div>
 
-  <div v-else>
+  <div v-else-if="store.restaurants === null">
     <h3>nessun ristorante corrisponde alla ricerca</h3>
   </div>
 </template>

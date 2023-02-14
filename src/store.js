@@ -4,21 +4,34 @@ import axios from "axios";
 export const store = reactive({
   showMenu: false,
   restaurants: "",
-  restaurant: "",
+  restaurant: null,
   loading: true,
   types: [],
   selectedTypes: [],
   queryString: "",
   base_api_url: "http://127.0.0.1:8000/",
+  error: null,
   callApi() {
     this.queryString = this.selectedTypes.join("+");
     const url = this.base_api_url + "api/restaurants/types/" + this.queryString;
     axios
       .get(url)
       .then((response) => {
-        this.restaurants = response.data.results;
+console.log(response.data);
+         if (response.data.success) {
+  this.restaurants = response.data.results;
         console.log(this.restaurants);
         this.loading = false;
+         }else{ 
+            this.restaurants = null;
+         }
+        
+            
+         
+       /*  console.log(response.data.results);
+        this.restaurants = null;
+        this.loading = false; */
+      
       })
       .catch((error) => {
         console.error(error);
