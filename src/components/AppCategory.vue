@@ -18,10 +18,6 @@ export default {
   mounted() {
     store.getRestaurants(store.base_api_url + "api/restaurants");
     //store.getRestaurants(store.base_api_url + 'api/restaurants/types/' + store.queryString + 'italiano')
-
-    //console.log(this.products + ' this.products');
-    console.log(store.base_api_url + "api/types");
-    store.getTypes(store.base_api_url + "api/types");
   },
 };
 </script>
@@ -67,6 +63,7 @@ export default {
   <div class="search container">
     <div class="restaurant_type fs-6 text-uppercase">
       <div class="row mb-1 d-flex">
+        <h1 class="lh-sm">I nostri ristoranti</h1>
         <div v-for="type in store.types" class="col-3">
           <input
             type="checkbox"
@@ -75,28 +72,19 @@ export default {
             :value="type.name"
             :id="type.id"
           />
-          <span for="types">{{ type.name }}</span>
+          <label for="types">{{ type.name }}</label>
         </div>
       </div>
     </div>
-    <button
-      class="btn btn-danger"
-      @click="
-        store.callApi;
-        this.showTypes();
-      "
-    >
-      Filtra
-    </button>
+    <button class="btn btn-danger" @click="store.callApi">Filtra</button>
   </div>
   <!-- <input placeholder="Cerca un ristorante" type="search" id="restaurant_search" name="restaurant_search">
                 <button><i class="fa-solid fa-magnifying-glass"></i></button> -->
 
-  <h1 class="lh-sm">I nostri ristoranti</h1>
-  <div v-show="this.isHidden === false">
-    <div class="top_title" v-if="store.restaurants.data && !store.loading">
-      <div class="row">
-        <div v-for="restaurant in store.restaurants.data" class="col-4">
+  <div class="top_title" v-if="!store.loading">
+    <div class="row">
+      <div v-for="restaurant in store.restaurants" class="col-4">
+        <div v-if="restaurant">
           <div class="card">
             {{ restaurant.name }}
             {{ restaurant.address }}
@@ -105,20 +93,10 @@ export default {
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="top_title" v-if="store.restaurants && !store.loading">
-      <div class="row">
-        <div v-for="restaurant in store.restaurants" class="col-4">
-          <div v-if="restaurant">
-            <div class="card">
-              {{ restaurant.name }}
-              {{ restaurant.address }}
-              {{ restaurant.phone }}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div v-else>
+    <h3>nessun ristorante corrisponde alla ricerca</h3>
   </div>
 </template>
 
