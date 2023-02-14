@@ -21,21 +21,21 @@ export const store = reactive({
     axios
       .get(url)
       .then((response) => {
-console.log(response.data);
-         if (response.data.success) {
-  this.restaurants = response.data.results;
-        console.log(this.restaurants);
-        this.loading = false;
-         }else{ 
-            this.restaurants = null;
-         }
-        
-            
-         
-       /*  console.log(response.data.results);
-        this.restaurants = null;
-        this.loading = false; */
-      
+        console.log(response.data);
+        if (response.data.success) {
+          this.restaurants = response.data.results;
+          console.log(this.restaurants);
+          this.loading = false;
+        } else {
+          this.restaurants = null;
+        }
+
+
+
+        /*  console.log(response.data.results);
+         this.restaurants = null;
+         this.loading = false; */
+
       })
       .catch((error) => {
         console.error(error);
@@ -56,7 +56,6 @@ console.log(response.data);
       .get(call)
       .then((response) => {
         this.restaurants = response.data.results.data;
-        console.log(this.restaurants);
         this.loading = false;
       })
       .catch((error) => {

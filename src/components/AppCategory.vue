@@ -1,5 +1,6 @@
 <script>
 import { store as store } from "../store.js";
+import { cart as cart } from "../cart.js";
 import axios from "axios";
 export default {
   name: "AppCategory",
@@ -7,49 +8,46 @@ export default {
   data() {
     return {
       store,
+      cart,
       products: [],
     };
   },
-    // #region logica carrello
-    watch: {
-        products: {//viene costruito in questo modo perché é un array di oggetti
-            handler(newProducts) {//viene costruito in questo modo perché é un array di oggetti
-                //ogni volta che products viene modificato viene trasformato in stringa e aggiunto al localStorage
-                localStorage.products = JSON.stringify(newProducts);
-            },
-            deep: true
-        }
+  watch: {
+    products: {
+      //viene costruito in questo modo perché é un array di oggetti
+      handler(newProducts) {
+        //viene costruito in questo modo perché é un array di oggetti
+        //ogni volta che products viene modificato viene trasformato in stringa e aggiunto al localStorage
+        localStorage.products = JSON.stringify(newProducts);
+      },
+      deep: true,
     },
-    // #endregion logica carrello
+  },
+  // #endregion logica carrello
   methods: {
-        // #region logica carrello
-        getPlates(call) {
-            axios.get(call)
-                .then(response => {
-                    this.plates = response.data.results;
-                    console.log(this.plates)
-                    this.loading = false
-                })
-                .catch(error => {
-                    console.error(error)
-                    this.error = error.message
-                    this.loading = false
-                })
-        }, addProduct(plate) {
-            this.products.unshift({
-                id: plate.id,
-                name: plate.name,
-                restaurant_id: plate.restaurant_id,
-            })
-            console.log(this.products);
-        }
-        //    #endregion
-    },
+    // #region logica carrello
+    getPlates(call) {
+      axios.get(call)
+        .then(response => {
+          this.plates = response.data.results;
+          console.log(this.plates)
+          this.loading = false
+        })
+        .catch(error => {
+          console.error(error)
+          this.error = error.message
+          this.loading = false
+        })
+    }, addProduct(plate) {
+      cart.products.unshift(plate)
+    }
+    //    #endregion
+  },
   mounted() {
     store.getRestaurants(store.base_api_url + "api/restaurants");
     if (localStorage.products) {
-            this.products = JSON.parse(localStorage.products);
-        }
+      cart.products = JSON.parse(localStorage.products);
+    }
   },
 };
 
@@ -98,13 +96,7 @@ export default {
       <div class="row mb-1 d-flex">
         <h1 class="lh-sm">I nostri ristoranti</h1>
         <div v-for="type in store.types" class="col-3">
-          <input
-            type="checkbox"
-            name="types"
-            v-model="store.selectedTypes"
-            :value="type.name"
-            :id="type.id"
-          />
+          <input type="checkbox" name="types" v-model="store.selectedTypes" :value="type.name" :id="type.id" />
           <label for="types">{{ type.name }}</label>
         </div>
       </div>
