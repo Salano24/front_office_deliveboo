@@ -1,13 +1,23 @@
 <script>
 import { store as store } from "../store.js";
+import { cart as cart } from "../cart.js";
+import { assert } from "@vue/compiler-core";
+
 export default {
   name: "AppCartPreview",
   data() {
     return {
       store,
+      cart
     };
   },
-  mounted() { },
+  // #region logica carrello
+  // #endregion logica carrello
+  mounted() {
+    if (localStorage.products) {
+      this.productsOrder = JSON.parse(localStorage.products);
+    }
+  },
 };
 </script>
 
@@ -15,7 +25,7 @@ export default {
   <div class="cart_preview">
     <div class="cart_right p-3">
       <div class="cart_preview_header d-flex">
-        <button type="button" class="btn-close me-3" @click="this.store.showOffcanvasMenu()" aria-label="Close">
+        <button type="button" class="btn-close me-3" @click="this.store.showOffcanvasMenu();" aria-label="Close">
         </button>
         <div class="cart_body pb-3 me-2">
           <div class="d-flex align-items-center justify-content-between mb-4">
@@ -25,133 +35,21 @@ export default {
             </div>
           </div>
           <div class="cart_content">
-            <!-- order -->
-            <a href="#" class="d-flex gap-3 mb-2">
-              <div class="sb-cover-frame">
-                <img src="../assets/plate1.jpg" alt="product" />
-              </div>
-              <div class="sb-card-tp py-2 pe-2">
-                <h4 class="sb-card-title">Insalata</h4>
-                <div class="price">6.50 €</div>
-              </div>
-            </a>
-            <div class="quantity_input mb-4">
-              <div class="plus">-</div>
-              <input type="number" value="1" min="1" max="10" />
-              <div class="minus">+</div>
-            </div>
-            <!-- //order -->
 
-            <!-- order -->
-            <a href="#" class="d-flex gap-3 mb-2">
+            <!-- #region order (sotto) -->
+            <a v-for="product in cart.products" href="#" class="d-flex gap-3 mb-2">
               <div class="sb-cover-frame">
-                <img src="../assets/hambuerger.jpg" alt="product" />
+                <img :src="store.getImagePath(product.plate_image)" :alt="'img ' + product.name" />
               </div>
               <div class="sb-card-tp py-2 pe-2">
-                <h4 class="sb-card-title">Insalata</h4>
-                <div class="price">6.50 €</div>
+                <h4 class="sb-card-title">{{ product.name }}</h4>
+                <h4 class="sb-card-title">{{ product.id }}</h4>
+                <div class="price">{{ product.price }} € </div>
               </div>
             </a>
-            <div class="quantity_input mb-4">
-              <div class="plus">-</div>
-              <input type="number" value="1" min="1" max="10" />
-              <div class="minus">+</div>
-            </div>
-            <!-- //order -->
+            <!-- #endregion order -->
 
-            <!-- order -->
-            <a href="#" class="d-flex gap-3 mb-2">
-              <div class="sb-cover-frame">
-                <img src="../assets/plate1.jpg" alt="product" />
-              </div>
-              <div class="sb-card-tp py-2 pe-2">
-                <h4 class="sb-card-title">Insalata</h4>
-                <div class="price">6.50 €</div>
-              </div>
-            </a>
-            <div class="quantity_input mb-4">
-              <div class="plus">-</div>
-              <input type="number" value="1" min="1" max="10" />
-              <div class="minus">+</div>
-            </div>
-            <!-- //order -->
 
-            <!-- order -->
-            <a href="#" class="d-flex gap-3 mb-2">
-              <div class="sb-cover-frame">
-                <img src="../assets/hambuerger.jpg" alt="product" />
-              </div>
-              <div class="sb-card-tp py-2 pe-2">
-                <h4 class="sb-card-title">Insalata</h4>
-                <div class="price">6.50 €</div>
-              </div>
-            </a>
-            <div class="quantity_input mb-4">
-              <div class="plus">-</div>
-              <input type="number" value="1" min="1" max="10" />
-              <div class="minus">+</div>
-            </div>
-            <!-- //order -->
-            <!-- order -->
-            <a href="#" class="d-flex gap-3 mb-2">
-              <div class="sb-cover-frame">
-                <img src="../assets/plate1.jpg" alt="product" />
-              </div>
-              <div class="sb-card-tp py-2 pe-2">
-                <h4 class="sb-card-title">Insalata</h4>
-                <div class="price">6.50 €</div>
-              </div>
-            </a>
-            <div class="quantity_input mb-4">
-              <div class="plus">-</div>
-              <input type="number" value="1" min="1" max="10" />
-              <div class="minus">+</div>
-            </div>
-            <!-- //order -->
-
-            <!-- order -->
-            <a href="#" class="d-flex gap-3 mb-2">
-              <div class="sb-cover-frame">
-                <img src="../assets/hambuerger.jpg" alt="product" />
-              </div>
-              <div class="sb-card-tp py-2 pe-2">
-                <h4 class="sb-card-title">Insalata</h4>
-                <div class="price">6.50 €</div>
-              </div>
-            </a>
-            <div class="quantity_input mb-4">
-              <div class="plus">-</div>
-              <input type="number" value="1" min="1" max="10" />
-              <div class="minus">+</div>
-            </div>
-            <!-- //order -->
-            <!-- order -->
-            <a href="#" class="d-flex gap-3 mb-2">
-              <div class="sb-cover-frame">
-                <img src="../assets/plate1.jpg" alt="product" />
-              </div>
-              <div class="sb-card-tp py-2 pe-2">
-                <h4 class="sb-card-title">Insalata</h4>
-                <div class="price">6.50 €</div>
-              </div>
-            </a>
-            <div class="quantity_input mb-4">
-              <div class="plus">-</div>
-              <input type="number" value="1" min="1" max="10" />
-              <div class="minus">+</div>
-            </div>
-            <!-- //order -->
-
-            <!-- order -->
-            <a href="#" class="d-flex gap-3 mb-2">
-              <div class="sb-cover-frame">
-                <img src="../assets/hambuerger.jpg" alt="product" />
-              </div>
-              <div class="sb-card-tp py-2 pe-2">
-                <h4 class="sb-card-title">Insalata</h4>
-                <div class="price">6.50 €</div>
-              </div>
-            </a>
             <div class="quantity_input mb-4">
               <div class="plus">-</div>
               <input type="number" value="1" min="1" max="10" />
