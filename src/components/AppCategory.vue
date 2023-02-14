@@ -135,8 +135,9 @@ export default {
             <div class="row">
                 <div v-for="plate in this.plates" class="col-3">
                     <div class="card">
-                        <div>{{ plate.name }}</div>
-                        <div>{{ plate.restaurant_id }}</div>
+                        nome:<div>{{ plate.name }}</div>
+                        id: <div>{{ plate.id }}</div>
+                        restaurant_id:<div>{{ plate.restaurant_id }}</div>
                         <button @click="this.addProduct(plate)">+</button>
                     </div>
                 </div>
