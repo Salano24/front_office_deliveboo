@@ -133,7 +133,7 @@ export default {
         </div>
     </div>
 
-    <div class="top_title" v-if="true">
+    <!-- <div class="top_title" v-if="true">
         <div class="container">
             <div class="row">
                 <div v-for="plate in this.plates" class="col-3">
@@ -146,7 +146,7 @@ export default {
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
 </template>
 
