@@ -115,7 +115,7 @@ export default {
                 <button><i class="fa-solid fa-magnifying-glass"></i></button> -->
 
   <div class="top_title" v-if="!store.loading && store.restaurants">
-    <div class="row">
+    <div class="row gx-0">
       <div v-for="restaurant in store.restaurants" class="col-4">
         <div v-if="restaurant">
           <div class="card">
