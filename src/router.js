@@ -4,13 +4,18 @@ const router = createRouter({
     routes: [
         {
             name: 'home',
-            component: () => import('./views/HomeView.vue'),
             path: '/',
+            component: () => import('./views/HomeView.vue'),
         },
         {
+            name: 'single-restaurant',
             path: '/restaurants/:id',
             component: () => import('./views/SingleRestaurantView.vue'),
-            name: 'single-restaurant',
+        },
+        {
+            name: 'checkout',
+            path: '/checkout/',
+            component: () => import('./views/CheckoutView.vue'),
         }
     ]
 })

@@ -42,7 +42,12 @@ export default {
           <div class="d-flex align-items-center justify-content-between mb-4">
             <h4 class="title_frame mb-0">Il tuo ordine</h4>
             <div class="square px-2 py-1">
-              <i class="fa-solid fa-utensils text-white"></i>
+              <router-link class="btn btn_secondary col-12" :to="{ name: 'checkout' }" aria-current="page">
+                <i class="fa-solid fa-utensils text-white"></i>
+              </router-link>
+              <router-link class="btn btn_secondary col-12 text-white" :to="{ name: 'checkout' }" aria-current="page">
+                Procedi al pagamento
+              </router-link>
             </div>
           </div>
           <div class="cart_content">
