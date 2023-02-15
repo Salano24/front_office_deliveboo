@@ -1,9 +1,10 @@
 <script>
 import { store } from '../store.js';
-import AppHeader from '../components/AppHeader.vue'
-import AppFooter from '../components/AppFooter.vue'
-
+import { cart } from '../cart.js';
+import AppHeader from '../components/AppHeader.vue';
+import AppFooter from '../components/AppFooter.vue';
 import axios from 'axios';
+import { createDOMCompilerError } from '@vue/compiler-dom';
 
 
 export default {
@@ -16,13 +17,31 @@ export default {
     data() {
         return {
             store,
+            cart,
             restaurant: [],
             loading: true,
-            message: ""
+            message: "",
+            products: store.products
         }
     },
-
+    // #region logica carrello
+    watch: {
+        products: {//viene costruito in questo modo perché é un array di oggetti
+            handler(newProducts) {//viene costruito in questo modo perché é un array di oggetti
+                //ogni volta che products viene modificato viene trasformato in stringa e aggiunto al localStorage
+                localStorage.products = JSON.stringify(newProducts);
+                cart.products = this.products
+                console.log('watch')
+            },
+            deep: true
+        }
+    },
     methods: {
+        addProduct(plate) {
+            this.products.unshift(plate)
+            console.log('aggiunto il piatto all\' array di prodotti in cart.js')
+            console.log(cart.products);
+        },
         getImagePath(path) {
             console.log(path)
             if (path) {
@@ -33,6 +52,9 @@ export default {
 
     },
     mounted() {
+        if (localStorage.products) {
+            this.products = JSON.parse(localStorage.products);
+        }
         const url = this.store.base_api_url + 'api/restaurants/' + this.$route.params.id
         console.log(url);
         axios.get(url)
@@ -80,7 +102,12 @@ export default {
             <div class="col-12">
 
                 <ul v-if="restaurant.plates.length > 0">
-                    <li v-for="plate in restaurant.plates">{{ plate.name }}</li>
+                    <li v-for="plate in restaurant.plates">
+                        {{ plate.name }}
+                        <button class="btn btn-sm btn-danger" @click="this.addProduct(plate)">
+                            Aggiungi
+                        </button>
+                    </li>
                 </ul>
 
                 <ul v-else>

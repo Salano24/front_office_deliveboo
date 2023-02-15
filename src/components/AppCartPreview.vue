@@ -8,7 +8,8 @@ export default {
   data() {
     return {
       store,
-      cart
+      cart,
+      products: cart.products
     };
   },
   // #region logica carrello
@@ -17,6 +18,7 @@ export default {
       handler(newProducts) {//viene costruito in questo modo perché é un array di oggetti
         //ogni volta che products viene modificato viene trasformato in stringa e aggiunto al localStorage
         localStorage.products = JSON.stringify(newProducts);
+        cart.products = this.products
         console.log('watch')
       },
       deep: true
@@ -24,7 +26,7 @@ export default {
   },
   mounted() {
     if (localStorage.products) {
-      this.productsOrder = JSON.parse(localStorage.products);
+      cart.products = JSON.parse(localStorage.products);
     }
   },
 };

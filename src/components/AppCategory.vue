@@ -12,42 +12,9 @@ export default {
       products: [],
     };
   },
-  watch: {
-    products: {
-      //viene costruito in questo modo perché é un array di oggetti
-      handler(newProducts) {
-        //viene costruito in questo modo perché é un array di oggetti
-        //ogni volta che products viene modificato viene trasformato in stringa e aggiunto al localStorage
-        localStorage.products = JSON.stringify(newProducts);
-      },
-      deep: true,
-    },
-  },
-  // #endregion logica carrello
-  methods: {
-    // #region logica carrello
-    getPlates(call) {
-      axios.get(call)
-        .then(response => {
-          this.plates = response.data.results;
-          console.log(this.plates)
-          this.loading = false
-        })
-        .catch(error => {
-          console.error(error)
-          this.error = error.message
-          this.loading = false
-        })
-    }, addProduct(plate) {
-      cart.products.unshift(plate)
-    }
-    //    #endregion
-  },
+  methods: {},
   mounted() {
     store.getRestaurants(store.base_api_url + "api/restaurants");
-    if (localStorage.products) {
-      cart.products = JSON.parse(localStorage.products);
-    }
   },
 };
 

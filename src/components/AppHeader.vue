@@ -11,14 +11,11 @@ export default {
       store,
     };
   },
-  //end watch
   methods: {
   },
-  //end metods
   mounted() {
     store.getTypes(store.base_api_url + "api/types");
   },
-  //end mounted
 };
 </script>
 
