@@ -22,10 +22,13 @@ export default {
 <template>
   <nav class="navbar sticky-top navbar-expand-sm shadow">
     <div class="container-fluid d-flex gap-sm-5">
-      <a class="logo w-sm-75 d-flex align-items-center text-decoration-none" href="#">
-        <img class="img-fluid" src="../assets/logo.png" alt="" />
-        <span class="d-none d-sm-inline fw-bold fs-4">DeliveBoo</span>
-      </a>
+      
+      <router-link class="logo w-sm-75 d-flex align-items-center text-decoration-none" :to="{ name: 'home' }" aria-current="page">
+         
+            <img class="img-fluid" src="../assets/logo.png" alt="" />
+            <span class="d-none d-sm-inline fw-bold fs-4">DeliveBoo</span>
+           
+      </router-link>
 
       <!-- <div class="search w-50">
         <div class="restaurant_type fs-6 w-75 text-uppercase">
@@ -47,11 +50,11 @@ export default {
       <div class="collapse navbar-collapse" id="collapsibleNavId">
         <ul class="navbar-nav ms-auto text-end gap-3">
           <li class="nav-itemhead_user">
-            <a href="">Accedi</a>
+            <a href="http://127.0.0.1:8000/login">Accedi</a>
           </li>
 
           <li class="nav-item">
-            <a href="">Registrati</a>
+            <a href="http://127.0.0.1:8000/register">Registrati</a>
           </li>
           <li class="nav-item cart">
             <button class="cart_icon border-0 bg-white" type="button" @click.prevent="this.store.showOffcanvasMenu()">
