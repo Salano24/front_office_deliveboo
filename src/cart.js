@@ -5,7 +5,20 @@ import { store as store } from "./store.js";
 export const cart = reactive({
     loading: true,
     products: [],
+    addProduct(plate) {
+        this.products.unshift(plate)
+        console.log('aggiunto il piatto all\' array di prodotti in cart.js')
+        console.log(cart.products);
+    },
 });
+
+/*
+tutto cio che si riferisce al carrello si deve trovare dentro i file scritti sotto E BASTA!
+
+- cart.js
+- SingleRestaurantView.vue
+- AppCartPrewiew.vue
+ */
 
 //eliminare tutta la logica riferita al carrello da AppHeader // fatto
 
