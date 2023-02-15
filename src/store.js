@@ -15,38 +15,40 @@ export const store = reactive({
   productsOrder: [],
   queryString: '',
   results: [],
+  failed: false,
   callApi() {
     this.queryString = this.selectedTypes.join("+");
-    const url = this.base_api_url + "api/restaurants/types/" + this.queryString;
-    axios
-      .get(url)
-      .then((response) => {
-        console.log(response.data);
-        if (response.data.success) {
-          this.restaurants = response.data.results;
-          console.log(this.restaurants);
+
+    if (this.queryString.length > 0) {
+      console.log(this.queryString)
+      const url = this.base_api_url + "api/restaurants/types/" + this.queryString;
+      axios
+        .get(url)
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.success) {
+            this.restaurants = response.data.results;
+            this.results = response.data.results;
+            console.log(this.restaurants);
+            this.loading = false;
+          } else {
+            this.restaurants = null;
+          }
+
+        })
+        .catch((error) => {
+          console.error(error);
+          this.error = error.message;
           this.loading = false;
-        } else {
-          this.restaurants = null;
-        }
+        });
+      this.queryString = "";
+      this.failed = false
+    } else {
 
+      this.failed = true
+      console.log(this.failed)
+    }
 
-
-        /*  console.log(response.data.results);
-         this.restaurants = null;
-         this.loading = false; */
-
-      })
-      .catch((error) => {
-        console.error(error);
-        this.error = error.message;
-        this.loading = false;
-      });
-
-    console.log(
-      this.base_api_url + "api/restaurants/types/" + this.queryString
-    );
-    this.queryString = "";
   },
   showOffcanvasMenu() {
     this.showMenu = !this.showMenu;
