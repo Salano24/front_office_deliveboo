@@ -14,7 +14,7 @@ export const store = reactive({
   products: [],
   productsOrder: [],
   queryString: '',
-  base_api_url: 'http://127.0.0.1:8000/',
+  results: [],
   callApi() {
     this.queryString = this.selectedTypes.join("+");
     const url = this.base_api_url + "api/restaurants/types/" + this.queryString;
@@ -56,6 +56,8 @@ export const store = reactive({
       .get(call)
       .then((response) => {
         this.restaurants = response.data.results.data;
+        this.results = response.data.results;
+        console.log(this.results);
         this.loading = false;
       })
       .catch((error) => {
@@ -97,6 +99,9 @@ export const store = reactive({
     if (path) {
       return this.base_api_url + "storage/" + path;
     }
-    return "/img/no-image.png";
+    return "src/assets/no-image-available.png";
   }
+
+
+
 });

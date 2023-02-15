@@ -11,13 +11,13 @@ const router = createRouter({
             name: 'restaurants',
             component: () => import('./views/RestaurantsView.vue'),
             path: '/restaurants',
-        }, 
+        },
         {
-            path: '/restaurant/:id',
-            component:() => import('./views/SingleRestaurantView.vue') ,
+            path: '/restaurants/:id',
+            component: () => import('./views/SingleRestaurantView.vue'),
             name: 'single-restaurant',
         },
-        
+
     ]
 })
 

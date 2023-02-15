@@ -105,19 +105,59 @@ export default {
   </div>
   <!-- <input placeholder="Cerca un ristorante" type="search" id="restaurant_search" name="restaurant_search">
                 <button><i class="fa-solid fa-magnifying-glass"></i></button> -->
+  <div class="container" v-if="!store.loading && store.restaurants">
+    <div class="row">
 
-  <div class="top_title" v-if="!store.loading && store.restaurants">
-    <div class="row gx-0">
-      <div v-for="restaurant in store.restaurants" class="col-4">
-        <div v-if="restaurant">
-          <div class="card">
-            {{ restaurant.name }}
-            {{ restaurant.address }}
-            {{ restaurant.phone }}
+      <div v-for="restaurant in store.restaurants" class="col-6 gy-3 d-flex align-content-center">
+
+        <div class="row">
+
+          <div class="col-4 d-flex align-content-center flex-wrap">
+
+            <img :src="store.getImagePath(restaurant.restaurant_image)" alt="" class="img-fluid p-3">
+
+            <router-link class="btn btn_secondary col-12"
+              :to="{ name: 'single-restaurant', params: { id: restaurant.id } }" aria-current="page">Dettaglio<span
+                class="visually-hidden">(current)</span></router-link>
+
           </div>
+
+          <div class="col-8 px-3 d-flex align-content-center flex-wrap">
+
+            <div>
+
+              <h4 class="m-0">{{ restaurant.name }}</h4>
+
+              <p class="m-0"><strong>Contatti: </strong> {{ restaurant.phone }}</p>
+
+              <p class="m-0"><strong>Indirizzo: </strong> {{ restaurant.address }} </p>
+
+            </div>
+          </div>
+
         </div>
+
       </div>
     </div>
+
+    <nav aria-label="Page navigation" class="d-flex justify-content-center pt-5">
+      <ul class="pagination">
+        <li class="page-item" v-if="store.results.prev_page_url" @click="prevPage(store.results.prev_page_url)">
+          <a class="page-link" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item active" aria-current="page">
+          <a class="page-link" href="#">{{ store.results.current_page }}</a>
+        </li>
+
+        <li class="page-item" v-if="store.results.next_page_url" @click="nextPage(store.results.next_page_url)">
+          <a class="page-link" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
 
   <div v-else-if="store.restaurants === null">
@@ -181,6 +221,22 @@ export default {
 
   .pasta {
     background-image: url(../assets/pasta.png);
+  }
+}
+
+.container .row img {
+  object-fit: scale-down;
+}
+
+.btn_secondary {
+  background-color: #f7af42;
+  color: #ffffff;
+  box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 18%);
+
+  &:hover {
+    background-color: #FFBD59;
+    border: 1px solid #FFBD59;
+    color: #ffffff;
   }
 }
 </style>
