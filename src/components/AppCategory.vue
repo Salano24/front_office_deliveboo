@@ -1,7 +1,7 @@
 <script>
 import { store as store } from "../store.js";
 import { cart as cart } from "../cart.js";
-import axios from "axios";
+
 export default {
   name: "AppCategory",
   components: {},
@@ -12,7 +12,14 @@ export default {
       products: [],
     };
   },
-  methods: {},
+  methods: {
+    prevPage(url) {
+      this.store.getRestaurants(url);
+    },
+    nextPage(url) {
+      this.store.getRestaurants(url);
+    }
+  },
   mounted() {
     store.getRestaurants(store.base_api_url + "api/restaurants");
   },
@@ -58,82 +65,145 @@ export default {
     </div>
   </div>
 
-  <div class="search container">
-    <div class="restaurant_type fs-6 text-uppercase">
-      <div class="row mb-1 d-flex">
-        <h1 class="lh-sm">I nostri ristoranti</h1>
-        <div v-for="type in store.types" class="col-3">
-          <input type="checkbox" name="types" v-model="store.selectedTypes" :value="type.name" :id="type.id" />
-          <label for="types">{{ type.name }}</label>
-        </div>
-      </div>
-    </div>
-    <button class="btn btn-danger" @click="store.callApi">Filtra</button>
-  </div>
-  <!-- <input placeholder="Cerca un ristorante" type="search" id="restaurant_search" name="restaurant_search">
-                <button><i class="fa-solid fa-magnifying-glass"></i></button> -->
-  <div class="container" v-if="!store.loading && store.restaurants">
-    <div class="row">
+  <section id="restaurants">
 
-      <div v-for="restaurant in store.restaurants" class="col-6 gy-3 d-flex align-content-center">
+    <div class="search container p-5">
 
-        <div class="row">
+      <div class="restaurant_type fs-6 text-uppercase">
 
-          <div class="col-4 d-flex align-content-center flex-wrap">
+        <div class="row mb-1 justify-content-center">
 
-            <img :src="store.getImagePath(restaurant.restaurant_image)" alt="" class="img-fluid p-3">
+          <h1 class="lh-sm text-center">I nostri ristoranti</h1>
 
-            <router-link class="btn btn_secondary col-12"
-              :to="{ name: 'single-restaurant', params: { id: restaurant.id } }" aria-current="page">Dettaglio<span
-                class="visually-hidden">(current)</span></router-link>
+          <p class="text-center fst-italic mb-3">Seleziona la tipologia che preferisci</p>
+
+          <div v-for="type in store.types" class="col-2 mb-3 checkbox">
+
+            <input type="checkbox" name="types" v-model="store.selectedTypes" :value="type.name" :id="type.id"
+              class="me-3" />
+
+            <label class="checkbox-text" for="types">{{ type.name }}</label>
 
           </div>
 
-          <div class="col-8 px-3 d-flex align-content-center flex-wrap">
+          <button class="btn btn_danger col-4 my-3" @click="store.callApi()">Avvia ricerca</button>
 
-            <div>
+          <p v-if="store.failed === true" class="text-center text-danger text-lowercase fst-italic ">Seleziona almeno
+            una
+            categoria</p>
 
-              <h4 class="m-0">{{ restaurant.name }}</h4>
+        </div>
 
-              <p class="m-0"><strong>Contatti: </strong> {{ restaurant.phone }}</p>
+      </div>
 
-              <p class="m-0"><strong>Indirizzo: </strong> {{ restaurant.address }} </p>
+    </div>
+
+    <hr class="mb-4">
+
+    <div class="container" v-if="!store.loading && store.restaurants">
+      <div class="row">
+
+        <div v-for="restaurant in store.restaurants" class="col-6 p-3 d-flex align-content-center">
+
+          <div class="row p-5 ms_card">
+
+            <div class="col-4 d-flex align-content-center flex-wrap">
+
+              <img :src="store.getImagePath(restaurant.restaurant_image)" alt="" class="img-fluid p-3">
+
+              <router-link class="btn btn_secondary col-12"
+                :to="{ name: 'single-restaurant', params: { id: restaurant.id } }" aria-current="page">Dettaglio<span
+                  class="visually-hidden">(current)</span></router-link>
 
             </div>
+
+            <div class="col-8 px-3 d-flex align-content-center flex-wrap">
+
+              <div>
+
+                <h4 class="m-0">{{ restaurant.name }}</h4>
+
+                <p class="m-0"><strong>Contatti: </strong> {{ restaurant.phone }}</p>
+
+                <p class="m-0"><strong>Indirizzo: </strong> {{ restaurant.address }} </p>
+
+              </div>
+
+            </div>
+
           </div>
 
         </div>
-
       </div>
+
+      <nav aria-label="Page navigation" class="d-flex justify-content-center pt-5"
+        v-if="store.results.next_page_url || store.results.prev_page_url">
+        <ul class="pagination">
+          <li class="page-item" v-if="store.results.prev_page_url" @click="prevPage(store.results.prev_page_url)">
+            <a class="page-link" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item active" aria-current="page">
+            <a class="page-link" href="#">{{ store.results.current_page }}</a>
+          </li>
+
+          <li class="page-item" v-if="store.results.next_page_url" @click="nextPage(store.results.next_page_url)">
+            <a class="page-link" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
     </div>
 
-    <nav aria-label="Page navigation" class="d-flex justify-content-center pt-5">
-      <ul class="pagination">
-        <li class="page-item" v-if="store.results.prev_page_url" @click="prevPage(store.results.prev_page_url)">
-          <a class="page-link" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        <li class="page-item active" aria-current="page">
-          <a class="page-link" href="#">{{ store.results.current_page }}</a>
-        </li>
+    <div v-else-if="store.restaurants === null" class="p-5">
+      <h3 class="text-center">La ricerca non ha generato risultati</h3>
 
-        <li class="page-item" v-if="store.results.next_page_url" @click="nextPage(store.results.next_page_url)">
-          <a class="page-link" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </div>
+      <div class="mt-5 text-center">
+        <button class="btn btn_danger" @click="store.getRestaurants(store.base_api_url + 'api/restaurants')">Torna a
+          tutti i ristoranti</button>
+      </div>
 
-  <div v-else-if="store.restaurants === null">
-    <h3>nessun ristorante corrisponde alla ricerca</h3>
-  </div>
+    </div>
+
+  </section>
+
+
+
+
 
 </template>
 
 <style lang="scss" scoped>
+#restaurants {
+  background-color: #F6EDDA;
+
+  .btn_danger {
+    background-color: #A43C28;
+    color: #ffffff;
+    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 18%);
+
+    &:hover {
+      background-color: #b44933;
+      color: #F6EDDA;
+    }
+  }
+
+  hr {
+    border: 3px solid #A43C28;
+    opacity: 1;
+    width: 90%;
+    margin: auto;
+  }
+
+  .ms_card {
+    background-color: white;
+    border-radius: 5px;
+  }
+}
+
 .top_title {
   margin: 0 0 1rem 0;
 
@@ -205,5 +275,11 @@ export default {
     border: 1px solid #FFBD59;
     color: #ffffff;
   }
+}
+
+
+.checkbox-text {
+  font-weight: 600;
+  color: #A43C28;
 }
 </style>
