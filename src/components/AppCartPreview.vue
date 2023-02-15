@@ -23,7 +23,7 @@ export default {
       },
       deep: true
     }
-  },
+  }, methods: {},
   mounted() {
     if (localStorage.products) {
       cart.products = JSON.parse(localStorage.products);
@@ -52,8 +52,7 @@ export default {
             </div>
           </div>
           <div class="cart_content">
-            <!-- #region order (sotto) -->
-            <div v-for="product in cart.products" class="wrapper">
+            <div v-for="(product, index) in cart.products" class="wrapper">
               <div class="d-flex flex-column gap-3 mb-2 hover-style px-2">
                 <div class="sb-cover-frame d-flex ">
                   <div class="py-2 col-4">
@@ -62,22 +61,22 @@ export default {
                   <div class="py-2 col-6">
                     <h4 class="sb-card-title">{{ product.name }}</h4>
                     <h4 class="sb-card-title">quantità: {{ product.quantity }}</h4>
-                    <h4 class="sb-card-title">{{ product.id }}</h4>
                     <div class="price">{{ product.price }} € </div>
                   </div>
                 </div>
-                <div class="quantity_input mb-4">
+                <div class="quantity_input d-flex justify-content-center gap-4 px-4">
                   <div class="plus">-</div>
-                  <input type="number" value="1" min="1" max="10" />
+                  {{ product.quantity }}
                   <div class="minus">+</div>
                 </div>
+                <button @click.stop="cart.removeProduct(index)" class="btn btn-danger btn-sm">
+                  elimina
+                </button>
               </div>
-
             </div>
-            <!-- #endregion order -->
           </div>
 
-          <div class="cart_footer border-top py-3">
+          <!-- <div class="cart_footer border-top py-3">
             <div class="buttons mb-2">
               <a href="#" class="view_order btn rounded-0 text-white me-2">
                 <span>Visualizza</span>
@@ -86,13 +85,13 @@ export default {
               <a href="#" class="pay btn rounded-0 text-white">
                 <span>Pagamento</span>
               </a>
-            </div>
-            <!-- //buttons -->
-            <div class="total">
+            </div> -->
+          <!-- //buttons -->
+          <!--  <div class="total">
               <h3>Totale</h3>
               <h4>34.00 €</h4>
             </div>
-          </div>
+          </div> -->
           <!-- //cart_footer -->
         </div>
       </div>

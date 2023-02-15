@@ -6,50 +6,16 @@ export const cart = reactive({
     loading: true,
     products: [],
     count: null,
-    // addProduct(plate) {
-    //     this.products.unshift(plate)
-    //     console.log('aggiunto il piatto all\' array di prodotti in cart.js')
-
-    // },
+    removeProduct(index) {
+        this.products.splice(index, 1)
+    }
 });
-//aggiungere chiave quantitá all oggetto piatto nel carello la quale verra modificata successivamente
-// eliminare un elemento dal carrello 
-// aggiungere la quantitá //solo nella sezione checkout
-// aggiungere il check di tipo esiste gia questo piatto nel carrello 
-// oppure check di tipo questo piatto é di un'altro ristorante
 
+// ToDo carrello:
+//aggiungere chiave quantitá all oggetto piatto nel carello la quale verra modificata successivamente #fatto 
+// eliminare un elemento dal carrello  
+// aggiungere check di tipo questo piatto é di un'altro ristorante
 
-
-/*
-tutto cio che si riferisce al carrello si deve trovare dentro i file scritti sotto E BASTA!
-
-- cart.js
-- SingleRestaurantView.vue
-- AppCartPrewiew.vue
- */
-
-//eliminare tutta la logica riferita al carrello da AppHeader // fatto
-
-
-//AppCartPreview //fatto
-// import { cart as cart } from "../cart.js";
-// import { assert } from "@vue/compiler-core";
-
-// export default {
-//   name: "AppCartPreview",
-//   data() {
-//     return {
-//       store,
-//       cart
-//     };
-//   },
-//   // #region logica carrello
-//   // #endregion logica carrello
-//   mounted() {
-//     if (localStorage.products) {
-//       this.productsOrder = JSON.parse(localStorage.products);
-//     }
-//   },
 
 
 
