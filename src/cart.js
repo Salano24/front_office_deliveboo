@@ -5,12 +5,20 @@ import { store as store } from "./store.js";
 export const cart = reactive({
     loading: true,
     products: [],
-    addProduct(plate) {
-        this.products.unshift(plate)
-        console.log('aggiunto il piatto all\' array di prodotti in cart.js')
-        console.log(cart.products);
-    },
+    count: null,
+    // addProduct(plate) {
+    //     this.products.unshift(plate)
+    //     console.log('aggiunto il piatto all\' array di prodotti in cart.js')
+
+    // },
 });
+//aggiungere chiave quantitá all oggetto piatto nel carello la quale verra modificata successivamente
+// eliminare un elemento dal carrello 
+// aggiungere la quantitá //solo nella sezione checkout
+// aggiungere il check di tipo esiste gia questo piatto nel carrello 
+// oppure check di tipo questo piatto é di un'altro ristorante
+
+
 
 /*
 tutto cio che si riferisce al carrello si deve trovare dentro i file scritti sotto E BASTA!

@@ -28,6 +28,7 @@ export default {
     if (localStorage.products) {
       cart.products = JSON.parse(localStorage.products);
     }
+    cart.count = cart.products.length
   },
 };
 </script>
@@ -60,6 +61,7 @@ export default {
                   </div>
                   <div class="py-2 col-6">
                     <h4 class="sb-card-title">{{ product.name }}</h4>
+                    <h4 class="sb-card-title">quantità: {{ product.quantity }}</h4>
                     <h4 class="sb-card-title">{{ product.id }}</h4>
                     <div class="price">{{ product.price }} € </div>
                   </div>
