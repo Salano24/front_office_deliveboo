@@ -14,9 +14,8 @@ export default {
   },
   // #region logica carrello
   watch: {
-    products: {//viene costruito in questo modo perché é un array di oggetti
-      handler(newProducts) {//viene costruito in questo modo perché é un array di oggetti
-        //ogni volta che products viene modificato viene trasformato in stringa e aggiunto al localStorage
+    products: {
+      handler(newProducts) {
         localStorage.products = JSON.stringify(newProducts);
         cart.products = this.products
         console.log('watch')
@@ -65,9 +64,9 @@ export default {
                   </div>
                 </div>
                 <div class="quantity_input d-flex justify-content-center gap-4 px-4">
-                  <div class="plus">-</div>
+                  <div class="a minus" @click.stop="cart.changeQuantity(index, '-')">-</div>
                   {{ product.quantity }}
-                  <div class="minus">+</div>
+                  <div class="a plus" @click.stop="cart.changeQuantity(index, '+')">+</div>
                 </div>
                 <button @click.stop="cart.removeProduct(index)" class="btn btn-danger btn-sm">
                   elimina

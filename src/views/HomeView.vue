@@ -6,6 +6,7 @@ import AppReview from '../components/AppReview.vue'
 import AppDownload from '../components/AppDownload.vue'
 import AppJoinUs from '../components/AppJoinUs.vue'
 import AppFooter from '../components/AppFooter.vue'
+import { cart } from '../cart'
 
 export default {
     components: {
@@ -18,8 +19,7 @@ export default {
         AppFooter,
     },
     data() {
-        return {
-        }
+        return {}
     },
     methods() {
 
@@ -39,4 +39,5 @@ export default {
 </template>
 
 <style lang="scss">
+
 </style>

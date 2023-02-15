@@ -11,8 +11,6 @@ export const store = reactive({
   queryString: "",
   base_api_url: "http://127.0.0.1:8000/",
   error: null,
-  products: [],
-  productsOrder: [],
   queryString: '',
   results: [],
   failed: false,
