@@ -38,9 +38,13 @@ export default {
     },
     methods: {
         addProduct(plate) {
-            this.products.unshift(plate)
-            console.log('aggiunto il piatto all\' array di prodotti in cart.js')
-            console.log(cart.products);
+            if (this.products.includes(plate)) {
+                plate.quantity = plate.quantity + 1
+            } else {
+                plate.quantity = 1
+                this.products.unshift(plate)
+            }
+            cart.count = cart.count + 1;
         },
         getImagePath(path) {
             console.log(path)
@@ -55,6 +59,7 @@ export default {
         if (localStorage.products) {
             this.products = JSON.parse(localStorage.products);
         }
+        cart.count = cart.products.length
         const url = this.store.base_api_url + 'api/restaurants/' + this.$route.params.id
         console.log(url);
         axios.get(url)
