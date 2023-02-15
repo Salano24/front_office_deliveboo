@@ -31,7 +31,8 @@ export const cart = reactive({
 // ToDo carrello:
 //aggiungere chiave quantitá all oggetto piatto nel carello la quale verra modificata successivamente #fatto 
 // eliminare un elemento dal carrello #fatto 
-// aggiungere check di tipo questo piatto é di un'altro ristorante
+// aggiungere check di tipo questo piatto é di un'altro ristorante #fatto //aggiungere un messaggio per l'utente nel caso ci provi 
+
 
 
 
