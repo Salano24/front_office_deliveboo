@@ -12,7 +12,16 @@ export default {
     };
   },
   // #region logica carrello
-  // #endregion logica carrello
+  watch: {
+    products: {//viene costruito in questo modo perché é un array di oggetti
+      handler(newProducts) {//viene costruito in questo modo perché é un array di oggetti
+        //ogni volta che products viene modificato viene trasformato in stringa e aggiunto al localStorage
+        localStorage.products = JSON.stringify(newProducts);
+        console.log('watch')
+      },
+      deep: true
+    }
+  },
   mounted() {
     if (localStorage.products) {
       this.productsOrder = JSON.parse(localStorage.products);
@@ -35,27 +44,28 @@ export default {
             </div>
           </div>
           <div class="cart_content">
-
             <!-- #region order (sotto) -->
-            <a v-for="product in cart.products" href="#" class="d-flex gap-3 mb-2">
-              <div class="sb-cover-frame">
-                <img :src="store.getImagePath(product.plate_image)" :alt="'img ' + product.name" />
+            <div v-for="product in cart.products" class="wrapper">
+              <div class="d-flex flex-column gap-3 mb-2 hover-style px-2">
+                <div class="sb-cover-frame d-flex ">
+                  <div class="py-2 col-4">
+                    <img :src="store.getImagePath(product.plate_image)" :alt="'img ' + product.name" />
+                  </div>
+                  <div class="py-2 col-6">
+                    <h4 class="sb-card-title">{{ product.name }}</h4>
+                    <h4 class="sb-card-title">{{ product.id }}</h4>
+                    <div class="price">{{ product.price }} € </div>
+                  </div>
+                </div>
+                <div class="quantity_input mb-4">
+                  <div class="plus">-</div>
+                  <input type="number" value="1" min="1" max="10" />
+                  <div class="minus">+</div>
+                </div>
               </div>
-              <div class="sb-card-tp py-2 pe-2">
-                <h4 class="sb-card-title">{{ product.name }}</h4>
-                <h4 class="sb-card-title">{{ product.id }}</h4>
-                <div class="price">{{ product.price }} € </div>
-              </div>
-            </a>
-            <!-- #endregion order -->
 
-
-            <div class="quantity_input mb-4">
-              <div class="plus">-</div>
-              <input type="number" value="1" min="1" max="10" />
-              <div class="minus">+</div>
             </div>
-            <!-- //order -->
+            <!-- #endregion order -->
           </div>
 
           <div class="cart_footer border-top py-3">
@@ -123,7 +133,8 @@ export default {
       height: 40%;
       overflow: auto;
 
-      a {
+      a,
+      .hover-style {
         background-color: #f6edda;
         text-decoration: none;
         color: #a43c28;

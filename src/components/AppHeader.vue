@@ -9,52 +9,23 @@ export default {
   data() {
     return {
       store,
-      products: [],
     };
-  },
-  watch: {
-    products: {
-      //viene costruito in questo modo perché é un array di oggetti
-      handler(newProducts) {
-        //viene costruito in questo modo perché é un array di oggetti
-        //ogni volta che products viene modificato viene trasformato in stringa e aggiunto al localStorage
-        localStorage.products = JSON.stringify(newProducts);
-      },
-      deep: true,
-    },
   },
   //end watch
   methods: {
-    addProduct(piatto) {
-      this.products.unshift({
-        name: piatto,
-        restaurant_id: 10,
-      });
-      console.log(this.products);
-    },
   },
   //end metods
   mounted() {
-    console.log("mounted");
-    if (localStorage.products) {
-      this.products = JSON.parse(localStorage.products);
-    }
-    //console.log(this.products + ' this.products');
-    console.log(store.base_api_url + "api/types");
     store.getTypes(store.base_api_url + "api/types");
   },
   //end mounted
-  //<button @click="addProduct('argomento')">prova</button>
 };
 </script>
 
 <template>
   <nav class="navbar sticky-top navbar-expand-sm shadow">
     <div class="container-fluid d-flex gap-sm-5">
-      <a
-        class="logo w-sm-75 d-flex align-items-center text-decoration-none"
-        href="#"
-      >
+      <a class="logo w-sm-75 d-flex align-items-center text-decoration-none" href="#">
         <img class="img-fluid" src="../assets/logo.png" alt="" />
         <span class="d-none d-sm-inline fw-bold fs-4">DeliveBoo</span>
       </a>
@@ -71,21 +42,11 @@ export default {
       <input placeholder="Cerca un ristorante" type="search" id="restaurant_search" name="restaurant_search">
                 <button><i class="fa-solid fa-magnifying-glass"></i></button> -->
 
-      <button
-        class="navbar-toggler d-lg-none"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#collapsibleNavId"
-        aria-controls="collapsibleNavId"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
+      <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
+        data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
+        aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-
-      <router-link class="nav-link" :to="{ name: 'restaurants' }">Ristoranti</router-link>
-      
-
       <div class="collapse navbar-collapse" id="collapsibleNavId">
         <ul class="navbar-nav ms-auto text-end gap-3">
           <li class="nav-itemhead_user">
@@ -96,11 +57,7 @@ export default {
             <a href="">Registrati</a>
           </li>
           <li class="nav-item cart">
-            <button
-              class="cart_icon border-0 bg-white"
-              type="button"
-              @click.prevent="this.store.showOffcanvasMenu()"
-            >
+            <button class="cart_icon border-0 bg-white" type="button" @click.prevent="this.store.showOffcanvasMenu()">
               <i class="fa-solid fa-cart-shopping"></i>
             </button>
           </li>

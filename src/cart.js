@@ -3,14 +3,14 @@ import axios from "axios";
 import { store as store } from "./store.js";
 
 export const cart = reactive({
-  loading: true,
-  products: [],
+    loading: true,
+    products: [],
 });
 
-//eliminare tutta la logica riferita al carrello da AppHeader
+//eliminare tutta la logica riferita al carrello da AppHeader // fatto
 
 
-//AppCartPreview
+//AppCartPreview //fatto
 // import { cart as cart } from "../cart.js";
 // import { assert } from "@vue/compiler-core";
 
@@ -42,7 +42,7 @@ export const cart = reactive({
 
 
 
-//AppCategory
+//AppCategory //fatto
  // #region logica carrello
 //  getPlates(call) {
 //   axios.get(call)

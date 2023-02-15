@@ -1,5 +1,6 @@
 <script>
 import { store as store } from "../store.js";
+import { cart as cart } from "../cart.js";
 import axios from "axios";
 export default {
   name: "AppCategory",
@@ -7,18 +8,20 @@ export default {
   data() {
     return {
       store,
+      cart,
       products: [],
     };
   },
-  // #region logica carrello
   watch: {
-    products: {//viene costruito in questo modo perché é un array di oggetti
-      handler(newProducts) {//viene costruito in questo modo perché é un array di oggetti
+    products: {
+      //viene costruito in questo modo perché é un array di oggetti
+      handler(newProducts) {
+        //viene costruito in questo modo perché é un array di oggetti
         //ogni volta che products viene modificato viene trasformato in stringa e aggiunto al localStorage
         localStorage.products = JSON.stringify(newProducts);
       },
-      deep: true
-    }
+      deep: true,
+    },
   },
   // #endregion logica carrello
   methods: {
@@ -35,27 +38,15 @@ export default {
           this.error = error.message
           this.loading = false
         })
-    },
-    addProduct(plate) {
-      this.products.unshift({
-        id: plate.id,
-        name: plate.name,
-        restaurant_id: plate.restaurant_id,
-      })
-      console.log(this.products);
-    },
-    prevPage(url) {
-      this.store.getRestaurants(url);
-    },
-    nextPage(url) {
-      this.store.getRestaurants(url);
+    }, addProduct(plate) {
+      cart.products.unshift(plate)
     }
-
+    //    #endregion
   },
   mounted() {
     store.getRestaurants(store.base_api_url + "api/restaurants");
     if (localStorage.products) {
-      this.products = JSON.parse(localStorage.products);
+      cart.products = JSON.parse(localStorage.products);
     }
   },
 };
@@ -114,7 +105,6 @@ export default {
   </div>
   <!-- <input placeholder="Cerca un ristorante" type="search" id="restaurant_search" name="restaurant_search">
                 <button><i class="fa-solid fa-magnifying-glass"></i></button> -->
-
   <div class="container" v-if="!store.loading && store.restaurants">
     <div class="row">
 
@@ -143,8 +133,6 @@ export default {
               <p class="m-0"><strong>Indirizzo: </strong> {{ restaurant.address }} </p>
 
             </div>
-
-
           </div>
 
         </div>
