@@ -36,59 +36,55 @@ export default {
       <div class="cart_preview_header d-flex">
         <button type="button" class="btn-close me-3" @click="this.store.showOffcanvasMenu();" aria-label="Close">
         </button>
-        <div class="cart_body pb-3 me-2">
+        <div class="cart_body d-flex flex-column pb-3 me-2 min-vh-100">
           <div class="d-flex align-items-center justify-content-between mb-4">
-            <h4 class="title_frame mb-0">Il tuo ordine</h4>
-            <div class="square px-2 py-1">
-              <router-link class="btn btn_secondary col-12" :to="{ name: 'checkout' }" aria-current="page">
-                <i class="fa-solid fa-utensils text-white"></i>
-              </router-link>
-              <router-link class="btn btn_secondary col-12 text-white" :to="{ name: 'checkout' }" aria-current="page">
-                Procedi al pagamento
-              </router-link>
-            </div>
+            <h3 class="title_frame mb-2 fw-bold">Il tuo ordine</h3>
           </div>
           <div class="cart_content">
             <div v-for="product, index in cart.products" class="wrapper">
-              <div class="d-flex flex-column gap-3 mb-2 hover-style px-2">
-                <div class="sb-cover-frame d-flex ">
-                  <div class="py-2 col-4">
-                    <img :src="store.getImagePath(product.plate_image)" :alt="'img ' + product.name" />
+              <div class="row d-flex flex-column hover-style g-0 mb-2  px-3">
+                <div class="sb-cover-frame d-flex justify-content-between gap-1">
+                  <div class="py-2 col-3">
+                    <img class="img-fluid" :src="store.getImagePath(product.plate_image)" :alt="'img ' + product.name" />
                   </div>
-                  <div class="py-2 col-6">
-                    <h4 class="sb-card-title">{{ product.name }}</h4>
-                    <h4 class="sb-card-title">quantità: {{ product.quantity }}</h4>
-                    <div class="price">{{ product.price }} € </div>
+                  <div class="py-2 col-9  ps-3">
+                    <span class="sb-card-title fw-bold">{{ product.name }}</span>
+                    <div class="price fw-bold fs-6 text-center">{{ product.price }} € </div>
                   </div>
                 </div>
-                <div class="quantity_input d-flex justify-content-center gap-4 px-4">
-                  <div class="a minus" @click.stop="cart.changeQuantity(index, '-')">-</div>
-                  {{ product.quantity }}
-                  <div class="a plus" @click.stop="cart.changeQuantity(index, '+')">+</div>
+                <div class="d-flex">
+                  <div class="form-row ms-auto py-2">
+                    <div class="form-group mb-0">
+                      <div class="input-group justify-content-center mb-0">
+                        <div class="number-input border-0">
+
+                          <button class="a minus" @click.stop="cart.changeQuantity(index, '-')">-</button>
+                          {{ product.quantity }}
+                          <button class="a plus" @click.stop="cart.changeQuantity(index, '+')">+</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <button @click.stop="cart.removeProduct(index)" class="btn trash"><i
+                      class="fa-solid fa-trash text-muted"></i>
+                  </button>
                 </div>
-                <button @click.stop="cart.removeProduct(index)" class="btn btn-danger btn-sm">
-                  elimina
-                </button>
+
               </div>
             </div>
-            Prezzo totale: {{ cart.productSum() }}
           </div>
-          <!-- <div class="cart_footer border-top py-3">
-                                        <div class="buttons mb-2">
-                                          <a href="#" class="view_order btn rounded-0 text-white me-2">
-                                            <span>Visualizza</span>
-                                          </a>
-                                          <a href="#" class="pay btn rounded-0 text-white">
-                                            <span>Pagamento</span>
-                                          </a>
-                                        </div> -->
-          <!-- //buttons -->
-          <!--  <div class="total">
-                                          <h3>Totale</h3>
-                                          <h4>34.00 €</h4>
-                                        </div>
-                                      </div> -->
-          <!-- //cart_footer -->
+          <div class="cart_footer pt-4">
+            <h3 class="total mt-5 text-muted fw-bold d-inline pe-2">Totale:</h3>
+            <h4 class="text-danger fw-bold d-inline">{{ cart.productSum() }}<span>€</span></h4>
+
+            <div class="px-1 pt-3">
+              <router-link class="btn pay bg_yellow text-white shadow border-0 rounded-pill" :to="{ name: 'checkout' }"
+                aria-current="page">
+                <i class="fa-solid fa-credit-card"></i>
+                <span class="fs-6 ps-1"> Vai al pagamento</span>
+              </router-link>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -105,6 +101,7 @@ export default {
   right: 0;
   bottom: 0;
   z-index: 9000;
+  height: 100vh;
 
   .cart_right {
     position: fixed;
@@ -112,14 +109,15 @@ export default {
     right: 0;
     bottom: 0;
     z-index: 9000;
-    background-color: #FFFFFF;
+    height: 100vh;
+    background-color: #ffffff;
     display: flex;
     flex-direction: column;
     outline: 0;
     transition: transform 0.3s ease-in-out;
 
-    .square {
-      background-color: #FFBD59;
+    .bg_yellow {
+      background-color: #ffbd59;
     }
 
     img {
@@ -129,38 +127,23 @@ export default {
     }
 
     .title_frame {
-      color: #8EA61D;
+      color: #8ea61d;
     }
 
     .cart_content {
       height: 40%;
+      min-height: 50%;
       overflow: auto;
 
       a,
       .hover-style {
-        background-color: #F6EDDA;
+        background-color: #f6edda;
         text-decoration: none;
-        color: #A43C28;
+        color: #a43c28;
         font-size: 1.1rem;
 
         &:hover {
-          color: #8EA61D;
-        }
-      }
-
-      .quantity_input {
-        display: flex;
-        align-items: center;
-
-        .plus,
-        .minus {
-          background-color: #F5C332;
-          width: 30px;
-          height: 30px;
-          text-align: center;
-          line-height: 30px;
-          border: none;
-          transition: 0.3s ease-in-out;
+          color: #8ea61d;
         }
       }
     }
@@ -178,7 +161,7 @@ export default {
 
     /* Handle */
     .cart_content::-webkit-scrollbar-thumb {
-      background: #FFBD59;
+      background: #ffbd59;
       border-radius: 10px;
     }
 
@@ -188,22 +171,44 @@ export default {
     }
 
     .cart_footer {
-      .view_order {
-        background-color: #FFBD59;
-
-        &:hover {
-          background-color: #8EA61D;
-        }
-      }
+      min-height: 100px;
 
       .pay {
-        background-color: #A43C28;
-
         &:hover {
-          background-color: #8EA61D;
+          background-color: #8ea61d;
         }
       }
     }
+
+
   }
+}
+
+.number-input {
+  border: none;
+  display: inline-flex;
+}
+
+.number-input,
+.number-input * {
+  box-sizing: border-box;
+}
+
+.number-input button {
+  outline: none;
+  -webkit-appearance: none;
+  background-color: #ffbd59;
+  border: none;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  cursor: pointer;
+  margin: 0;
+  position: relative;
+  padding: 0;
+}
+
+button {
+  color: white
 }
 </style>
