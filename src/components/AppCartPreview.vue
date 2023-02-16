@@ -49,7 +49,7 @@ export default {
             </div>
           </div>
           <div class="cart_content">
-            <div v-for="(product, index) in cart.products" class="wrapper">
+            <div v-for="product, index in cart.products" class="wrapper">
               <div class="d-flex flex-column gap-3 mb-2 hover-style px-2">
                 <div class="sb-cover-frame d-flex ">
                   <div class="py-2 col-4">
@@ -73,20 +73,20 @@ export default {
             </div>
           </div>
           <!-- <div class="cart_footer border-top py-3">
-                                <div class="buttons mb-2">
-                                  <a href="#" class="view_order btn rounded-0 text-white me-2">
-                                    <span>Visualizza</span>
-                                  </a>
-                                  <a href="#" class="pay btn rounded-0 text-white">
-                                    <span>Pagamento</span>
-                                  </a>
-                                </div> -->
+                                  <div class="buttons mb-2">
+                                    <a href="#" class="view_order btn rounded-0 text-white me-2">
+                                      <span>Visualizza</span>
+                                    </a>
+                                    <a href="#" class="pay btn rounded-0 text-white">
+                                      <span>Pagamento</span>
+                                    </a>
+                                  </div> -->
           <!-- //buttons -->
           <!--  <div class="total">
-                                  <h3>Totale</h3>
-                                  <h4>34.00 €</h4>
-                                </div>
-                              </div> -->
+                                    <h3>Totale</h3>
+                                    <h4>34.00 €</h4>
+                                  </div>
+                                </div> -->
           <!-- //cart_footer -->
         </div>
       </div>
