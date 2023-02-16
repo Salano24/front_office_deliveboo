@@ -12,7 +12,8 @@ export default {
             products: cart.products,
             hostedFieldInstance: false,
             nonce: "",
-            error: ""
+            error: "",
+            price: cart.productSum
         };
     },
     // #region logica carrello
@@ -30,6 +31,7 @@ export default {
         payWithCreditCard() {
             this.error = "";
             this.nonce = "";
+            this.price = cart.productSum()
             if (this.hostedFieldInstance) {
                 this.hostedFieldInstance.tokenize().then(payload => {
                     console.log(payload);
@@ -110,7 +112,6 @@ export default {
                         <div class="a plus" @click.stop="cart.changeQuantity(index, '+')">+</div>
                     </div>
                     <button class="btn btn-danger" @click.stop="cart.removeProduct(index)"> Rimuovi </button>
-
                 </div>
             </div>
             Prezzo totale: {{ cart.productSum() }}
@@ -147,10 +148,11 @@ export default {
                     </div>
                     <form>
                         <div class="form-group">
-                            <label for="amount">Amount</label>
+                            <label for="amount">Prezzo</label>
                             <div class="input-group">
-                                <div class="input-group-prepend"><span class="input-group-text">$</span></div>
-                                <input type="number" id="amount" class="form-control" placeholder="Enter Amount">
+                                <input disabled id="amount" :value="cart.productSum()" class="form-control"
+                                    placeholder="Enter Amount">
+                                <div class="input-group-prepend"><span class="input-group-text">&euro;</span></div>
                             </div>
                         </div>
                         <hr />
@@ -171,7 +173,8 @@ export default {
                             </div>
                         </div>
                         <button class="btn btn-primary btn-block" @click.prevent="payWithCreditCard">Pay with Credit
-                            Card</button>
+                            Card
+                        </button>
                     </form>
                 </div>
             </div>
