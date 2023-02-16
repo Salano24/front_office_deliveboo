@@ -73,7 +73,6 @@ export default {
               </div>
             </div>
           </div>
-
           <div class="cart_footer pt-4">
             <h3 class="total mt-5 text-muted fw-bold d-inline pe-2">Totale:</h3>
             <h4 class="text-danger fw-bold d-inline">{{ cart.productSum() }}<span>€</span></h4>
