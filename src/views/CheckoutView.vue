@@ -25,7 +25,7 @@ export default {
     },
     mounted() {
         if (localStorage.products) {
-            cart.products = JSON.parse(localStorage.products);
+            this.products = JSON.parse(localStorage.products);
         }
         cart.count = cart.products.length
         console.log(cart.products);
@@ -36,7 +36,7 @@ export default {
 <template>
     <div class="container">
         <div v-if="cart.count > 0">
-            <div v-for="product in cart.products" class="wrapper">
+            <div v-for="product, index in cart.products" class="wrapper">
                 <div class="d-flex flex-column gap-3 mb-2 hover-style px-2">
                     <div class="sb-cover-frame d-flex ">
                         <div class="py-2 col-4">
@@ -49,21 +49,23 @@ export default {
                         </div>
                     </div>
                     <div class="quantity_input mb-4">
-                        <div class="plus">-</div>
-                        <input type="number" value="1" min="1" max="10" />
-                        <div class="minus">+</div>
+                        <div class="a minus" @click.stop="cart.changeQuantity(index, '-')">-</div>
+                        {{ product.quantity }}
+                        <div class="a plus" @click.stop="cart.changeQuantity(index, '+')">+</div>
                     </div>
+                    <button class="btn btn-danger" @click.stop="cart.removeProduct(index)"> Rimuovi </button>
+
                 </div>
             </div>
         </div>
         <div v-else class="m-5">
-            <router-link class="btn btn_secondary p-4" :to="{ name: 'checkout' }" aria-current="page">
+            <router-link class="btn btn_secondary p-4" :to="{ name: 'home' }" aria-current="page">
                 <h2>Ancora nessun
                     prodotto nel carrello, puoi trovare nella pagina principale i migliori ristoranti!</h2>
                 <h1 class="h2"> Torna alla HOME!</h1>
             </router-link>
         </div>
-    </div>
+</div>
 </template>
 
 <style lang="scss" scoped>
