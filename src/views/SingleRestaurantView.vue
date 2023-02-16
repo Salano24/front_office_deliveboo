@@ -38,22 +38,19 @@ export default {
     },
     methods: {
         addProduct(plate) {
-            if (this.products.includes(plate)) {
-                plate.quantity = plate.quantity + 1
+            if (cart.products.filter(product => product.restaurant_id !== plate.restaurant_id).length > 0) {
+                return console.log('Puoi ordinare da un solo ristorante per volta!')
             } else {
-                plate.quantity = 1
-                this.products.unshift(plate)
+                if (this.products.includes(plate)) {
+                    plate.quantity = plate.quantity + 1
+                } else {
+                    plate.quantity = 1
+                    this.products.unshift(plate)
+                }
+                cart.count = cart.count + 1;
             }
-            cart.count = cart.count + 1;
-        },
-        getImagePath(path) {
-            console.log(path)
-            if (path) {
-                return this.store.base_api_url + "storage/" + path;
-            }
-            return "src/assets/no-image-available.png";
-        }
 
+        }
     },
     mounted() {
         if (localStorage.products) {
@@ -80,7 +77,6 @@ export default {
 </script>
 
 <template>
-
     <AppHeader />
     <div class="bg_yellow" v-if="!loading">
         <div class="container">
@@ -94,7 +90,7 @@ export default {
 
                 </div>
                 <div class="col-6">
-                    <img :src="getImagePath(restaurant.restaurant_image)" alt="">
+                    <img :src="store.getImagePath(restaurant.restaurant_image)" alt="">
                 </div>
             </div>
 
@@ -102,53 +98,53 @@ export default {
 
             <div>
 
-                    <ul  v-if="restaurant.plates.length > 0">
-                        <li class='bg-light' v-for="plate in restaurant.plates">
-                            {{ plate.name }}
-                            <button class="btn btn-sm btn-danger" @click="this.addProduct(plate)">
-                                Aggiungi
-                            </button>
-                        </li>
-                    </ul>
+                <ul v-if="restaurant.plates.length > 0">
+                    <li class='bg-light' v-for="plate in restaurant.plates">
+                        {{ plate.name }}
+                        <button class="btn btn-sm btn-danger" @click="this.addProduct(plate)">
+                            Aggiungi
+                        </button>
+                    </li>
+                </ul>
 
-                    <ul v-else>
-                        <li>Non ci sono piatti disponibili per questo ristorante</li>
-                    </ul>
+                <ul v-else>
+                    <li>Non ci sono piatti disponibili per questo ristorante</li>
+                </ul>
 
             </div>
         </div>
     </div>
     <div v-else>Caricamento</div>
 
-   
 
 
-     <AppFooter /> 
 
+<AppFooter />
 </template>
 
 <style lang="scss">
-    .bg_yellow{
-        background-color: #ffbd59;
-       
-        padding-bottom: 2rem;
+.bg_yellow {
+    background-color: #ffbd59;
 
-        img{
-          height: 70%  ;
-          margin-top: 2rem;
-        }
+    padding-bottom: 2rem;
 
-        li{
-            width: 25%;
-            padding: 1rem 1rem 1rem 3rem;
-            margin: 1rem ;
-            list-style: none;
-    
-        }
-        .red_line{
-            background-color: #a43c28;
-            height: 5px;
-            width: 100%;
-        }
+    img {
+        height: 70%;
+        margin-top: 2rem;
     }
+
+    li {
+        width: 25%;
+        padding: 1rem 1rem 1rem 3rem;
+        margin: 1rem;
+        list-style: none;
+
+    }
+
+    .red_line {
+        background-color: #a43c28;
+        height: 5px;
+        width: 100%;
+    }
+}
 </style>
