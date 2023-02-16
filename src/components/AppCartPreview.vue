@@ -2,7 +2,6 @@
 import { store as store } from "../store.js";
 import { cart as cart } from "../cart.js";
 import { assert } from "@vue/compiler-core";
-
 export default {
   name: "AppCartPreview",
   data() {
@@ -14,25 +13,23 @@ export default {
   },
   // #region logica carrello
   watch: {
-    products: {//viene costruito in questo modo perché é un array di oggetti
-      handler(newProducts) {//viene costruito in questo modo perché é un array di oggetti
-        //ogni volta che products viene modificato viene trasformato in stringa e aggiunto al localStorage
+    products: {
+      handler(newProducts) {
         localStorage.products = JSON.stringify(newProducts);
         cart.products = this.products
         console.log('watch')
       },
       deep: true
     }
-  },
+  }, methods: {},
   mounted() {
     if (localStorage.products) {
-      cart.products = JSON.parse(localStorage.products);
+      this.products = JSON.parse(localStorage.products);
     }
     cart.count = cart.products.length
   },
 };
 </script>
-
 <template>
   <div class="cart_preview">
     <div class="cart_right p-3">
@@ -52,8 +49,7 @@ export default {
             </div>
           </div>
           <div class="cart_content">
-            <!-- #region order (sotto) -->
-            <div v-for="product in cart.products" class="wrapper">
+            <div v-for="(product, index) in cart.products" class="wrapper">
               <div class="d-flex flex-column gap-3 mb-2 hover-style px-2">
                 <div class="sb-cover-frame d-flex ">
                   <div class="py-2 col-4">
@@ -62,44 +58,41 @@ export default {
                   <div class="py-2 col-6">
                     <h4 class="sb-card-title">{{ product.name }}</h4>
                     <h4 class="sb-card-title">quantità: {{ product.quantity }}</h4>
-                    <h4 class="sb-card-title">{{ product.id }}</h4>
                     <div class="price">{{ product.price }} € </div>
                   </div>
                 </div>
-                <div class="quantity_input mb-4">
-                  <div class="plus">-</div>
-                  <input type="number" value="1" min="1" max="10" />
-                  <div class="minus">+</div>
+                <div class="quantity_input d-flex justify-content-center gap-4 px-4">
+                  <div class="a minus" @click.stop="cart.changeQuantity(index, '-')">-</div>
+                  {{ product.quantity }}
+                  <div class="a plus" @click.stop="cart.changeQuantity(index, '+')">+</div>
                 </div>
+                <button @click.stop="cart.removeProduct(index)" class="btn btn-danger btn-sm">
+                  elimina
+                </button>
               </div>
-
-            </div>
-            <!-- #endregion order -->
-          </div>
-
-          <div class="cart_footer border-top py-3">
-            <div class="buttons mb-2">
-              <a href="#" class="view_order btn rounded-0 text-white me-2">
-                <span>Visualizza</span>
-              </a>
-
-              <a href="#" class="pay btn rounded-0 text-white">
-                <span>Pagamento</span>
-              </a>
-            </div>
-            <!-- //buttons -->
-            <div class="total">
-              <h3>Totale</h3>
-              <h4>34.00 €</h4>
             </div>
           </div>
+          <!-- <div class="cart_footer border-top py-3">
+                              <div class="buttons mb-2">
+                                <a href="#" class="view_order btn rounded-0 text-white me-2">
+                                  <span>Visualizza</span>
+                                </a>
+                                <a href="#" class="pay btn rounded-0 text-white">
+                                  <span>Pagamento</span>
+                                </a>
+                              </div> -->
+          <!-- //buttons -->
+          <!--  <div class="total">
+                                <h3>Totale</h3>
+                                <h4>34.00 €</h4>
+                              </div>
+                            </div> -->
           <!-- //cart_footer -->
         </div>
       </div>
     </div>
-  </div>
+</div>
 </template>
-
 <style lang="scss" scoped>
 .cart_preview {
   transition: 0.5;
@@ -118,14 +111,14 @@ export default {
     right: 0;
     bottom: 0;
     z-index: 9000;
-    background-color: #ffffff;
+    background-color: #FFFFFF;
     display: flex;
     flex-direction: column;
     outline: 0;
     transition: transform 0.3s ease-in-out;
 
     .square {
-      background-color: #ffbd59;
+      background-color: #FFBD59;
     }
 
     img {
@@ -135,7 +128,7 @@ export default {
     }
 
     .title_frame {
-      color: #8ea61d;
+      color: #8EA61D;
     }
 
     .cart_content {
@@ -144,13 +137,13 @@ export default {
 
       a,
       .hover-style {
-        background-color: #f6edda;
+        background-color: #F6EDDA;
         text-decoration: none;
-        color: #a43c28;
+        color: #A43C28;
         font-size: 1.1rem;
 
         &:hover {
-          color: #8ea61d;
+          color: #8EA61D;
         }
       }
 
@@ -160,7 +153,7 @@ export default {
 
         .plus,
         .minus {
-          background-color: #f5c332;
+          background-color: #F5C332;
           width: 30px;
           height: 30px;
           text-align: center;
@@ -184,7 +177,7 @@ export default {
 
     /* Handle */
     .cart_content::-webkit-scrollbar-thumb {
-      background: #ffbd59;
+      background: #FFBD59;
       border-radius: 10px;
     }
 
@@ -195,18 +188,18 @@ export default {
 
     .cart_footer {
       .view_order {
-        background-color: #ffbd59;
+        background-color: #FFBD59;
 
         &:hover {
-          background-color: #8ea61d;
+          background-color: #8EA61D;
         }
       }
 
       .pay {
-        background-color: #a43c28;
+        background-color: #A43C28;
 
         &:hover {
-          background-color: #8ea61d;
+          background-color: #8EA61D;
         }
       }
     }

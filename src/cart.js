@@ -1,68 +1,32 @@
 import { reactive } from "vue";
 import axios from "axios";
 import { store as store } from "./store.js";
-
 export const cart = reactive({
     loading: true,
     products: [],
     count: null,
-    // addProduct(plate) {
-    //     this.products.unshift(plate)
-    //     console.log('aggiunto il piatto all\' array di prodotti in cart.js')
-
-    // },
+    removeProduct(index) {
+        this.products.splice(index, 1)
+        this.count = --this.count
+    },
+    changeQuantity(index, operator) {
+        let quantity = this.products[index].quantity
+        if (operator === '+') {
+            this.products[index].quantity = ++quantity
+        } else if (operator === '-') {
+            this.products[index].quantity = --quantity
+        } else {
+            return console.log('argomenti della funzione errati')
+        }
+        if (quantity <= 0) {
+            return this.removeProduct(index)
+        }
+    }
 });
-//aggiungere chiave quantitá all oggetto piatto nel carello la quale verra modificata successivamente
-// eliminare un elemento dal carrello 
-// aggiungere la quantitá //solo nella sezione checkout
-// aggiungere il check di tipo esiste gia questo piatto nel carrello 
-// oppure check di tipo questo piatto é di un'altro ristorante
-
-
-
-/*
-tutto cio che si riferisce al carrello si deve trovare dentro i file scritti sotto E BASTA!
-
-- cart.js
-- SingleRestaurantView.vue
-- AppCartPrewiew.vue
- */
-
-//eliminare tutta la logica riferita al carrello da AppHeader // fatto
-
-
-//AppCartPreview //fatto
-// import { cart as cart } from "../cart.js";
-// import { assert } from "@vue/compiler-core";
-
-// export default {
-//   name: "AppCartPreview",
-//   data() {
-//     return {
-//       store,
-//       cart
-//     };
-//   },
-//   // #region logica carrello
-//   // #endregion logica carrello
-//   mounted() {
-//     if (localStorage.products) {
-//       this.productsOrder = JSON.parse(localStorage.products);
-//     }
-//   },
-
-
-
-
-
-
-
-
-
-
-
-
-
+// ToDo carrello:
+//aggiungere chiave quantitá all oggetto piatto nel carello la quale verra modificata successivamente #fatto
+// eliminare un elemento dal carrello #fatto
+// aggiungere check di tipo questo piatto é di un'altro ristorante #fatto //aggiungere un messaggio per l'utente nel caso ci provi
 //AppCategory //fatto
  // #region logica carrello
 //  getPlates(call) {
@@ -82,10 +46,8 @@ tutto cio che si riferisce al carrello si deve trovare dentro i file scritti sot
 //   console.log('cambiato local storage')
 //   console.log(cart.products);
 // }
-
-// dentro mouted 
+// dentro mouted
 //  #region logica carrello
-
 // if (localStorage.products) {
 //   cart.products = JSON.parse(localStorage.products);
 // }
