@@ -57,6 +57,7 @@ export default {
 
                 </div>
             </div>
+            Prezzo totale: {{ cart.productSum() }}
         </div>
         <div v-else class="m-5">
             <router-link class="btn btn_secondary p-4" :to="{ name: 'home' }" aria-current="page">

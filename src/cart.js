@@ -21,6 +21,14 @@ export const cart = reactive({
         if (quantity <= 0) {
             return this.removeProduct(index)
         }
+    },
+    productSum() {
+        let totalPrice = 0;
+        this.products.forEach(product => {
+            let singlePrice = product.price * product.quantity
+            totalPrice = totalPrice + singlePrice
+        });
+        return Number(totalPrice.toFixed(2))
     }
 });
 // ToDo carrello:
