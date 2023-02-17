@@ -2,6 +2,8 @@
 import { store as store } from "../store.js";
 import { cart as cart } from "../cart.js";
 
+import axios from "axios";
+
 export default {
   name: "AppCategory",
   components: {},
@@ -18,6 +20,27 @@ export default {
     },
     nextPage(url) {
       this.store.getRestaurants(url);
+    },
+    simpleCall(url) {
+      axios
+        .get(url)
+        .then((response) => {
+          if (response.data.success) {
+            store.restaurants = response.data.results;
+            store.results = response.data.results;
+            console.log(store.restaurants);
+            this.loading = false;
+          } else {
+            this.$router.replace({ name: "not-found" });
+          }
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    scrollToBottom() {
+      this.$refs["restaurants"].scrollIntoView({ behavior: "smooth" })
     }
   },
   mounted() {
@@ -38,32 +61,42 @@ export default {
 
   <div class="container-fluid bg-black m-auto p-0">
     <div class="row gx-0">
-      <div class="col-12 col-sm-6 col-md-3 text_center pizza">
+      <div @click="this.simpleCall(store.base_api_url + 'api/restaurants/types/pizza'), this.scrollToBottom()"
+        class="col-12 col-sm-6 col-md-3 text_center pizza" style="cursor:pointer">
         <h2>PIZZA</h2>
       </div>
-      <div class="col-12 col-sm-6 col-md-3 text_center hamburgher">
-        <h2>HAMBURGER</h2>
+      <div @click="this.simpleCall(store.base_api_url + 'api/restaurants/types/cinese'), this.scrollToBottom()"
+        class="col-12 col-sm-6 col-md-3 text_center hamburgher" style="cursor:pointer">
+        <h2>CINESE</h2>
       </div>
-      <div class="col-12 col-sm-6 col-md-3 text_center indiano">
+      <div @click="this.simpleCall(store.base_api_url + 'api/restaurants/types/indiano'), this.scrollToBottom()"
+        class="col-12 col-sm-6 col-md-3 text_center indiano" style="cursor:pointer">
         <h2>INDIANO</h2>
       </div>
-      <div class="col-12 col-sm-6 col-md-3 text_center insalata">
+      <div @click="this.simpleCall(store.base_api_url + 'api/restaurants/types/vegano'), this.scrollToBottom()"
+        class="col-12 col-sm-6 col-md-3 text_center insalata" style="cursor:pointer">
         <h2>VEGANO</h2>
       </div>
-      <div class="col-12 col-sm-6 col-md-3 text_center messicano">
+      <div @click="this.simpleCall(store.base_api_url + 'api/restaurants/types/messicano'), this.scrollToBottom()"
+        class="col-12 col-sm-6 col-md-3 text_center messicano" style="cursor:pointer">
         <h2>MESSICANO</h2>
       </div>
-      <div class="col-12 col-sm-6 col-md-3 text_center sushi">
+      <div @click="this.simpleCall(store.base_api_url + 'api/restaurants/types/giapponese'), this.scrollToBottom()"
+        class="col-12 col-sm-6 col-md-3 text_center sushi" style="cursor:pointer">
         <h2>SUSHI</h2>
       </div>
-      <div class="col-12 col-sm-6 col-md-3 text_center carne">
+      <div @click="this.simpleCall(store.base_api_url + 'api/restaurants/types/carne'), this.scrollToBottom()"
+        class="col-12 col-sm-6 col-md-3 text_center carne" style="cursor:pointer">
         <h2>CARNE</h2>
       </div>
-      <div class="col-12 col-sm-6 col-md-3 text_center pasta">
+      <div @click="this.simpleCall(store.base_api_url + 'api/restaurants/types/pasta'), this.scrollToBottom()"
+        class="col-12 col-sm-6 col-md-3 text_center pasta" style="cursor:pointer">
         <h2>PASTA</h2>
       </div>
     </div>
   </div>
+
+  <div ref="restaurants" class="p-3" id="special"></div>
 
   <section id="restaurants">
 
@@ -169,14 +202,13 @@ export default {
     </div>
 
   </section>
-
-
-
-
-
 </template>
 
 <style lang="scss" scoped>
+#special {
+  background-color: #F6EDDA;
+}
+
 #restaurants {
   background-color: #F6EDDA;
 
@@ -190,6 +222,7 @@ export default {
       color: #F6EDDA;
     }
   }
+
 
   hr {
     border: 3px solid #A43C28;
@@ -233,7 +266,7 @@ export default {
   }
 
   .hamburgher {
-    background-image: url(../assets/hamburgher.png);
+    background-image: url(../assets/chinese.jpg);
   }
 
   .indiano {
