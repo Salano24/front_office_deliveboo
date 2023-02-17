@@ -2,8 +2,14 @@
 import { store as store } from "../store.js";
 import { cart as cart } from "../cart.js";
 import braintree from 'braintree-web';
+import AppHeader from '../components/AppHeader.vue';
+import AppFooter from '../components/AppFooter.vue';
 
 export default {
+    components: {
+        AppHeader,
+        AppFooter
+    },
     name: "AppCartPreview",
     data() {
         return {
@@ -92,95 +98,92 @@ export default {
 </script>
 
 <template>
-    <div class="container">
-        <div v-if="cart.count > 0">
-            <div v-for="product, index in cart.products" class="wrapper">
-                <div class="d-flex flex-column gap-3 mb-2 hover-style px-2">
-                    <div class="sb-cover-frame d-flex ">
-                        <div class="py-2 col-4">
-                            <img :src="store.getImagePath(product.plate_image)" :alt="'img ' + product.name" />
-                        </div>
-                        <div class="py-2 col-6">
-                            <h4 class="sb-card-title">{{ product.name }}</h4>
-                            <h4 class="sb-card-title">{{ product.id }}</h4>
-                            <div class="price">{{ product.price }} € </div>
+    <AppHeader />
+    <div v-if="true" class="container py-5">
+        <div class="row gap-5 gy-0">
+            <h2 class="fw-bold mb-0">Procedi al pagamento</h2>
+
+            <div class="col-12 col-lg-6">
+                <div class="card box rounded-4 border-0 shadow  overflow-auto px-3 py-4">
+                    <h3 class="fw-bold mb-0 text-muted mx-1">Il tuo ordine</h3>
+                    <div v-for="product, index in cart.products" class="wrapper card border-0 p-3">
+                        <div class="row justify-content-between hover-style">
+                            <div class="sb-cover-frame d-flex py-2 col-5 col-sm-4">
+                                <img :src="store.getImagePath(product.plate_image)" :alt="'img ' + product.name"
+                                    class="img-fluid" />
+                            </div>
+                            <div class="py-2 col-7 col-sm-8 text-end d-flex flex-column justify-content-center">
+                                <h4>{{ product.name }}</h4>
+
+                                <div class="price">{{ product.price }} € </div>
+
+
+                                <div class="quantity_input justify-content-end pt-3">
+                                    <button class="bg-transparent btn" @click.stop="cart.removeProduct(index)"><i
+                                            class="fa-solid fa-trash text-muted pe-3"></i></button>
+                                    <div class="a minus text-white fw-bold" @click.stop="cart.changeQuantity(index, '-')">-
+                                    </div>
+                                    <span class="bg-white px-3">{{ product.quantity }}</span>
+                                    <div class="a plus text-white fw-bold" @click.stop="cart.changeQuantity(index, '+')">+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="quantity_input mb-4">
-                        <div class="a minus" @click.stop="cart.changeQuantity(index, '-')">-</div>
-                        {{ product.quantity }}
-                        <div class="a plus" @click.stop="cart.changeQuantity(index, '+')">+</div>
-                    </div>
-                    <button class="btn btn-danger" @click.stop="cart.removeProduct(index)"> Rimuovi </button>
                 </div>
             </div>
-            Prezzo totale: {{ cart.productSum() }}
-        </div>
-        <div v-else class="m-5">
-            <router-link class="btn btn_secondary p-4" :to="{ name: 'home' }" aria-current="page">
-                <h2>Ancora nessun
-                    prodotto nel carrello, puoi trovare nella pagina principale i migliori ristoranti!</h2>
-                <h1 class="h2"> Torna alla HOME!</h1>
-            </router-link>
+
+
+            <div class="col-12 col-lg-5">
+                <div class="card rounded-4 border-0 shadow px-3 py-4">
+                    <div class="card bg-light">
+                        <div class="card-header">Payment Information</div>
+                        <div class="card-body">
+                            <div class="alert alert-danger" v-if="error">
+                                {{ error }}
+                            </div>
+                            <div class="alert alert-success" v-if="nonce">
+                                Successfully generated nonce.
+                            </div>
+                            <form>
+                                <div class="form-group">
+                                    <label for="amount">Prezzo</label>
+                                    <div class="input-group">
+                                        <input disabled id="amount" :value="cart.productSum()" class="form-control"
+                                            placeholder="Enter Amount">
+                                        <div class="input-group-prepend"><span class="input-group-text">&euro;</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="form-group">
+                                    <label>Credit Card Number</label>
+                                    <div id="creditCardNumber" class="form-control"></div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label>Expire Date</label>
+                                            <div id="expireDate" class="form-control"></div>
+                                        </div>
+                                        <div class="col-6">
+                                            <label>CVV</label>
+                                            <div id="cvv" class="form-control"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary btn-block" @click.prevent="payWithCreditCard">Pay with
+                                    Credit
+                                    Card
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-    <div class="container">
-        <div class="col-6 offset-3">
-            <div class="card bg-light">
-                <div class="card-header">Payment Information</div>
-                <div class="card-body">
-                    <div class="alert alert-danger" v-if="error">
-                        {{ error }}
-                    </div>
-                    <div class="alert alert-success" v-if="nonce">
-                        Successfully generated nonce.
-                    </div>
-                    <form>
-                        <div class="form-group">
-                            <label for="amount">Prezzo</label>
-                            <div class="input-group">
-                                <input disabled id="amount" :value="cart.productSum()" class="form-control"
-                                    placeholder="Enter Amount">
-                                <div class="input-group-prepend"><span class="input-group-text">&euro;</span></div>
-                            </div>
-                        </div>
-                        <hr />
-                        <div class="form-group">
-                            <label>Credit Card Number</label>
-                            <div id="creditCardNumber" class="form-control"></div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-6">
-                                    <label>Expire Date</label>
-                                    <div id="expireDate" class="form-control"></div>
-                                </div>
-                                <div class="col-6">
-                                    <label>CVV</label>
-                                    <div id="cvv" class="form-control"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary btn-block" @click.prevent="payWithCreditCard">Pay with Credit
-                            Card
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-        </div>
-</div>
+<AppFooter />
 </template>
 
 <style lang="scss" scoped>
@@ -212,26 +215,29 @@ a,
     }
 }
 
+.box {
+    max-height: 600px;
+}
 
 /* width */
-.cart_content::-webkit-scrollbar {
+.box::-webkit-scrollbar {
     width: 10px;
 }
 
 /* Track */
-.cart_content::-webkit-scrollbar-track {
+.box::-webkit-scrollbar-track {
     border: 1px solid rgb(182, 182, 182);
     border-radius: 10px;
 }
 
 /* Handle */
-.cart_content::-webkit-scrollbar-thumb {
+.box::-webkit-scrollbar-thumb {
     background: #ffbd59;
     border-radius: 10px;
 }
 
 /* Handle on hover */
-.cart_content::-webkit-scrollbar-thumb:hover {
+.box::-webkit-scrollbar-thumb:hover {
     background: grey;
 }
 
@@ -250,6 +256,16 @@ a,
         &:hover {
             background-color: #8ea61d;
         }
+    }
+}
+
+.to_home {
+    color: #8ea61d;
+    font-weight: bold;
+    font-size: 50px;
+
+    &:hover {
+        color: #a43c28;
     }
 }
 </style>
