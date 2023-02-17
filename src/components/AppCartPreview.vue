@@ -55,11 +55,11 @@ export default {
                 <div class="d-flex">
                   <div class="form-row ms-auto py-2">
                     <div class="form-group mb-0">
-                      <div class="input-group justify-content-center mb-0">
+                      <div class="input-group bg-white justify-content-center mb-0">
                         <div class="number-input border-0">
 
                           <button class="a minus" @click.stop="cart.changeQuantity(index, '-')">-</button>
-                          {{ product.quantity }}
+                          <span class="bg-white px-3">{{ product.quantity }}</span>
                           <button class="a plus" @click.stop="cart.changeQuantity(index, '+')">+</button>
                         </div>
                       </div>
