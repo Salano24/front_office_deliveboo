@@ -21,7 +21,8 @@ export default {
             restaurant: [],
             loading: true,
             message: "",
-            products: store.products
+            products: store.products,
+            confirm: false
         }
     },
     // #region logica carrello
@@ -43,11 +44,15 @@ export default {
             } else {
                 if (this.products.includes(plate)) {
                     plate.quantity = plate.quantity + 1
+                    this.confirm = true
+                    
                 } else {
                     plate.quantity = 1
                     this.products.unshift(plate)
+                    this.confirm = true
                 }
                 cart.count = cart.count + 1;
+
             }
 
         }
@@ -62,9 +67,9 @@ export default {
         axios.get(url)
             .then(response => {
                 if (response.data.success) {
+                    this.loading = false
                     this.restaurant = response.data.results
                     console.log(this.restaurant)
-                    this.loading = false
                 } else {
                     this.message = "404 not found"
                 }
@@ -78,84 +83,67 @@ export default {
 
 <template>
     <AppHeader />
-    <div class="bg_yellow py-5" v-if="!loading">
-        <div class="container">
+    <div class="py-5" v-if="!loading">
+        <div class="container-lg">
             <div class="row">
-                <div class="col-6 text-center">
-                    <h1 class="mt-5 ">{{ restaurant.name }}</h1>
-                    <p class="m-0"><strong>Contatti: </strong> +39 {{ restaurant.phone }}</p>
-
-                    <p class="m-0"><strong>Indirizzo: </strong> {{ restaurant.address }} </p>
-
-
-                </div>
-                <div class="col-6">
-                    <img :src="store.getImagePath(restaurant.restaurant_image)" alt="">
-                </div>
-            </div>
-
-            <div class="red_line"></div>
-
-            <div>
-
-                <div class="container" v-if="restaurant.plates.length > 0">
-                    <div class="row">
-                        <div class="col-3" v-for="plate in restaurant.plates">
-                            <div class=' plate_card'>
-                                <img :src="store.getImagePath(plate.plate_image)" alt="">
-                                <h2>{{ plate.name }}</h2>
-                                <p class="w-75">{{ plate.ingredients }}</p>
-                                <div class="d-flex justify-content-between w-75 align-items-center">
-                                    <span>€ {{ plate.price }}</span>
-                                    <button class="add_kart btn" @click="this.addProduct(plate)">
-                                        <i class="fa-solid fa-cart-shopping"></i>
-
-                                    </button>
-                                </div>
+                <div class="col-12 text-center">
+                    <div class="card border-0 shadow p-4 rounded-4">
+                        <div class="row">
+                             <div class="col-12 col-sm-5">
+                               <img class="img-fluid" :src="store.getImagePath(restaurant.restaurant_image)" alt="">
+                            </div>      
+                            <div class="col-12 col-sm-6 ms-auto text-start">
+                                <h1 class="mb-4 lh-1 green_text text-uppercase">{{ restaurant.name }}</h1>
+                                <p class="m-0"><strong>Contatti: </strong> +39 {{ restaurant.phone }}</p>
+                                <p class="m-0"><strong>Indirizzo: </strong> {{ restaurant.address }} </p>              
+                                <div v-if="restaurant.plates.length > 0">
+                                    <div class="alert alert-warning alert-dismissible fade show mt-3" role="alert" v-if="this.confirm">
+                                        <strong>Piatto aggiunto al carrello</strong>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" @click="this.confirm = false"></button>
+                                    </div>
+                                        <div class="plates overflow-auto">
+                                            <div v-for="plate in restaurant.plates">
+                                                <div class='pt-2'>
+                                                    <div class="row g-0 border-top py-3">
+                                                        
+                                                        <div class="col-4 pe-3">
+                                                            <img class="img-fluid" :src="store.getImagePath(plate.plate_image)" alt="">  
+                                                        </div>
+                                                        <div class="col-8 text-muted">
+                                                            <h2>{{ plate.name }}</h2>
+                                                            <p class="py-2">{{ plate.ingredients }}</p>
+                                                            <div class="d-flex justify-content-between w-75 align-items-center">
+                                                                <span class="fs-4 fw-bold">€ {{ plate.price }}</span>
+                                                                <button class="add_cart btn" @click="this.addProduct(plate)">
+                                                                    <i class="fa-solid fa-cart-plus fa-2xl text-muted"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div> 
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                </div>  
+                                <h3 class="mt-5 text-muted " v-else>Non ci sono piatti disponibili per questo ristorante</h3>                           
                             </div>
-
                         </div>
                     </div>
-
                 </div>
-
-                <ul v-else>
-                    <li>Non ci sono piatti disponibili per questo ristorante</li>
-                </ul>
-
             </div>
         </div>
     </div>
     <div v-else>Caricamento</div>
 
-
-
-
 <AppFooter />
 </template>
 
-<style lang="scss">
-.bg_yellow {
-    background-color: #ffbd59;
-
-    img {
-        height: 70%;
-        margin-top: 1rem;
-    }
+<style lang="scss" scoped>
 
     li {
         width: 25%;
         padding: 1rem 1rem 1rem 3rem;
         margin: 1rem;
         list-style: none;
-
-
-    }
-
-    .red_line {
-        background-color: #a43c28;
-        height: 5px;
-        width: 100%;
     }
 
     .plate_card {
@@ -169,32 +157,43 @@ export default {
         height: 100%;
         margin-bottom: 2rem;
 
-        img {
-            width: 200px;
-        }
 
         h2 {
             margin-top: 0.5rem;
         }
 
         div {
-            font-size: 2rem;
-
-
-            .add_kart {
-                background-color: #f6edda;
-                font-weight: bold;
-                font-size: 2rem;
-                color: #a43c28;
-
-            }
-
-            .add_kart:hover {
+            font-size: 2rem;          
+        }
+    }
+    .add_cart{
+        &:hover {
                 color: #ffbd59;
             }
-        }
-
-
     }
-}
+    .plates{
+        max-height: 800px;
+    }
+
+    .plates::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    /* Track */
+    .plates::-webkit-scrollbar-track {
+      border: 1px solid rgb(182, 182, 182);
+      border-radius: 10px;
+    }
+
+    /* Handle */
+    .plates::-webkit-scrollbar-thumb {
+      background: #ffbd59;
+      border-radius: 10px;
+    }
+
+    /* Handle on hover */
+    .plates::-webkit-scrollbar-thumb:hover {
+      background: grey;
+    }
+
 </style>
