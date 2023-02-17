@@ -78,7 +78,7 @@ export default {
 
 <template>
     <AppHeader />
-    <div class="bg_yellow" v-if="!loading">
+    <div class="bg_yellow py-5" v-if="!loading">
         <div class="container">
             <div class="row">
                 <div class="col-6 text-center">
@@ -101,22 +101,22 @@ export default {
                 <div class="container" v-if="restaurant.plates.length > 0">
                     <div class="row">
                         <div class="col-3" v-for="plate in restaurant.plates">
-                            <div class=' plate_card' >
+                            <div class=' plate_card'>
                                 <img :src="store.getImagePath(plate.plate_image)" alt="">
                                 <h2>{{ plate.name }}</h2>
-                                <p class="w-75">{{ plate.ingredients }}</p> 
+                                <p class="w-75">{{ plate.ingredients }}</p>
                                 <div class="d-flex justify-content-between w-75 align-items-center">
-                                    <span>€ {{ plate.price }}</span> 
+                                    <span>€ {{ plate.price }}</span>
                                     <button class="add_kart btn" @click="this.addProduct(plate)">
                                         <i class="fa-solid fa-cart-shopping"></i>
 
-                                   </button>
-                           </div>
+                                    </button>
                                 </div>
-                               
+                            </div>
+
                         </div>
                     </div>
-                    
+
                 </div>
 
                 <ul v-else>
@@ -138,8 +138,6 @@ export default {
 .bg_yellow {
     background-color: #ffbd59;
 
-    padding-bottom: 2rem;
-
     img {
         height: 70%;
         margin-top: 1rem;
@@ -150,7 +148,7 @@ export default {
         padding: 1rem 1rem 1rem 3rem;
         margin: 1rem;
         list-style: none;
-        
+
 
     }
 
@@ -160,7 +158,7 @@ export default {
         width: 100%;
     }
 
-    .plate_card{
+    .plate_card {
         margin-top: 1rem;
         border-radius: 25px;
         display: flex;
@@ -170,31 +168,33 @@ export default {
         color: #a43c28;
         height: 100%;
         margin-bottom: 2rem;
-        img{
+
+        img {
             width: 200px;
         }
 
-        h2{
+        h2 {
             margin-top: 0.5rem;
         }
 
-        div{
+        div {
             font-size: 2rem;
-        
 
-        .add_kart{
-            background-color: #f6edda;
-            font-weight: bold;
-            font-size: 2rem;
-            color: #a43c28;
 
-        } 
-        .add_kart:hover{
-            color: #ffbd59;
+            .add_kart {
+                background-color: #f6edda;
+                font-weight: bold;
+                font-size: 2rem;
+                color: #a43c28;
+
+            }
+
+            .add_kart:hover {
+                color: #ffbd59;
+            }
         }
-        }
 
-     
+
     }
 }
 </style>

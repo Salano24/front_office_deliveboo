@@ -73,11 +73,11 @@ export default {
                     fields: {
                         number: {
                             selector: '#creditCardNumber',
-                            placeholder: 'Enter Credit Card'
+                            placeholder: 'Inserisci numero di carta'
                         },
                         cvv: {
                             selector: '#cvv',
-                            placeholder: 'Enter CVV'
+                            placeholder: 'Inserisci CVV'
                         },
                         expirationDate: {
                             selector: '#expireDate',
@@ -99,10 +99,9 @@ export default {
 
 <template>
     <AppHeader />
-    <div v-if="true" class="container py-5">
+    <div v-if="cart.productSum()" class="container py-5">
         <div class="row gap-5 gy-0">
             <h2 class="fw-bold mb-0">Procedi al pagamento</h2>
-
             <div class="col-12 col-lg-6">
                 <div class="card box rounded-4 border-0 shadow  overflow-auto px-3 py-4">
                     <h3 class="fw-bold mb-0 text-muted mx-1">Il tuo ordine</h3>
@@ -137,15 +136,32 @@ export default {
             <div class="col-12 col-lg-5">
                 <div class="card rounded-4 border-0 shadow px-3 py-4">
                     <div class="card bg-light">
-                        <div class="card-header">Payment Information</div>
+                        <div class="card-header">Pagamento</div>
                         <div class="card-body">
                             <div class="alert alert-danger" v-if="error">
                                 {{ error }}
                             </div>
                             <div class="alert alert-success" v-if="nonce">
-                                Successfully generated nonce.
+                                Pagamento effettuato con successo!
                             </div>
                             <form>
+                                <div class="form-group">
+                                    <label>Numero carta di credito</label>
+                                    <div id="creditCardNumber" class="form-control"></div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label>Data di scadenza</label>
+                                            <div id="expireDate" class="form-control"></div>
+                                        </div>
+                                        <div class="col-6">
+                                            <label>CVV</label>
+                                            <div id="cvv" class="form-control"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
                                 <div class="form-group">
                                     <label for="amount">Prezzo</label>
                                     <div class="input-group">
@@ -155,30 +171,26 @@ export default {
                                         </div>
                                     </div>
                                 </div>
-                                <hr />
-                                <div class="form-group">
-                                    <label>Credit Card Number</label>
-                                    <div id="creditCardNumber" class="form-control"></div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <label>Expire Date</label>
-                                            <div id="expireDate" class="form-control"></div>
-                                        </div>
-                                        <div class="col-6">
-                                            <label>CVV</label>
-                                            <div id="cvv" class="form-control"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="btn btn-primary btn-block" @click.prevent="payWithCreditCard">Pay with
-                                    Credit
-                                    Card
+
+                                <button class="btn btn-primary btn-block my-2" @click.prevent="payWithCreditCard">
+                                    Paga con carta di credito
                                 </button>
                             </form>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div v-else class="container py-5">
+        <div class="row py-5">
+            <div class="col-12">
+                <div class="card  rounded-4 border-0 shadow px-3 py-5">
+                    <router-link class="btn bg-white p-4" :to="{ name: 'home' }" aria-current="page">
+                        <h2 class="text-muted fw-bold text-uppercase mb-3">Nessun prodotto nel carrello</h2>
+                        <h2 class="text-muted mb-5">Puoi trovare nella pagina principale i migliori ristoranti!</h2>
+                        <h2 class="to_home"> Torna alla home <i class="fa-solid fa-burger"></i></h2>
+                    </router-link>
                 </div>
             </div>
         </div>
