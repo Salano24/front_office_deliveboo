@@ -81,9 +81,11 @@ export default {
         class="col-12 col-sm-6 col-md-3 text_center messicano" style="cursor:pointer">
         <h2>MESSICANO</h2>
       </div>
+
       <div @click="this.simpleCall(store.base_api_url + 'api/restaurants/types/giapponese'), this.scrollToBottom()"
         class="col-12 col-sm-6 col-md-3 text_center sushi" style="cursor:pointer">
         <h2>SUSHI</h2>
+
       </div>
       <div @click="this.simpleCall(store.base_api_url + 'api/restaurants/types/carne'), this.scrollToBottom()"
         class="col-12 col-sm-6 col-md-3 text_center carne" style="cursor:pointer">
@@ -201,7 +203,9 @@ export default {
 
     </div>
 
+
   </section>
+
 </template>
 
 <style lang="scss" scoped>
