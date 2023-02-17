@@ -98,14 +98,26 @@ export default {
 
             <div>
 
-                <ul v-if="restaurant.plates.length > 0">
-                    <li class='bg-light' v-for="plate in restaurant.plates">
-                        {{ plate.name }}
-                        <button class="btn btn-sm btn-danger" @click="this.addProduct(plate)">
-                            Aggiungi
-                        </button>
-                    </li>
-                </ul>
+                <div class="container" v-if="restaurant.plates.length > 0">
+                    <div class="row">
+                        <div class="col-3" v-for="plate in restaurant.plates">
+                            <div class=' plate_card' >
+                                <img :src="store.getImagePath(plate.plate_image)" alt="">
+                                <h2>{{ plate.name }}</h2>
+                                <p class="w-75">{{ plate.ingredients }}</p> 
+                                <div class="d-flex justify-content-between w-75 align-items-center">
+                                    <span>€ {{ plate.price }}</span> 
+                                    <button class="add_kart btn" @click="this.addProduct(plate)">
+                                        <i class="fa-solid fa-cart-shopping"></i>
+
+                                   </button>
+                           </div>
+                                </div>
+                               
+                        </div>
+                    </div>
+                    
+                </div>
 
                 <ul v-else>
                     <li>Non ci sono piatti disponibili per questo ristorante</li>
@@ -130,7 +142,7 @@ export default {
 
     img {
         height: 70%;
-        margin-top: 2rem;
+        margin-top: 1rem;
     }
 
     li {
@@ -138,6 +150,7 @@ export default {
         padding: 1rem 1rem 1rem 3rem;
         margin: 1rem;
         list-style: none;
+        
 
     }
 
@@ -145,6 +158,43 @@ export default {
         background-color: #a43c28;
         height: 5px;
         width: 100%;
+    }
+
+    .plate_card{
+        margin-top: 1rem;
+        border-radius: 25px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #f6edda;
+        color: #a43c28;
+        height: 100%;
+        margin-bottom: 2rem;
+        img{
+            width: 200px;
+        }
+
+        h2{
+            margin-top: 0.5rem;
+        }
+
+        div{
+            font-size: 2rem;
+        
+
+        .add_kart{
+            background-color: #f6edda;
+            font-weight: bold;
+            font-size: 2rem;
+            color: #a43c28;
+
+        } 
+        .add_kart:hover{
+            color: #ffbd59;
+        }
+        }
+
+     
     }
 }
 </style>
