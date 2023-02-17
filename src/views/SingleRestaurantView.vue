@@ -83,16 +83,16 @@ export default {
 
 <template>
     <AppHeader />
-    <div class="py-5" v-if="!loading">
-        <div class="container-lg">
+    <div class="background py-5" v-if="!loading">
+        <div class="container-lg py-4">
             <div class="row">
                 <div class="col-12 text-center">
                     <div class="card border-0 shadow p-4 rounded-4">
                         <div class="row">
-                             <div class="col-12 col-sm-5">
+                             <div class="col-12 col-sm-4">
                                <img class="img-fluid" :src="store.getImagePath(restaurant.restaurant_image)" alt="">
                             </div>      
-                            <div class="col-12 col-sm-6 ms-auto text-start">
+                            <div class="col-12 col-sm-7 ms-auto text-start">
                                 <h1 class="mb-4 lh-1 green_text text-uppercase">{{ restaurant.name }}</h1>
                                 <p class="m-0"><strong>Contatti: </strong> +39 {{ restaurant.phone }}</p>
                                 <p class="m-0"><strong>Indirizzo: </strong> {{ restaurant.address }} </p>              
@@ -138,6 +138,10 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.background {
+    background-color: #ffbd59;
+    background-image: url(../assets/background.png);
+}
 
     li {
         width: 25%;
