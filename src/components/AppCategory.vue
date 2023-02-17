@@ -84,16 +84,16 @@ export default {
 
       <div @click="this.simpleCall(store.base_api_url + 'api/restaurants/types/giapponese'), this.scrollToBottom()"
         class="col-12 col-sm-6 col-md-3 text_center sushi" style="cursor:pointer">
-        <h2>SUSHI</h2>
+        <h2>GIAPPONESE</h2>
 
       </div>
       <div @click="this.simpleCall(store.base_api_url + 'api/restaurants/types/carne'), this.scrollToBottom()"
         class="col-12 col-sm-6 col-md-3 text_center carne" style="cursor:pointer">
         <h2>CARNE</h2>
       </div>
-      <div @click="this.simpleCall(store.base_api_url + 'api/restaurants/types/pasta'), this.scrollToBottom()"
+      <div @click="this.simpleCall(store.base_api_url + 'api/restaurants/types/italiano'), this.scrollToBottom()"
         class="col-12 col-sm-6 col-md-3 text_center pasta" style="cursor:pointer">
-        <h2>PASTA</h2>
+        <h2>ITALIANO</h2>
       </div>
     </div>
   </div>
@@ -205,7 +205,6 @@ export default {
 
 
   </section>
-
 </template>
 
 <style lang="scss" scoped>
