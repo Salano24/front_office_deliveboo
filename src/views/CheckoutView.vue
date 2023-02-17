@@ -99,11 +99,12 @@ export default {
 
 <template>
     <AppHeader />
+<div class="background py-5">
     <div v-if="cart.productSum()" class="container py-5">
         <div class="row gap-5 gy-0">
-            <h2 class="fw-bold mb-0">Procedi al pagamento</h2>
             <div class="col-12 col-lg-6">
                 <div class="card box rounded-4 border-0 shadow  overflow-auto px-3 py-4">
+                    <h2 class="fw-bold mb-0 green_text mb-4">Procedi al pagamento</h2>
                     <h3 class="fw-bold mb-0 text-muted mx-1">Il tuo ordine</h3>
                     <div v-for="product, index in cart.products" class="wrapper card border-0 p-3">
                         <div class="row justify-content-between hover-style">
@@ -182,6 +183,7 @@ export default {
             </div>
         </div>
     </div>
+
     <div v-else class="container py-5">
         <div class="row py-5">
             <div class="col-12">
@@ -195,10 +197,15 @@ export default {
             </div>
         </div>
     </div>
+</div>
 <AppFooter />
 </template>
 
 <style lang="scss" scoped>
+.background {
+    background-color: #ffbd59;
+    background-image: url(../assets/background.png);
+}
 a,
 .hover-style {
     background-color: #f6edda;
