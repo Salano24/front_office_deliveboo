@@ -125,6 +125,7 @@ export default {
                                         </div>
                                 </div>  
                                 <h3 class="mt-5 text-muted " v-else>Non ci sono piatti disponibili per questo ristorante</h3>                           
+
                             </div>
                         </div>
                     </div>
