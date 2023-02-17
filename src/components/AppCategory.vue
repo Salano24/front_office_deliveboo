@@ -54,7 +54,7 @@ export default {
         <h2>MESSICANO</h2>
       </div>
       <div class="col-12 col-sm-6 col-md-3 text_center sushi">
-        <h2>SUSHI</h2>
+        <h2>GIAPPONESE</h2>
       </div>
       <div class="col-12 col-sm-6 col-md-3 text_center carne">
         <h2>CARNE</h2>
@@ -168,12 +168,7 @@ export default {
 
     </div>
 
-  </section>
-
-
-
-
-
+</section>
 </template>
 
 <style lang="scss" scoped>
