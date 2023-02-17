@@ -86,8 +86,6 @@ export default {
                     <p class="m-0"><strong>Contatti: </strong> +39 {{ restaurant.phone }}</p>
 
                     <p class="m-0"><strong>Indirizzo: </strong> {{ restaurant.address }} </p>
-
-
                 </div>
                 <div class="col-6">
                     <img :src="store.getImagePath(restaurant.restaurant_image)" alt="">
@@ -101,7 +99,7 @@ export default {
                 <div class="container" v-if="restaurant.plates.length > 0">
                     <div class="row">
                         <div class="col-3" v-for="plate in restaurant.plates">
-                            <div class=' plate_card'>
+                            <div class='plate_card'>
                                 <img :src="store.getImagePath(plate.plate_image)" alt="">
                                 <h2>{{ plate.name }}</h2>
                                 <p class="w-75">{{ plate.ingredients }}</p>
