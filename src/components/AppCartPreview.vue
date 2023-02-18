@@ -21,7 +21,13 @@ export default {
       },
       deep: true
     }
-  }, methods: {},
+  }, methods: {
+
+    emptyCart() {
+      this.products = [];
+    }
+
+  },
   mounted() {
     if (localStorage.products) {
       this.products = JSON.parse(localStorage.products);
@@ -74,6 +80,9 @@ export default {
             </div>
           </div>
           <div class="cart_footer pt-4">
+            <div class="d-flex justify-content-end">
+              <button @click.stop="this.emptyCart" class="btn btn-secondary btn-sm">Svuota tutto</button>
+            </div>
             <h3 class="total mt-5 text-muted fw-bold d-inline pe-2">Totale:</h3>
             <h4 class="text-danger fw-bold d-inline">{{ cart.productSum() }}<span>€</span></h4>
 
@@ -81,14 +90,14 @@ export default {
               <router-link class="btn pay bg_yellow text-white shadow border-0 rounded-pill" :to="{ name: 'checkout' }"
                 aria-current="page">
                 <i class="fa-solid fa-credit-card"></i>
-                <span class="fs-6 ps-1"> Vai al pagamento</span>
+                <span class="fs-6 ps-1">Vai al pagamento</span>
               </router-link>
             </div>
           </div>
         </div>
       </div>
     </div>
-</div>
+  </div>
 </template>
 <style lang="scss" scoped>
 .cart_preview {

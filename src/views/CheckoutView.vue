@@ -164,7 +164,14 @@ export default {
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
+                        </div>
+                    </div>
+                    <div class="wrapper d-flex justify-content-end mt-2">
+                        <div class="card pt-1 px-4 rounded-4 border-0 shadow d-flex">
+                            <h4 class="total text-muted fw-bold">Totale:</h4>
+                            <h5 class="text-danger fw-bold">{{ cart.productSum() }}<span>€</span></h5>
                         </div>
                     </div>
                 </div>
