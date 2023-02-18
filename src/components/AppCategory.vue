@@ -102,32 +102,38 @@ export default {
 
   <section id="restaurants">
 
-    <div class="search container-fluid shadow-sm p-5">
+    <div class="search shadow-sm pb-5 pb-sm-5 px-md-0 p-sm-3 ">
 
-      <div class="container restaurant_type fs-6">
+      <div class="container-lg restaurant_type fs-6">
 
         <div class="row">
 
           <h1 class="lh-sm text-center">I nostri ristoranti</h1>
 
-          <h3 class="pt-md-4 text-center">Seleziona la tipologia che preferisci</h3>
+          <h3 class="pt-md-4 text-center mb-5">Seleziona la tipologia che preferisci</h3>
+          <div class="col-12 col-sm-10 m-auto">
+                <div class="card border-0 shadow py-5">
+                  <div class="row w-100 g-0 ps-xl-5">
+                    <div v-for="type in store.types" class="col-12 col-sm-6 checkbox text-uppercase rounded-pill g-1 g-sm-3 m-auto ps-md-5">
 
-          <div v-for="type in store.types" class="col-2 checkbox text-uppercase mt-5">
+                  
+                      <div class="w-100 ms-auto ps-5">
+                        <input type="checkbox" name="types" v-model="store.selectedTypes" :value="type.name" :id="type.id"
+                          class="me-0 me-sm-2 ms-lg-5" />
 
-          
-
-            <input type="checkbox" name="types" v-model="store.selectedTypes" :value="type.name" :id="type.id"
-              class="me-2" />
-
-            <label class="checkbox-text fw-bold" for="types">{{ type.name }}</label>
-
+                        <label class="checkbox-text text-muted fs-4" for="types">{{ type.name }}</label>
+                      </div>
+                  </div>
+                  </div>
+                  
+                  <button class="btn btn_danger rounded-pill shadow col-8 col-sm-4 mt-5 m-auto" @click="store.callApi()">Avvia ricerca</button>
+                
+                
+                    <p v-if="store.failed === true" class="text-center text-muted text-lowercase mt-2">Seleziona almeno
+                      una
+                      categoria</p>
+                </div>
           </div>
-
-          <button class="btn btn_danger col-4 mt-5 m-auto" @click="store.callApi()">Avvia ricerca</button>
-
-          <p v-if="store.failed === true" class="text-center text-danger text-lowercase fst-italic ">Seleziona almeno
-            una
-            categoria</p>
 
         </div>
 
@@ -136,18 +142,19 @@ export default {
     </div>
 
 
-    <div class="container py-4" v-if="!store.loading && store.restaurants">
+    <div class="container-lg py-4" v-if="!store.loading && store.restaurants">
       <div class="row">
 
-        <div v-for="restaurant in store.restaurants" class="col-6 p-3 d-flex align-content-center">
+        <div v-for="restaurant in store.restaurants" class="col-12 col-md-6 p-3 d-flex align-content-center">
 
           
           <div class="card rounded-4 border-0 shadow">
               <div class="row gy-0 p-4">
-              <div class="col-4 d-flex align-content-center flex-wrap">
+              <div class="col-4 d-flex  align-content-center flex-wrap ">
+
                 <img :src="store.getImagePath(restaurant.restaurant_image)" alt="" class="img-fluid p-3">
 
-                <router-link class="btn btn_secondary col-12"
+                <router-link class="btn btn_secondary rounded-pill col-12"
                   :to="{ name: 'single-restaurant', params: { id: restaurant.id } }" aria-current="page">Dettaglio<span
                   class="visually-hidden">(current)</span></router-link>
 
@@ -308,10 +315,35 @@ export default {
   }
 }
 
+input[type=checkbox] {
+	-moz-appearance:none;
+	-webkit-appearance:none;
+	-o-appearance:none;
+	outline: none;
+	content: none;	
+}
+input[type=checkbox]:before {
+	font-family: "FontAwesome";
+    content: "\f00c";
+    font-size: 15px;
+    color: transparent !important;
+    background: #fef2e0;
+    display: block;
+    width: 15px;
+    height: 15px;
+    margin-right: 7px;
+    margin-top: 5px;;
+}
 
+input[type=checkbox]:checked:before {
+
+	color: #8ea61d !important;
+}
 .checkbox-text {
   font-weight: 600;
-  color: #A43C28;
+}
+.bg_yellow{
+  background: #ffbd59;
 }
 
 </style>
