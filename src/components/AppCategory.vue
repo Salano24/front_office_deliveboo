@@ -126,7 +126,7 @@ export default {
                   </div>
                   </div>
                   
-                  <button class="btn btn_danger rounded-pill shadow col-8 col-sm-4 mt-5 m-auto" @click="store.callApi()">Avvia ricerca</button>
+                  <button class="btn btn_danger rounded-pill shadow-sm col-8 col-sm-4 mt-5 m-auto" @click="store.callApi()">Avvia ricerca</button>
                 
                 
                     <p v-if="store.failed === true" class="text-center text-muted text-lowercase mt-2">Seleziona almeno
@@ -149,22 +149,20 @@ export default {
 
           
           <div class="card rounded-4 border-0 shadow">
-              <div class="row gy-0 p-4">
-              <div class="col-4 d-flex  align-content-center flex-wrap ">
+              <div class="row gy-0 p-4 p-sm-3 p-md-5">
+              <div class="col-12 col-sm-4 d-flex align-content-center flex-wrap ">
 
                 <img :src="store.getImagePath(restaurant.restaurant_image)" alt="" class="img-fluid p-3">
 
-                <router-link class="btn btn_secondary rounded-pill col-12"
+                <router-link class="btn btn_secondary rounded-pill col-12 d-none d-sm-block"
                   :to="{ name: 'single-restaurant', params: { id: restaurant.id } }" aria-current="page">Dettaglio<span
                   class="visually-hidden">(current)</span></router-link>
 
               </div>
 
-                <div class="col-8 px-3 d-flex align-content-center flex-wrap">
+                <div class="col-12 col-sm-8 px-5 px-sm-2 d-flex flex-column align-content-center flex-wrap text-muted">
 
-                  <div class=" text-muted">
-
-                    <h4 class="m-0 green_text text-uppercase fw-bold mb-2">{{ restaurant.name }}</h4>
+                    <h3 class=" green_text text-uppercase fw-bold mb-2 mt-4 mt-md-2 mt-xl-3 mt-xxl-4">{{ restaurant.name }}</h3>
                     <span class="fw-bold pe-2"><i class="fa-solid fa-utensils"></i> Categoria: </span>
                     <span class="pe-3" v-for="type in restaurant.types"><i class="fa-solid fa-hashtag"></i> {{ type.name }} </span>  
                       
@@ -172,7 +170,9 @@ export default {
 
                     <p class="m-0"><strong><i class="fa-solid fa-location-dot"></i> Indirizzo: </strong> {{ restaurant.address }} </p>
 
-                  </div>
+                    <router-link class="btn btn_secondary rounded-pill col-12 dblock d-sm-none mt-3 mt-sm-0"
+                  :to="{ name: 'single-restaurant', params: { id: restaurant.id } }" aria-current="page">Dettaglio<span
+                  class="visually-hidden">(current)</span></router-link>
 
                 </div>
             </div>
