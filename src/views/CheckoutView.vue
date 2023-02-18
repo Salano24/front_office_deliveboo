@@ -65,7 +65,7 @@ export default {
                 description: this.description,
                 phone: this.phone,
                 address: this.address,
-                cart: cart.products,
+                cart: JSON.stringify(cart.products),
                 price: cart.productSum()
             }
             // console.log(data);
