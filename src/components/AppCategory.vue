@@ -112,7 +112,7 @@ export default {
 
           <h3 class="pt-md-4 text-center mb-5">Seleziona la tipologia che preferisci</h3>
           <div class="col-12 col-sm-10 m-auto">
-                <div class="card border-0 shadow py-5">
+                <div class="card border-0 shadow rounded-4 py-5">
                   <div class="row w-100 g-0 ps-xl-5">
                     <div v-for="type in store.types" class="col-12 col-sm-6 checkbox text-uppercase rounded-pill g-1 g-sm-3 m-auto ps-md-5">
 
