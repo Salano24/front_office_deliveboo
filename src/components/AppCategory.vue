@@ -208,6 +208,9 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@use '../styles/general.scss' as *;
+
+
 #special {
   background-color: #F6EDDA;
 }
@@ -216,7 +219,7 @@ export default {
   background-color: #F6EDDA;
 
   .btn_danger {
-    background-color: #A43C28;
+    background-color: $db_danger;
     color: #ffffff;
     box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 18%);
 
@@ -228,7 +231,7 @@ export default {
 
 
   hr {
-    border: 3px solid #A43C28;
+    border: 3px solid $db_danger;
     opacity: 1;
     width: 90%;
     margin: auto;
@@ -316,6 +319,6 @@ export default {
 
 .checkbox-text {
   font-weight: 600;
-  color: #A43C28;
+  color: $db_danger;
 }
 </style>

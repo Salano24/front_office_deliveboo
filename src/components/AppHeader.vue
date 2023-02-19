@@ -35,16 +35,16 @@ export default {
       </router-link>
 
       <!-- <div class="search w-50">
-                                                                                        <div class="restaurant_type fs-6 w-75 text-uppercase">
-                                                                                          <div v-for="type in store.types" class="mb-1 d-flex">
-                                                                                            <input type="checkbox" name="types" v-model="store.selectedTypes" :value="type.name" :id="type.id">
-                                                                                            <label for="types">{{ type.name }}</label>
-                                                                                          </div>
-                                                                                          <button class="btn btn-danger" @click="store.callApi">Filtra</button>
-                                                                                        </div>
-                                                                                      </div>
-                                                                                      <input placeholder="Cerca un ristorante" type="search" id="restaurant_search" name="restaurant_search">
-                                                                                                <button><i class="fa-solid fa-magnifying-glass"></i></button> -->
+                                                                                                                                                                                                                <div class="restaurant_type fs-6 w-75 text-uppercase">
+                                                                                                                                                                                                                  <div v-for="type in store.types" class="mb-1 d-flex">
+                                                                                                                                                                                                                    <input type="checkbox" name="types" v-model="store.selectedTypes" :value="type.name" :id="type.id">
+                                                                                                                                                                                                                    <label for="types">{{ type.name }}</label>
+                                                                                                                                                                                                                  </div>
+                                                                                                                                                                                                                  <button class="btn btn-danger" @click="store.callApi">Filtra</button>
+                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                              </div>
+                                                                                                                                                                                                              <input placeholder="Cerca un ristorante" type="search" id="restaurant_search" name="restaurant_search">
+                                                                                                                                                                                                                        <button><i class="fa-solid fa-magnifying-glass"></i></button> -->
 
       <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId"
         aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,12 +60,11 @@ export default {
             <a href="http://127.0.0.1:8000/register">Registrati</a>
           </li>
           <li class="nav-item cart">
-            <button class="cart_icon border-0 bg-white" type="button" @click.prevent="this.store.showOffcanvasMenu()">
+            <button class="cart_icon pe-2 border-0 bg-white position-relative" type=" button"
+              @click.prevent="this.store.showOffcanvasMenu()">
               <i class="fa-solid fa-cart-shopping"></i>
+              <div v-show="cart.productSum()" class="cart_badge"></div>
             </button>
-            <div class="badge bg-primary" v-show="cart.productSum() > 0">
-              badge
-            </div>
           </li>
         </ul>
       </div>
@@ -78,6 +77,8 @@ export default {
 <!-- //cart_preview --></template>
 
 <style lang="scss" scoped>
+@use '../styles/general.scss' as *;
+
 .container-fluid {
   max-width: 1800px;
 }
@@ -97,7 +98,7 @@ nav {
 
   a {
     text-decoration: none;
-    color: #a43c28;
+    color: $db_danger;
     font-size: 1.1rem;
 
     .cart {
@@ -110,7 +111,7 @@ nav {
   }
 
   .cart_icon {
-    color: #a43c28;
+    color: $db_danger;
 
     &:hover {
       color: #8ea61d;
@@ -122,11 +123,13 @@ nav {
   max-width: 130px;
 }
 
-.badge {
-  background-color: red;
+.cart_badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: $db_danger;
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  width: 6px;
   aspect-ratio: 1/1;
 }
 
@@ -152,7 +155,7 @@ nav {
 
 .restaurant_type {
   border: 0;
-  color: #a43c28;
+  color: $db_danger;
   font-weight: bold;
   background-color: #ffffff;
 
@@ -160,7 +163,7 @@ nav {
     color: #8ea61d;
 
     option {
-      color: #a43c28;
+      color: $db_danger;
       background-color: #ffffff;
 
       &:hover {

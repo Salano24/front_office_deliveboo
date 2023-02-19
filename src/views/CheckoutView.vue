@@ -286,6 +286,9 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@use '../styles/general.scss' as *;
+
+
 .background {
     background-color: #ffbd59;
     background-image: url(../assets/background.png);
@@ -295,7 +298,7 @@ a,
 .hover-style {
     background-color: #f6edda;
     text-decoration: none;
-    color: #a43c28;
+    color: $db_danger;
     font-size: 1.1rem;
 
     &:hover {
@@ -355,7 +358,7 @@ a,
     }
 
     .pay {
-        background-color: #a43c28;
+        background-color: $db_danger;
 
         &:hover {
             background-color: #8ea61d;
@@ -369,7 +372,7 @@ a,
     font-size: 50px;
 
     &:hover {
-        color: #a43c28;
+        color: $db_danger;
     }
 }
 </style>

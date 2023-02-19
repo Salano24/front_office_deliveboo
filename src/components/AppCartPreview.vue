@@ -100,6 +100,8 @@ export default {
   </div>
 </template>
 <style lang="scss" scoped>
+@use '../styles/general.scss' as *;
+
 .cart_preview {
   transition: 0.5;
   background-color: #0000004f;
@@ -148,7 +150,7 @@ export default {
       .hover-style {
         background-color: #f6edda;
         text-decoration: none;
-        color: #a43c28;
+        color: $db_danger;
         font-size: 1.1rem;
 
         &:hover {
