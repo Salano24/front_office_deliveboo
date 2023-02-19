@@ -253,7 +253,7 @@ export default {
             <div class="mb-3">
                 <label for="address" class="form-label">Indirizzo</label>
                 <input required type="address" name="address" id="address" v-model="address" class="form-control"
-                    placeholder="Mario Rossi" aria-describedby="addressHelper">
+                    placeholder="Via Roma 54" aria-describedby="addressHelper">
                 <small id="addressHelper" class="text-muted">Inserisci l'indirizzo di consegna</small>
             </div>
             <div class="mb-3">
@@ -271,10 +271,10 @@ export default {
             </div>
 
             <div class="mb-3">
-                <label for="description" class="form-label">Descrizione</label>
+                <label for="description" class="form-label">Dettagli per l'ordine aggiuntivi</label>
                 <textarea name="description" id="description" v-model="description" class="form-control"
-                    placeholder="Inserisci dettagli sul tuo ordine" aria-describedby="descriptionHelper" />
-                <small id="descriptionHelper" class="text-muted">Inserisci descrizione</small>
+                    placeholder="Inserisci dettagli" aria-describedby="descriptionHelper" />
+                <small id="descriptionHelper" class="text-muted">Inserisci descrizione aggiuntiva </small>
             </div>
 
             <button type="submit" class="btn btn-primary" :disabled="payLoading"> {{

@@ -37,8 +37,9 @@ export default {
 };
 </script>
 <template>
-  <div class="cart_preview">
-    <div class="cart_right p-3">
+  <div class="cart_preview" @click.prevent="store.showOffcanvasMenu">
+    <!-- carrello si chiude quanto premo fuori dal carrello  -->
+    <div class="cart_right p-3" @click.stop="none">
       <div class="cart_preview_header d-flex">
         <button type="button" class="btn-close me-3" @click="this.store.showOffcanvasMenu();" aria-label="Close">
         </button>
@@ -108,7 +109,7 @@ export default {
   width: 100%;
   height: 100vh;
   position: fixed;
-  top: 60px;
+  top: 66px;
   right: 0;
   bottom: 0;
   z-index: 9000;
