@@ -265,8 +265,8 @@ export default {
 
             <div class="mb-3">
                 <label for="phone" class="form-label">Numero di telefono</label>
-                <input required type="text" name="phone" id="phone" v-model="phone" class="form-control"
-                    placeholder="3211234456" aria-describedby="phoneHelper">
+                <input required minlength="9" maxlength="12" type="text" name="phone" id="phone" v-model="phone"
+                    class="form-control" placeholder="3211234456" aria-describedby="phoneHelper">
                 <small id="phoneHelper" class="text-muted">Inserisci il tuo numero di telefono</small>
             </div>
 
