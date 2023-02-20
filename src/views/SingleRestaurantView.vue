@@ -52,7 +52,6 @@ export default {
                     this.products.unshift(plate)
                     this.confirm = true
                 }
-                cart.count = cart.count + 1;
 
             }
 
@@ -62,7 +61,6 @@ export default {
         if (localStorage.products) {
             this.products = JSON.parse(localStorage.products);
         }
-        cart.count = cart.products.length
         const url = this.store.base_api_url + 'api/restaurants/' + this.$route.params.id
         console.log(url);
         axios.get(url)

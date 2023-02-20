@@ -59,7 +59,7 @@ export default {
                     })
             }
             this.payLoading = false
-            this.$router.push({ name: "home" })
+            this.$router.push({ name: "success" })
         },
         sendForm() {
             this.payLoading = true;
@@ -124,7 +124,7 @@ export default {
         if (localStorage.products) {
             this.products = JSON.parse(localStorage.products);
         }
-        cart.count = cart.products.length
+
         console.log(cart.products);
 
         braintree.client.create({

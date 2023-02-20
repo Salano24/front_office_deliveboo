@@ -32,7 +32,7 @@ export default {
     if (localStorage.products) {
       this.products = JSON.parse(localStorage.products);
     }
-    cart.count = cart.products.length
+
   },
 };
 </script>
