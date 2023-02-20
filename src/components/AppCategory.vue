@@ -102,30 +102,38 @@ export default {
 
   <section id="restaurants">
 
-    <div class="search container p-5">
+    <div class="search shadow-sm pb-5 pb-sm-5 px-md-0 p-sm-3 ">
 
-      <div class="restaurant_type fs-6 text-uppercase">
+      <div class="container-lg restaurant_type fs-6">
 
-        <div class="row mb-1 justify-content-center">
+        <div class="row">
 
           <h1 class="lh-sm text-center">I nostri ristoranti</h1>
 
-          <p class="text-center fst-italic mb-3">Seleziona la tipologia che preferisci</p>
+          <h3 class="pt-md-4 text-center mb-5">Seleziona la tipologia che preferisci</h3>
+          <div class="col-12 col-sm-10 m-auto">
+                <div class="card border-0 shadow rounded-4 py-5">
+                  <div class="row w-100 g-0 ps-xl-5">
+                    <div v-for="type in store.types" class="col-12 col-sm-6 checkbox text-uppercase rounded-pill g-1 g-sm-3 m-auto ps-md-5">
 
-          <div v-for="type in store.types" class="col-2 mb-3 checkbox">
+                  
+                      <div class="w-100 ms-auto ps-5">
+                        <input type="checkbox" name="types" v-model="store.selectedTypes" :value="type.name" :id="type.id"
+                          class="me-0 me-sm-2 ms-lg-5" />
 
-            <input type="checkbox" name="types" v-model="store.selectedTypes" :value="type.name" :id="type.id"
-              class="me-3" />
-
-            <label class="checkbox-text" for="types">{{ type.name }}</label>
-
+                        <label class="checkbox-text text-muted fs-4" for="types">{{ type.name }}</label>
+                      </div>
+                  </div>
+                  </div>
+                  
+                  <button class="btn btn_danger rounded-pill shadow-sm col-8 col-sm-4 mt-5 m-auto" @click="store.callApi()">Avvia ricerca</button>
+                
+                
+                    <p v-if="store.failed === true" class="text-center text-muted text-lowercase mt-2">Seleziona almeno
+                      una
+                      categoria</p>
+                </div>
           </div>
-
-          <button class="btn btn_danger col-4 my-3" @click="store.callApi()">Avvia ricerca</button>
-
-          <p v-if="store.failed === true" class="text-center text-danger text-lowercase fst-italic ">Seleziona almeno
-            una
-            categoria</p>
 
         </div>
 
@@ -133,37 +141,40 @@ export default {
 
     </div>
 
-    <hr class="mb-4">
 
-    <div class="container" v-if="!store.loading && store.restaurants">
+    <div class="container-lg py-4" v-if="!store.loading && store.restaurants">
       <div class="row">
 
-        <div v-for="restaurant in store.restaurants" class="col-6 p-3 d-flex align-content-center">
+        <div v-for="restaurant in store.restaurants" class="col-12 col-md-6 p-3 d-flex align-content-center">
 
-          <div class="row p-5 ms_card">
+          
+          <div class="card rounded-4 border-0 shadow">
+              <div class="row gy-0 p-4 p-sm-3 p-md-5">
+              <div class="col-12 col-sm-4 d-flex align-content-center flex-wrap ">
 
-            <div class="col-4 d-flex align-content-center flex-wrap">
+                <img :src="store.getImagePath(restaurant.restaurant_image)" alt="" class="img-fluid p-3">
 
-              <img :src="store.getImagePath(restaurant.restaurant_image)" alt="" class="img-fluid p-3">
-
-              <router-link class="btn btn_secondary col-12"
-                :to="{ name: 'single-restaurant', params: { id: restaurant.id } }" aria-current="page">Dettaglio<span
+                <router-link class="btn btn_secondary rounded-pill col-12 d-none d-sm-block"
+                  :to="{ name: 'single-restaurant', params: { id: restaurant.id } }" aria-current="page">Dettaglio<span
                   class="visually-hidden">(current)</span></router-link>
-
-            </div>
-
-            <div class="col-8 px-3 d-flex align-content-center flex-wrap">
-
-              <div>
-
-                <h4 class="m-0">{{ restaurant.name }}</h4>
-
-                <p class="m-0"><strong>Contatti: </strong> {{ restaurant.phone }}</p>
-
-                <p class="m-0"><strong>Indirizzo: </strong> {{ restaurant.address }} </p>
 
               </div>
 
+                <div class="col-12 col-sm-8 px-5 px-sm-2 d-flex flex-column align-content-center flex-wrap text-muted">
+
+                    <h3 class=" green_text text-uppercase fw-bold mb-2 mt-4 mt-md-2 mt-xl-3 mt-xxl-4">{{ restaurant.name }}</h3>
+                    <span class="fw-bold pe-2"><i class="fa-solid fa-utensils"></i> Categoria: </span>
+                    <span class="pe-3" v-for="type in restaurant.types"><i class="fa-solid fa-hashtag"></i> {{ type.name }} </span>  
+                      
+                      <p class="m-0"><strong><i class="fa-solid fa-phone"></i> Contatti: </strong> {{ restaurant.phone }}</p>
+
+                    <p class="m-0"><strong><i class="fa-solid fa-location-dot"></i> Indirizzo: </strong> {{ restaurant.address }} </p>
+
+                    <router-link class="btn btn_secondary rounded-pill col-12 dblock d-sm-none mt-3 mt-sm-0"
+                  :to="{ name: 'single-restaurant', params: { id: restaurant.id } }" aria-current="page">Dettaglio<span
+                  class="visually-hidden">(current)</span></router-link>
+
+                </div>
             </div>
 
           </div>
@@ -216,8 +227,6 @@ export default {
 }
 
 #restaurants {
-  background-color: #F6EDDA;
-
   .btn_danger {
     background-color: $db_danger;
     color: #ffffff;
@@ -235,11 +244,6 @@ export default {
     opacity: 1;
     width: 90%;
     margin: auto;
-  }
-
-  .ms_card {
-    background-color: white;
-    border-radius: 5px;
   }
 }
 
@@ -316,9 +320,35 @@ export default {
   }
 }
 
+input[type=checkbox] {
+	-moz-appearance:none;
+	-webkit-appearance:none;
+	-o-appearance:none;
+	outline: none;
+	content: none;	
+}
+input[type=checkbox]:before {
+	font-family: "FontAwesome";
+    content: "\f00c";
+    font-size: 15px;
+    color: transparent !important;
+    background: #fef2e0;
+    display: block;
+    width: 15px;
+    height: 15px;
+    margin-right: 7px;
+    margin-top: 5px;;
+}
 
+input[type=checkbox]:checked:before {
+
+	color: #8ea61d !important;
+}
 .checkbox-text {
   font-weight: 600;
   color: $db_danger;
+}
+.bg_yellow{
+  background: #ffbd59;
 }
 </style>
