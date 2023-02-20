@@ -4,6 +4,7 @@ import { cart as cart } from "../cart.js";
 import braintree from 'braintree-web';
 import AppHeader from '../components/AppHeader.vue';
 import AppFooter from '../components/AppFooter.vue';
+import { router } from "../router.js";
 import axios from "axios";
 export default {
     components: {
@@ -26,6 +27,7 @@ export default {
             description: '',
             phone: '',
             address: '',
+            form_info: false
         };
     },
     // #region logica carrello
@@ -41,6 +43,7 @@ export default {
         }
     }, methods: {
         payWithCreditCard() {
+            this.payLoading = true
             this.error = "";
             this.nonce = "";
             this.price = cart.productSum()
@@ -48,13 +51,15 @@ export default {
                 this.hostedFieldInstance.tokenize().then(payload => {
                     console.log(payload);
                     this.nonce = payload.nonce
-                    //quando siamo qua invochiamo la funzione che invia l'ordine
+
                 })
                     .catch(err => {
                         console.error(err);
                         this.error = err.message;
                     })
             }
+            this.payLoading = false
+            this.$router.push({ name: "home" })
         },
         sendForm() {
             this.payLoading = true;
@@ -72,12 +77,42 @@ export default {
             axios.post(`${this.store.base_api_url}api/order`, data).then((response) => {
                 console.log(response);
                 if (response.data.success) {
-                    //this.full_name = '';
-                    //this.email = '';
-                    //this.description = '';
-                    //this.phone = '';
-                    //this.address = '';
-                    //cart.products = [];
+                    this.form_info = true
+                    braintree.client.create({
+                        authorization: "sandbox_q7z92y97_vtb2xgfs69b9ns8t"
+                    })
+                        .then(clientInstance => {
+                            let options = {
+                                client: clientInstance,
+                                styles: {
+                                    input: {
+                                        'font-size': '14px',
+                                        'font-family': 'Open Sans'
+                                    }
+                                },
+                                fields: {
+                                    number: {
+                                        selector: '#creditCardNumber',
+                                        placeholder: 'Inserisci numero di carta'
+                                    },
+                                    cvv: {
+                                        selector: '#cvv',
+                                        placeholder: 'Inserisci CVV'
+                                    },
+                                    expirationDate: {
+                                        selector: '#expireDate',
+                                        placeholder: '00 / 0000'
+                                    }
+                                }
+                            }
+                            return braintree.hostedFields.create(options)
+                        })
+                        .then(hostedFieldInstance => {
+                            // Use hostedFieldInstance to send data to Braintree
+                            this.hostedFieldInstance = hostedFieldInstance;
+                        })
+                        .catch(err => {
+                        });
                 } else {
                     this.errors = response.data.errors;
                 }
@@ -180,7 +215,7 @@ export default {
                 <div class="col-12 col-lg-5">
                     <div class="card rounded-4 border-0 shadow px-3 py-4">
                         <div class="card bg-light">
-                            <div class="card-header">Pagamento</div>
+
                             <div class="card-body">
                                 <div class="alert alert-danger" v-if="error">
                                     {{ error }}
@@ -188,7 +223,55 @@ export default {
                                 <div class="alert alert-success" v-if="nonce">
                                     Pagamento effettuato con successo!
                                 </div>
-                                <form>
+                                <form @submit.prevent="sendForm()" v-if="!form_info">
+                                    <h2>Informazioni ordine</h2>
+                                    <div class="mb-3">
+                                        <label for="full_name" class="form-label">Nome</label>
+                                        <input required type="full_name" name="full_name" id="full_name" v-model="full_name"
+                                            class="form-control" placeholder="Mario Rossi"
+                                            aria-describedby="full_nameHelper">
+                                        <small id="full_nameHelper" class="text-muted">Inserisci il tuo nome</small>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="address" class="form-label">Indirizzo</label>
+                                        <input required type="address" name="address" id="address" v-model="address"
+                                            class="form-control" placeholder="Via Roma 54" aria-describedby="addressHelper">
+                                        <small id="addressHelper" class="text-muted">Inserisci l'indirizzo di
+                                            consegna</small>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Email</label>
+                                        <input required type="email" name="email" id="email" v-model="email"
+                                            class="form-control" placeholder="name@example.com"
+                                            aria-describedby="emailHelper">
+                                        <small id="emailHelper" class="text-muted">Inserisci la tua email</small>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="phone" class="form-label">Numero di telefono</label>
+                                        <input required minlength="9" maxlength="12" type="text" name="phone" id="phone"
+                                            v-model="phone" class="form-control" placeholder="3211234456"
+                                            aria-describedby="phoneHelper">
+                                        <small id="phoneHelper" class="text-muted">Inserisci il tuo numero di
+                                            telefono</small>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="description" class="form-label">Dettagli aggiuntivi per l'ordine</label>
+                                        <textarea name="description" id="description" v-model="description"
+                                            class="form-control" placeholder="Inserisci dettagli"
+                                            aria-describedby="descriptionHelper" />
+                                        <small id="descriptionHelper" class="text-muted">Inserisci descrizione aggiuntiva
+                                        </small>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary" :disabled="payLoading"> {{
+                                        payLoading ? 'Caricamento...' : 'Procedi al pagamento'
+                                    }} </button>
+                                </form>
+
+                                <form v-else>
+                                    <div class="card-header">Pagamento</div>
                                     <div class="form-group">
                                         <label>Numero carta di credito</label>
                                         <div id="creditCardNumber" class="form-control"></div>
@@ -216,10 +299,14 @@ export default {
                                         </div>
                                     </div>
 
-                                    <button class="btn btn-primary btn-block my-2" @click.prevent="payWithCreditCard">
-                                        Paga con carta di credito
+                                    <button class="btn btn-primary btn-block my-2" @click.prevent="payWithCreditCard"
+                                        :disabled="payLoading">
+                                        {{
+                                            payLoading ? 'Caricamento...' : 'Procedi al pagamento'
+                                        }}
                                     </button>
                                 </form>
+
                             </div>
                         </div>
                     </div>
@@ -243,44 +330,7 @@ export default {
     </div>
 
     <div class="container">
-        <form @submit.prevent="sendForm()">
-            <div class="mb-3">
-                <label for="full_name" class="form-label">Nome</label>
-                <input required type="full_name" name="full_name" id="full_name" v-model="full_name" class="form-control"
-                    placeholder="Mario Rossi" aria-describedby="full_nameHelper">
-                <small id="full_nameHelper" class="text-muted">Inserisci il tuo nome</small>
-            </div>
-            <div class="mb-3">
-                <label for="address" class="form-label">Indirizzo</label>
-                <input required type="address" name="address" id="address" v-model="address" class="form-control"
-                    placeholder="Via Roma 54" aria-describedby="addressHelper">
-                <small id="addressHelper" class="text-muted">Inserisci l'indirizzo di consegna</small>
-            </div>
-            <div class="mb-3">
-                <label for="" class="form-label">Email</label>
-                <input required type="email" name="email" id="email" v-model="email" class="form-control"
-                    placeholder="name@example.com" aria-describedby="emailHelper">
-                <small id="emailHelper" class="text-muted">Inserisci la tua email</small>
-            </div>
 
-            <div class="mb-3">
-                <label for="phone" class="form-label">Numero di telefono</label>
-                <input required minlength="9" maxlength="12" type="text" name="phone" id="phone" v-model="phone"
-                    class="form-control" placeholder="3211234456" aria-describedby="phoneHelper">
-                <small id="phoneHelper" class="text-muted">Inserisci il tuo numero di telefono</small>
-            </div>
-
-            <div class="mb-3">
-                <label for="description" class="form-label">Dettagli per l'ordine aggiuntivi</label>
-                <textarea name="description" id="description" v-model="description" class="form-control"
-                    placeholder="Inserisci dettagli" aria-describedby="descriptionHelper" />
-                <small id="descriptionHelper" class="text-muted">Inserisci descrizione aggiuntiva </small>
-            </div>
-
-            <button type="submit" class="btn btn-primary" :disabled="payLoading"> {{
-                payLoading ? 'Caricamento...' : 'Invia'
-            }} </button>
-        </form>
     </div>
     <AppFooter />
 </template>
