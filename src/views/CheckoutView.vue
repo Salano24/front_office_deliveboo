@@ -4,7 +4,7 @@ import { cart as cart } from "../cart.js";
 import braintree from 'braintree-web';
 import AppHeader from '../components/AppHeader.vue';
 import AppFooter from '../components/AppFooter.vue';
-
+import axios from "axios";
 export default {
     components: {
         AppHeader,
@@ -19,7 +19,13 @@ export default {
             hostedFieldInstance: false,
             nonce: "",
             error: "",
-            price: cart.productSum
+            price: cart.productSum,
+            payLoading: false,
+            full_name: '',
+            email: '',
+            description: '',
+            phone: '',
+            address: '',
         };
     },
     // #region logica carrello
@@ -49,6 +55,34 @@ export default {
                         this.error = err.message;
                     })
             }
+        },
+        sendForm() {
+            this.payLoading = true;
+            this.errors = {};
+            const data = {
+                full_name: this.full_name,
+                email: this.email,
+                description: this.description,
+                phone: this.phone,
+                address: this.address,
+                cart: JSON.stringify(cart.products),
+                price: cart.productSum()
+            }
+            // console.log(data);
+            axios.post(`${this.store.base_api_url}api/order`, data).then((response) => {
+                console.log(response);
+                if (response.data.success) {
+                    //this.full_name = '';
+                    //this.email = '';
+                    //this.description = '';
+                    //this.phone = '';
+                    //this.address = '';
+                    //cart.products = [];
+                } else {
+                    this.errors = response.data.errors;
+                }
+                this.payLoading = false;
+            });
         }
     },
     mounted() {
@@ -99,118 +133,172 @@ export default {
 
 <template>
     <AppHeader />
-<div class="background py-5">
-    <div v-if="cart.productSum()" class="container py-5">
-        <div class="row gap-5 gy-0">
-            <div class="col-12 col-lg-6">
-                <div class="card box rounded-4 border-0 shadow  overflow-auto px-3 py-4">
-                    <h2 class="fw-bold mb-0 green_text mb-4">Procedi al pagamento</h2>
-                    <h3 class="fw-bold mb-0 text-muted mx-1">Il tuo ordine</h3>
-                    <div v-for="product, index in cart.products" class="wrapper card border-0 p-3">
-                        <div class="row justify-content-between hover-style">
-                            <div class="sb-cover-frame d-flex py-2 col-5 col-sm-4">
-                                <img :src="store.getImagePath(product.plate_image)" :alt="'img ' + product.name"
-                                    class="img-fluid" />
-                            </div>
-                            <div class="py-2 col-7 col-sm-8 text-end d-flex flex-column justify-content-center">
-                                <h4>{{ product.name }}</h4>
+    <div class="background py-5">
+        <div v-if="cart.productSum()" class="container py-5">
+            <div class="row gap-5 gy-0">
+                <div class="col-12 col-lg-6">
+                    <div class="card box rounded-4 border-0 shadow  overflow-auto px-3 py-4">
+                        <h2 class="fw-bold mb-0 green_text mb-4">Procedi al pagamento</h2>
+                        <h3 class="fw-bold mb-0 text-muted mx-1">Il tuo ordine</h3>
+                        <div v-for="product, index in cart.products" class="wrapper card border-0 p-3">
+                            <div class="row justify-content-between hover-style">
+                                <div class="sb-cover-frame d-flex py-2 col-5 col-sm-4">
+                                    <img :src="store.getImagePath(product.plate_image)" :alt="'img ' + product.name"
+                                        class="img-fluid" />
+                                </div>
+                                <div class="py-2 col-7 col-sm-8 text-end d-flex flex-column justify-content-center">
+                                    <h4>{{ product.name }}</h4>
 
-                                <div class="price">{{ product.price }} € </div>
+                                    <div class="price">{{ product.price }} € </div>
 
 
-                                <div class="quantity_input justify-content-end pt-3">
-                                    <button class="bg-transparent btn" @click.stop="cart.removeProduct(index)"><i
-                                            class="fa-solid fa-trash text-muted pe-3"></i></button>
-                                    <div class="a minus text-white fw-bold" @click.stop="cart.changeQuantity(index, '-')">-
-                                    </div>
-                                    <span class="bg-white px-3">{{ product.quantity }}</span>
-                                    <div class="a plus text-white fw-bold" @click.stop="cart.changeQuantity(index, '+')">+
+                                    <div class="quantity_input justify-content-end pt-3">
+                                        <button class="bg-transparent btn" @click.stop="cart.removeProduct(index)"><i
+                                                class="fa-solid fa-trash text-muted pe-3"></i></button>
+                                        <div class="a minus text-white fw-bold"
+                                            @click.stop="cart.changeQuantity(index, '-')">-
+                                        </div>
+                                        <span class="bg-white px-3">{{ product.quantity }}</span>
+                                        <div class="a plus text-white fw-bold"
+                                            @click.stop="cart.changeQuantity(index, '+')">+
+                                        </div>
                                     </div>
                                 </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wrapper d-flex justify-content-end mt-2">
+                        <div class="card pt-1 px-4 rounded-4 border-0 shadow d-flex">
+                            <h4 class="total text-muted fw-bold">Totale:</h4>
+                            <h5 class="text-danger fw-bold">{{ cart.productSum() }}<span>€</span></h5>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-12 col-lg-5">
+                    <div class="card rounded-4 border-0 shadow px-3 py-4">
+                        <div class="card bg-light">
+                            <div class="card-header">Pagamento</div>
+                            <div class="card-body">
+                                <div class="alert alert-danger" v-if="error">
+                                    {{ error }}
+                                </div>
+                                <div class="alert alert-success" v-if="nonce">
+                                    Pagamento effettuato con successo!
+                                </div>
+                                <form>
+                                    <div class="form-group">
+                                        <label>Numero carta di credito</label>
+                                        <div id="creditCardNumber" class="form-control"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <label>Data di scadenza</label>
+                                                <div id="expireDate" class="form-control"></div>
+                                            </div>
+                                            <div class="col-6">
+                                                <label>CVV</label>
+                                                <div id="cvv" class="form-control"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="form-group">
+                                        <label for="amount">Prezzo</label>
+                                        <div class="input-group">
+                                            <input disabled id="amount" :value="cart.productSum()" class="form-control"
+                                                placeholder="Enter Amount">
+                                            <div class="input-group-prepend"><span class="input-group-text">&euro;</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button class="btn btn-primary btn-block my-2" @click.prevent="payWithCreditCard">
+                                        Paga con carta di credito
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-
-            <div class="col-12 col-lg-5">
-                <div class="card rounded-4 border-0 shadow px-3 py-4">
-                    <div class="card bg-light">
-                        <div class="card-header">Pagamento</div>
-                        <div class="card-body">
-                            <div class="alert alert-danger" v-if="error">
-                                {{ error }}
-                            </div>
-                            <div class="alert alert-success" v-if="nonce">
-                                Pagamento effettuato con successo!
-                            </div>
-                            <form>
-                                <div class="form-group">
-                                    <label>Numero carta di credito</label>
-                                    <div id="creditCardNumber" class="form-control"></div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <label>Data di scadenza</label>
-                                            <div id="expireDate" class="form-control"></div>
-                                        </div>
-                                        <div class="col-6">
-                                            <label>CVV</label>
-                                            <div id="cvv" class="form-control"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr />
-                                <div class="form-group">
-                                    <label for="amount">Prezzo</label>
-                                    <div class="input-group">
-                                        <input disabled id="amount" :value="cart.productSum()" class="form-control"
-                                            placeholder="Enter Amount">
-                                        <div class="input-group-prepend"><span class="input-group-text">&euro;</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <button class="btn btn-primary btn-block my-2" @click.prevent="payWithCreditCard">
-                                    Paga con carta di credito
-                                </button>
-                            </form>
-                        </div>
+        <div v-else class="container py-5">
+            <div class="row py-5">
+                <div class="col-12">
+                    <div class="card  rounded-4 border-0 shadow px-3 py-5">
+                        <router-link class="btn bg-white p-4" :to="{ name: 'home' }" aria-current="page">
+                            <h2 class="text-muted fw-bold text-uppercase mb-3">Nessun prodotto nel carrello</h2>
+                            <h2 class="text-muted mb-5">Puoi trovare nella pagina principale i migliori ristoranti!</h2>
+                            <h2 class="to_home"> Torna alla home <i class="fa-solid fa-burger"></i></h2>
+                        </router-link>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div v-else class="container py-5">
-        <div class="row py-5">
-            <div class="col-12">
-                <div class="card  rounded-4 border-0 shadow px-3 py-5">
-                    <router-link class="btn bg-white p-4" :to="{ name: 'home' }" aria-current="page">
-                        <h2 class="text-muted fw-bold text-uppercase mb-3">Nessun prodotto nel carrello</h2>
-                        <h2 class="text-muted mb-5">Puoi trovare nella pagina principale i migliori ristoranti!</h2>
-                        <h2 class="to_home"> Torna alla home <i class="fa-solid fa-burger"></i></h2>
-                    </router-link>
-                </div>
+    <div class="container">
+        <form @submit.prevent="sendForm()">
+            <div class="mb-3">
+                <label for="full_name" class="form-label">Nome</label>
+                <input required type="full_name" name="full_name" id="full_name" v-model="full_name" class="form-control"
+                    placeholder="Mario Rossi" aria-describedby="full_nameHelper">
+                <small id="full_nameHelper" class="text-muted">Inserisci il tuo nome</small>
             </div>
-        </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">Indirizzo</label>
+                <input required type="address" name="address" id="address" v-model="address" class="form-control"
+                    placeholder="Via Roma 54" aria-describedby="addressHelper">
+                <small id="addressHelper" class="text-muted">Inserisci l'indirizzo di consegna</small>
+            </div>
+            <div class="mb-3">
+                <label for="" class="form-label">Email</label>
+                <input required type="email" name="email" id="email" v-model="email" class="form-control"
+                    placeholder="name@example.com" aria-describedby="emailHelper">
+                <small id="emailHelper" class="text-muted">Inserisci la tua email</small>
+            </div>
+
+            <div class="mb-3">
+                <label for="phone" class="form-label">Numero di telefono</label>
+                <input required type="text" name="phone" id="phone" v-model="phone" class="form-control"
+                    placeholder="3211234456" aria-describedby="phoneHelper">
+                <small id="phoneHelper" class="text-muted">Inserisci il tuo numero di telefono</small>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Dettagli per l'ordine aggiuntivi</label>
+                <textarea name="description" id="description" v-model="description" class="form-control"
+                    placeholder="Inserisci dettagli" aria-describedby="descriptionHelper" />
+                <small id="descriptionHelper" class="text-muted">Inserisci descrizione aggiuntiva </small>
+            </div>
+
+            <button type="submit" class="btn btn-primary" :disabled="payLoading"> {{
+                payLoading ? 'Caricamento...' : 'Invia'
+            }} </button>
+        </form>
     </div>
-</div>
-<AppFooter />
+    <AppFooter />
 </template>
 
 <style lang="scss" scoped>
+@use '../styles/general.scss' as *;
+
+
 .background {
     background-color: #ffbd59;
     background-image: url(../assets/background.png);
 }
+
 a,
 .hover-style {
     background-color: #f6edda;
     text-decoration: none;
-    color: #a43c28;
+    color: $db_danger;
     font-size: 1.1rem;
 
     &:hover {
@@ -270,7 +358,7 @@ a,
     }
 
     .pay {
-        background-color: #a43c28;
+        background-color: $db_danger;
 
         &:hover {
             background-color: #8ea61d;
@@ -284,7 +372,7 @@ a,
     font-size: 50px;
 
     &:hover {
-        color: #a43c28;
+        color: $db_danger;
     }
 }
 </style>

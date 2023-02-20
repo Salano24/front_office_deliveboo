@@ -145,6 +145,8 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@use '../styles/general.scss' as *;
+
 .background {
     background-color: #ffbd59;
     background-image: url(../assets/background.png);
@@ -164,7 +166,7 @@ li {
     flex-direction: column;
     align-items: center;
     background-color: #f6edda;
-    color: #a43c28;
+    color: $db_danger;
     height: 100%;
     margin-bottom: 2rem;
 
@@ -207,4 +209,5 @@ li {
 /* Handle on hover */
 .plates::-webkit-scrollbar-thumb:hover {
     background: grey;
-}</style>
+}
+</style>

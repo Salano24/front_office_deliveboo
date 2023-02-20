@@ -21,7 +21,13 @@ export default {
       },
       deep: true
     }
-  }, methods: {},
+  }, methods: {
+
+    emptyCart() {
+      this.products = [];
+    }
+
+  },
   mounted() {
     if (localStorage.products) {
       this.products = JSON.parse(localStorage.products);
@@ -31,8 +37,9 @@ export default {
 };
 </script>
 <template>
-  <div class="cart_preview">
-    <div class="cart_right p-3">
+  <div class="cart_preview" @click.prevent="store.showOffcanvasMenu">
+    <!-- carrello si chiude quanto premo fuori dal carrello  -->
+    <div class="cart_right p-3" @click.stop="none">
       <div class="cart_preview_header d-flex">
         <button type="button" class="btn-close me-3" @click="this.store.showOffcanvasMenu();" aria-label="Close">
         </button>
@@ -74,6 +81,9 @@ export default {
             </div>
           </div>
           <div class="cart_footer pt-4">
+            <div class="d-flex justify-content-end">
+              <button @click.stop="this.emptyCart" class="btn btn-secondary btn-sm">Svuota tutto</button>
+            </div>
             <h3 class="total mt-5 text-muted fw-bold d-inline pe-2">Totale:</h3>
             <h4 class="text-danger fw-bold d-inline">{{ cart.productSum() }}<span>€</span></h4>
 
@@ -81,23 +91,25 @@ export default {
               <router-link class="btn pay bg_yellow text-white shadow border-0 rounded-pill" :to="{ name: 'checkout' }"
                 aria-current="page">
                 <i class="fa-solid fa-credit-card"></i>
-                <span class="fs-6 ps-1"> Vai al pagamento</span>
+                <span class="fs-6 ps-1">Vai al pagamento</span>
               </router-link>
             </div>
           </div>
         </div>
       </div>
     </div>
-</div>
+  </div>
 </template>
 <style lang="scss" scoped>
+@use '../styles/general.scss' as *;
+
 .cart_preview {
   transition: 0.5;
   background-color: #0000004f;
   width: 100%;
   height: 100vh;
   position: fixed;
-  top: 60px;
+  top: 66px;
   right: 0;
   bottom: 0;
   z-index: 9000;
@@ -139,7 +151,7 @@ export default {
       .hover-style {
         background-color: #f6edda;
         text-decoration: none;
-        color: #a43c28;
+        color: $db_danger;
         font-size: 1.1rem;
 
         &:hover {
