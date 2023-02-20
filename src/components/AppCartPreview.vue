@@ -17,7 +17,6 @@ export default {
       handler(newProducts) {
         localStorage.products = JSON.stringify(newProducts);
         cart.products = this.products
-        console.log('watch')
       },
       deep: true
     }

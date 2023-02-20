@@ -15,8 +15,6 @@ export const cart = reactive({
             this.products[index].quantity = ++quantity
         } else if (operator === '-') {
             this.products[index].quantity = --quantity
-        } else {
-            return console.log('argomenti della funzione errati')
         }
         if (quantity <= 0) {
             return this.removeProduct(index)

@@ -33,7 +33,6 @@ export default {
                 //ogni volta che products viene modificato viene trasformato in stringa e aggiunto al localStorage
                 localStorage.products = JSON.stringify(newProducts);
                 cart.products = this.products
-                console.log('watch')
             },
             deep: true
         }
@@ -41,7 +40,7 @@ export default {
     methods: {
         addProduct(plate) {
             if (cart.products.filter(product => product.restaurant_id !== plate.restaurant_id).length > 0) {
-                return console.log('Puoi ordinare da un solo ristorante per volta!')
+                store.orderError = 'Puoi ordinare solo da un ristorante alla volta!';
             } else {
                 if (this.products.includes(plate)) {
                     plate.quantity = plate.quantity + 1
@@ -62,20 +61,16 @@ export default {
             this.products = JSON.parse(localStorage.products);
         }
         const url = this.store.base_api_url + 'api/restaurants/' + this.$route.params.id
-        console.log(url);
         axios.get(url)
             .then(response => {
                 if (response.data.success) {
                     this.loading = false
                     this.restaurant = response.data.results
                     this.plates = response.data.plates
-                    console.log(this.restaurant)
                 } else {
                     this.message = "404 not found"
                 }
-                console.log(response);
             }).catch(error => {
-                console.log(error)
             })
     }
 }
@@ -85,6 +80,14 @@ export default {
     <AppHeader />
     <div class="background py-5" v-if="!loading">
         <div class="container-lg py-4">
+            <div class="alert alert-danger alert-dismissible fade show d-flex justify-content-between  fs-5" role="alert"
+                v-if="store.orderError">
+                <strong>{{ store.orderError }}</strong>
+                <button @click="store.orderError = ''" type="button" class="btn close  fs-5" data-dismiss="alert"
+                    aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             <div class="row">
                 <div class="col-12 text-center">
                     <div class="card border-0 shadow p-4 rounded-4">

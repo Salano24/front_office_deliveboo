@@ -12,24 +12,21 @@ export const store = reactive({
   base_api_url: "http://127.0.0.1:8000/",
   error: null,
   products: [],
-  productsOrder: [],
   queryString: '',
   results: [],
+  orderError: null,
   failed: false,
   callApi() {
     this.queryString = this.selectedTypes.join("+");
 
     if (this.queryString.length > 0) {
-      console.log(this.queryString)
       const url = this.base_api_url + "api/restaurants/types/" + this.queryString;
       axios
         .get(url)
         .then((response) => {
-          console.log(response.data);
           if (response.data.success) {
             this.restaurants = response.data.results;
             this.results = response.data.results;
-            console.log(this.restaurants);
             this.loading = false;
           } else {
             this.restaurants = null;
@@ -44,9 +41,7 @@ export const store = reactive({
       this.queryString = "";
       this.failed = false
     } else {
-
       this.failed = true
-      console.log(this.failed)
     }
 
   },
@@ -59,7 +54,6 @@ export const store = reactive({
       .then((response) => {
         this.restaurants = response.data.results.data;
         this.results = response.data.results;
-        console.log(this.results);
         this.loading = false;
       })
       .catch((error) => {
@@ -91,10 +85,8 @@ export const store = reactive({
         } else {
           this.$router.replace({ name: "not-found" });
         }
-        console.log(response);
       })
       .catch((error) => {
-        console.log(error);
       });
   },
   getImagePath(path) {
@@ -103,7 +95,4 @@ export const store = reactive({
     }
     return "src/assets/no-image-available.png";
   }
-
-
-
 });

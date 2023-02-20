@@ -37,7 +37,6 @@ export default {
                 //ogni volta che products viene modificato viene trasformato in stringa e aggiunto al localStorage
                 localStorage.products = JSON.stringify(newProducts);
                 cart.products = this.products
-                console.log('watch')
             },
             deep: true
         }
@@ -49,7 +48,6 @@ export default {
             this.price = cart.productSum()
             if (this.hostedFieldInstance) {
                 this.hostedFieldInstance.tokenize().then(payload => {
-                    console.log(payload);
                     this.nonce = payload.nonce
 
                 })
@@ -73,9 +71,7 @@ export default {
                 cart: JSON.stringify(cart.products),
                 price: cart.productSum()
             }
-            // console.log(data);
             axios.post(`${this.store.base_api_url}api/order`, data).then((response) => {
-                console.log(response);
                 if (response.data.success) {
                     this.form_info = true
                     braintree.client.create({
@@ -124,44 +120,6 @@ export default {
         if (localStorage.products) {
             this.products = JSON.parse(localStorage.products);
         }
-
-        console.log(cart.products);
-
-        braintree.client.create({
-            authorization: "sandbox_q7z92y97_vtb2xgfs69b9ns8t"
-        })
-            .then(clientInstance => {
-                let options = {
-                    client: clientInstance,
-                    styles: {
-                        input: {
-                            'font-size': '14px',
-                            'font-family': 'Open Sans'
-                        }
-                    },
-                    fields: {
-                        number: {
-                            selector: '#creditCardNumber',
-                            placeholder: 'Inserisci numero di carta'
-                        },
-                        cvv: {
-                            selector: '#cvv',
-                            placeholder: 'Inserisci CVV'
-                        },
-                        expirationDate: {
-                            selector: '#expireDate',
-                            placeholder: '00 / 0000'
-                        }
-                    }
-                }
-                return braintree.hostedFields.create(options)
-            })
-            .then(hostedFieldInstance => {
-                // Use hostedFieldInstance to send data to Braintree
-                this.hostedFieldInstance = hostedFieldInstance;
-            })
-            .catch(err => {
-            });
     },
 }
 </script>

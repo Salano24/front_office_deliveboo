@@ -28,15 +28,12 @@ export default {
           if (response.data.success) {
             store.restaurants = response.data.results;
             store.results = response.data.results;
-            console.log(store.restaurants);
             this.loading = false;
           } else {
             this.$router.replace({ name: "not-found" });
           }
-          console.log(response);
         })
         .catch((error) => {
-          console.log(error);
         });
     },
     scrollToBottom() {
