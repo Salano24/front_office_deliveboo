@@ -306,7 +306,6 @@ export default {
                                         }}
                                     </button>
                                 </form>
-
                             </div>
                         </div>
                     </div>
@@ -327,10 +326,6 @@ export default {
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="container">
-
     </div>
     <AppFooter />
 </template>
