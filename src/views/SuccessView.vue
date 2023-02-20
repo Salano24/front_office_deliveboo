@@ -1,5 +1,7 @@
 <script>
 import { store as store } from "../store.js";
+import { cart as cart } from "../cart.js";
+
 import { router } from "../router.js";
 import AppHeader from "../components/AppHeader.vue";
 import AppFooter from "../components/AppFooter.vue";
@@ -13,7 +15,11 @@ export default {
     data() {
         return {
             store,
+            cart,
         }
+    },
+    mounted() {
+        cart.emptyCart()
     }
 }
 </script>

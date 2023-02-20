@@ -21,13 +21,7 @@ export default {
       },
       deep: true
     }
-  }, methods: {
-
-    emptyCart() {
-      this.products = [];
-    }
-
-  },
+  }, methods: {},
   mounted() {
     if (localStorage.products) {
       this.products = JSON.parse(localStorage.products);
@@ -82,7 +76,7 @@ export default {
           </div>
           <div class="cart_footer pt-4">
             <div class="d-flex justify-content-end">
-              <button @click.stop="this.emptyCart" class="btn btn-secondary btn-sm">Svuota tutto</button>
+              <button @click.stop="cart.emptyCart" class="btn btn-secondary btn-sm">Svuota tutto</button>
             </div>
             <h3 class="total mt-5 text-muted fw-bold d-inline pe-2">Totale:</h3>
             <h4 class="text-danger fw-bold d-inline">{{ cart.productSum() }}<span>€</span></h4>
