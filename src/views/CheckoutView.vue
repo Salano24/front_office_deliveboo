@@ -131,45 +131,45 @@ export default {
             <div class="row gap-5 gy-0">
                 <div class="col-12 col-lg-6">
                     <div class="card rounded-4 border-0 shadow p-3">
-                    <h2 class="fw-bold mb-0 green_text mb-4">Procedi al pagamento</h2>
-                    <h3 class="fw-bold mb-0 text-muted mx-1 pb-2">Il tuo ordine</h3>
-                    <div class="box overflow-auto px-3 py-4">
-                        <div v-for="product, index in cart.products" class="wrapper card border-0 p-3">
-                            <div class="row justify-content-between hover-style">
-                                <div class="sb-cover-frame d-flex py-2 col-5 col-sm-4">
-                                    <img :src="store.getImagePath(product.plate_image)" :alt="'img ' + product.name"
-                                        class="img-fluid" />
-                                </div>
-                                <div class="py-2 col-7 col-sm-8 text-end d-flex flex-column justify-content-center">
-                                    <h4>{{ product.name }}</h4>
+                        <h2 class="fw-bold mb-0 green_text mb-4">Procedi al pagamento</h2>
+                        <h3 class="fw-bold mb-0 text-muted mx-1 pb-2">Il tuo ordine</h3>
+                        <div class="box overflow-auto px-3 py-4">
+                            <div v-for="product, index in cart.products" class="wrapper card border-0 p-3">
+                                <div class="row justify-content-between hover-style">
+                                    <div class="sb-cover-frame d-flex py-2 col-5 col-sm-4">
+                                        <img :src="store.getImagePath(product.plate_image)" :alt="'img ' + product.name"
+                                            class="img-fluid" />
+                                    </div>
+                                    <div class="py-2 col-7 col-sm-8 text-end d-flex flex-column justify-content-center">
+                                        <h4>{{ product.name }}</h4>
 
-                                    <div class="price">{{ product.price }} € </div>
+                                        <div class="price">{{ product.price }} € </div>
 
 
-                                    <div class="quantity_input justify-content-end pt-3">
-                                        <button class="bg-transparent btn" @click.stop="cart.removeProduct(index)"><i
-                                                class="fa-solid fa-trash text-muted pe-3"></i></button>
-                                        <div class="a minus text-white fw-bold"
-                                            @click.stop="cart.changeQuantity(index, '-')">-
-                                        </div>
-                                        <span class="bg-white px-3">{{ product.quantity }}</span>
-                                        <div class="a plus text-white fw-bold"
-                                            @click.stop="cart.changeQuantity(index, '+')">+
+                                        <div class="quantity_input justify-content-end pt-3">
+                                            <button class="bg-transparent btn" @click.stop="cart.removeProduct(index)"><i
+                                                    class="fa-solid fa-trash text-muted pe-3"></i></button>
+                                            <div class="a minus text-white fw-bold"
+                                                @click.stop="cart.changeQuantity(index, '-')">-
+                                            </div>
+                                            <span class="bg-white px-3">{{ product.quantity }}</span>
+                                            <div class="a plus text-white fw-bold"
+                                                @click.stop="cart.changeQuantity(index, '+')">+
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wrapper d-flex justify-content-end mt-2">
+                            <div class="pt-1 px-4 d-flex">
+                                <h4 class="total text-muted fw-bold">Totale: </h4>
+                                <h5 class="text-danger fw-bold px-1">{{ cart.productSum() }}<span>€</span></h5>
                             </div>
                         </div>
                     </div>
-                    <div class="wrapper d-flex justify-content-end mt-2">
-                        <div class="pt-1 px-4 d-flex">
-                            <h4 class="total text-muted fw-bold">Totale: </h4>
-                            <h5 class="text-danger fw-bold">{{ cart.productSum() }}<span>€</span></h5>
-                        </div>
-                    </div>
-                    </div>
-                    
+
                 </div>
 
 
